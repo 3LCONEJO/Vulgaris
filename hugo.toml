@@ -47,14 +47,14 @@ summaryLength = 40
     weight = 30
 
 [params]
-  author = "Your Name"
+  author = "Jorge Alfredo Suazo Victoria"
   tagline = "Complex Systems & Single-Cell // building from seed to pipeline"
   description = "Vulgaris — a documentation-first portfolio bridging code and biology, named for Phaseolus vulgaris, the common bean."
-  email = "you@example.com"
-  github = "https://github.com/YOUR-USERNAME"
-  linkedin = "https://linkedin.com/in/YOUR-USERNAME"
+  email = "jasvpj@gmail.com"
+  github = "https://github.com/3LCONEJO"
+  linkedin = "https://linkedin.com/in/Notyet"
   siteVersion = "alpha 0.1"
-  accessibilityNote = "Designed with reduced-motion support and high-contrast text for neuro-inclusive reading."
+  accessibilityNote = ""
 
   # Home hero — the ~$ whoami terminal block
   [params.whoami]
