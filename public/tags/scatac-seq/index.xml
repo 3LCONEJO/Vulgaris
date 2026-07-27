@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>ScATAC-Seq on Vulgaris</title>
+		<link>http://localhost:1313/vulgaris/tags/scatac-seq/</link>
+		<description>Recent content in ScATAC-Seq on Vulgaris</description>
+		<generator>Hugo</generator>
+		<language>en-us</language>
+		
+		
+		
+		
+			<lastBuildDate>Sun, 26 Jul 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="http://localhost:1313/vulgaris/tags/scatac-seq/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>JAGUAR-GRN</title>
+				<link>http://localhost:1313/vulgaris/projects/jaguar-grn/</link>
+				<pubDate>Sun, 26 Jul 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/vulgaris/projects/jaguar-grn/</guid>
+				<description>A single-cell ATAC-seq pipeline designed to build a Gene Regulation Network to unveil the regulatory systems on JAGUAR Project Data.</description>
+			</item>
+			<item>
+				<title>JAGUAR-DEMULTIPLEXING</title>
+				<link>http://localhost:1313/vulgaris/projects/jaguar-demultiplexing/</link>
+				<pubDate>Fri, 26 Jun 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/vulgaris/projects/jaguar-demultiplexing/</guid>
+				<description>Given the information in my garden, an algorithm helps me infer which berry belongs to which bush. In our data, it tells us which cell belongs to which individual.</description>
+			</item>
+	</channel>
+</rss>

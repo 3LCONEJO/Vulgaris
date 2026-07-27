@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Seurat on Vulgaris</title>
+		<link>http://localhost:1313/vulgaris/tags/seurat/</link>
+		<description>Recent content in Seurat on Vulgaris</description>
+		<generator>Hugo</generator>
+		<language>en-us</language>
+		
+		
+		
+		
+			<lastBuildDate>Sun, 26 Jul 2026 00:00:00 +0000</lastBuildDate>
+		
+			<atom:link href="http://localhost:1313/vulgaris/tags/seurat/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>JAGUAR-GRN</title>
+				<link>http://localhost:1313/vulgaris/projects/jaguar-grn/</link>
+				<pubDate>Sun, 26 Jul 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/vulgaris/projects/jaguar-grn/</guid>
+				<description>A single-cell ATAC-seq pipeline designed to build a Gene Regulation Network to unveil the regulatory systems on JAGUAR Project Data.</description>
+			</item>
+	</channel>
+</rss>

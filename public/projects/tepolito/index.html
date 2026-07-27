@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head><script src="/vulgaris/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=vulgaris/livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tepolito · Vulgaris</title>
+<meta name="description" content="A lightweight simulation framework for exploring emergent behavior in small agent populations.">
+
+<link rel="icon" type="image/svg+xml" href="/vulgaris/img/favicon.svg">
+<link rel="canonical" href="http://localhost:1313/vulgaris/projects/tepolito/">
+
+
+<meta property="og:title" content="Tepolito">
+<meta property="og:description" content="Vulgaris — a documentation-first portfolio bridging code and biology, named for Phaseolus vulgaris, the common bean.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://localhost:1313/vulgaris/projects/tepolito/">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/vulgaris/css/style.css">
+
+
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/vulgaris/">
+      <span class="bean" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 14C4 8 9 3 15 3c2.8 0 4.5 1.7 4.5 3.8 0 4.7-4.6 8.4-9.8 9.9C6.4 17.7 4 16.3 4 14Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          <path d="M6.5 15.5C9 12 12.5 9.5 17 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+      </span>vulgaris<span class="prompt">/</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="main-nav">
+        
+        
+          <li>
+            <a href="/vulgaris/projects/"
+               aria-current="page">
+              ~/projects
+            </a>
+          </li>
+        
+          <li>
+            <a href="/vulgaris/blog/"
+               >
+              ~/blog
+            </a>
+          </li>
+        
+          <li>
+            <a href="/vulgaris/tags/"
+               >
+              ~/tags
+            </a>
+          </li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+  <main id="main">
+    
+
+  <a class="btn btn--primary floating-src-btn" href="https://github.com/YOUR-USERNAME/tepolito" target="_blank" rel="noopener">↗ source</a>
+
+
+<article class="wrap">
+  <header class="post-header">
+    <p class="eyebrow">./projects</p>
+    <h1>Tepolito</h1>
+    <div class="post-meta">
+      <span>2026-03-02</span>
+      <span class="sep">/</span><span>in progress</span>
+      
+        <span class="sep">/</span>
+        <span>
+          <a href="/vulgaris/tags/python/">Python</a>, <a href="/vulgaris/tags/complex-systems/">Complex Systems</a>, <a href="/vulgaris/tags/simulation/">Simulation</a>
+        </span>
+      
+    </div>
+    
+      <div class="post-source-btn">
+        <a class="btn" href="https://github.com/YOUR-USERNAME/tepolito" target="_blank" rel="noopener">↗ view source on github</a>
+      </div>
+    
+  </header>
+
+  <div class="post-body">
+    <blockquote>
+<p><strong>Placeholder content.</strong> Replace this write-up with the real documentation for
+Tepolito. The structure below follows the didactic format described in the
+project brief — problem, approach, steps, results, notes — keep it or adapt it.</p>
+</blockquote>
+<h2 id="problem">Problem</h2>
+<p>Describe the question this project explores. What phenomenon are you trying to
+reproduce or understand? Who would find this useful — a recruiter skimming for
+technique, or a collaborator trying to reuse the code?</p>
+<h2 id="approach">Approach</h2>
+<p>Explain the computational logic in plain language before showing code. What is
+the model, the state space, the update rule?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#ff79c6">class</span> <span style="color:#50fa7b">Agent</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">__init__</span>(<span style="font-style:italic">self</span>, state):
+</span></span><span style="display:flex;"><span>        <span style="font-style:italic">self</span><span style="color:#ff79c6">.</span>state <span style="color:#ff79c6">=</span> state
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">def</span> <span style="color:#50fa7b">step</span>(<span style="font-style:italic">self</span>, neighbors):
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4"># replace with the real update rule</span>
+</span></span><span style="display:flex;"><span>        <span style="font-style:italic">self</span><span style="color:#ff79c6">.</span>state <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">sum</span>(n<span style="color:#ff79c6">.</span>state <span style="color:#ff79c6">for</span> n <span style="color:#ff79c6">in</span> neighbors) <span style="color:#ff79c6">/</span> <span style="color:#8be9fd;font-style:italic">len</span>(neighbors)
+</span></span></code></pre></div><h2 id="key-steps">Key steps</h2>
+<ol>
+<li>Initialize the population with a defined distribution.</li>
+<li>Run the update rule for <code>N</code> steps, logging state at each interval.</li>
+<li>Aggregate and visualize the resulting trajectories.</li>
+</ol>
+<h2 id="results">Results</h2>
+<p>Summarize what came out — a figure, a metric, a surprising failure mode.</p>
+<h2 id="notes">Notes</h2>
+<p>What you&rsquo;d change next time, open questions, or follow-up experiments.</p>
+
+  </div>
+
+  <nav class="post-nav" aria-label="Project navigation">
+    <span></span>
+    
+      <a class="post-nav-link next" href="http://localhost:1313/vulgaris/projects/jaguar-demultiplexing/">
+        <span class="dir">next →</span>JAGUAR-DEMULTIPLEXING
+      </a>
+    
+  </nav>
+</article>
+
+  </main>
+  <footer class="site-footer">
+  <div class="wrap">
+    <span>vulgaris alpha 0.1 · © 2026</span>
+    <span></span>
+    <span>
+      <a href="https://github.com/3LCONEJO">github</a>
+       · 
+      <a href="https://linkedin.com/in/YOUR-USERNAME">linkedin</a>
+    </span>
+  </div>
+</footer>
+
+  <script src="/vulgaris/js/main.js" defer></script>
+</body>
+</html>

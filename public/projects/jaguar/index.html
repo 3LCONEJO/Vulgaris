@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head><script src="/vulgaris/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=vulgaris/livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JAGUAR · Vulgaris</title>
+<meta name="description" content="A single-cell RNA-seq pipeline for QC, clustering, and differential expression on HPC.">
+
+<link rel="icon" type="image/svg+xml" href="/vulgaris/img/favicon.svg">
+<link rel="canonical" href="http://localhost:1313/vulgaris/projects/jaguar/">
+
+
+<meta property="og:title" content="JAGUAR">
+<meta property="og:description" content="Vulgaris — a documentation-first portfolio bridging code and biology, named for Phaseolus vulgaris, the common bean.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://localhost:1313/vulgaris/projects/jaguar/">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/vulgaris/css/style.css">
+
+
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/vulgaris/">
+      <span class="bean" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 14C4 8 9 3 15 3c2.8 0 4.5 1.7 4.5 3.8 0 4.7-4.6 8.4-9.8 9.9C6.4 17.7 4 16.3 4 14Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          <path d="M6.5 15.5C9 12 12.5 9.5 17 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+      </span>vulgaris<span class="prompt">/</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="main-nav">
+        
+        
+          <li>
+            <a href="/vulgaris/projects/"
+               aria-current="page">
+              ~/projects
+            </a>
+          </li>
+        
+          <li>
+            <a href="/vulgaris/blog/"
+               >
+              ~/blog
+            </a>
+          </li>
+        
+          <li>
+            <a href=""
+               >
+              ~/tags
+            </a>
+          </li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+  <main id="main">
+    
+
+  <a class="btn btn--primary floating-src-btn" href="https://github.com/YOUR-USERNAME/jaguar" target="_blank" rel="noopener">↗ source</a>
+
+
+<article class="wrap">
+  <header class="post-header">
+    <p class="eyebrow">./projects</p>
+    <h1>JAGUAR</h1>
+    <div class="post-meta">
+      <span>2026-04-18</span>
+      <span class="sep">/</span><span>complete</span>
+      
+        <span class="sep">/</span>
+        <span>
+          <a href="/vulgaris/tags/scrna-seq/">scRNA-seq</a>, <a href="/vulgaris/tags/hpc/">HPC</a>, <a href="/vulgaris/tags/snakemake/">Snakemake</a>, <a href="/vulgaris/tags/r/">R</a>
+        </span>
+      
+    </div>
+    
+      <div class="post-source-btn">
+        <a class="btn" href="https://github.com/YOUR-USERNAME/jaguar" target="_blank" rel="noopener">↗ view source on github</a>
+      </div>
+    
+  </header>
+
+  <div class="post-body">
+    <blockquote>
+<p><strong>Placeholder content.</strong> Replace this write-up with the real documentation
+for JAGUAR.</p>
+</blockquote>
+<h2 id="problem">Problem</h2>
+<p>What biological question or lab bottleneck does this pipeline solve? Name the
+input data type (e.g. 10x Genomics scRNA-seq) and the output you&rsquo;re aiming for.</p>
+<h2 id="approach">Approach</h2>
+<p>Walk through the pipeline logic stage by stage: raw counts → QC filtering →
+normalization → clustering → annotation → differential expression.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>snakemake --profile slurm <span style="color:#f1fa8c">\
+</span></span></span><span style="display:flex;"><span>  --configfile config/jaguar.yaml <span style="color:#f1fa8c">\
+</span></span></span><span style="display:flex;"><span>  qc cluster diffexp
+</span></span></code></pre></div><h2 id="key-steps">Key steps</h2>
+<ol>
+<li><strong>QC</strong>: filter cells on min genes / max mitochondrial fraction.</li>
+<li><strong>Normalization</strong>: log-normalize and select highly variable genes.</li>
+<li><strong>Clustering</strong>: PCA → neighbors graph → Leiden clustering.</li>
+<li><strong>Annotation</strong>: marker-gene scoring against a reference atlas.</li>
+<li><strong>Differential expression</strong>: pseudobulk comparison across conditions.</li>
+</ol>
+<h2 id="results">Results</h2>
+<p>Report cluster counts, marker genes recovered, or runtime on the HPC cluster.</p>
+<h2 id="notes">Notes</h2>
+<p>Scaling considerations, edge cases in the data, or what you&rsquo;d automate next.</p>
+
+  </div>
+
+  <nav class="post-nav" aria-label="Project navigation">
+    
+      <a class="post-nav-link prev" href="http://localhost:1313/vulgaris/projects/tepolito/">
+        <span class="dir">← previous</span>Tepolito
+      </a>
+    
+    <span></span>
+  </nav>
+</article>
+
+  </main>
+  <footer class="site-footer">
+  <div class="wrap">
+    <span>vulgaris alpha 0.1 · © 2026</span>
+    <span></span>
+    <span>
+      <a href="https://github.com/YOUR-USERNAME">github</a>
+       · 
+      <a href="https://linkedin.com/in/YOUR-USERNAME">linkedin</a>
+    </span>
+  </div>
+</footer>
+
+  <script src="/vulgaris/js/main.js" defer></script>
+</body>
+</html>
