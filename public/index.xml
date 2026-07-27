@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Vulgaris</title>
-		<link>http://localhost:1313/vulgaris/</link>
+		<link>http://localhost:1313/Vulgaris/</link>
 		<description>Recent content on Vulgaris</description>
 		<generator>Hugo</generator>
 		<language>en-us</language>
@@ -12,40 +12,40 @@
 		
 			<lastBuildDate>Sun, 26 Jul 2026 00:00:00 +0000</lastBuildDate>
 		
-			<atom:link href="http://localhost:1313/vulgaris/index.xml" rel="self" type="application/rss+xml" />
+			<atom:link href="http://localhost:1313/Vulgaris/index.xml" rel="self" type="application/rss+xml" />
 			<item>
 				<title>Creating Vulgaris</title>
-				<link>http://localhost:1313/vulgaris/blog/vulgaris-creation/</link>
+				<link>http://localhost:1313/Vulgaris/blog/vulgaris-creation/</link>
 				<pubDate>Sun, 26 Jul 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/vulgaris/blog/vulgaris-creation/</guid>
+				<guid>http://localhost:1313/Vulgaris/blog/vulgaris-creation/</guid>
 				<description>The story behind my new personal webpage, a sudden wave of financial anxiety, and why I named it after my cat.</description>
 			</item>
 			<item>
 				<title>JAGUAR-GRN</title>
-				<link>http://localhost:1313/vulgaris/projects/jaguar-grn/</link>
+				<link>http://localhost:1313/Vulgaris/projects/jaguar-grn/</link>
 				<pubDate>Sun, 26 Jul 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/vulgaris/projects/jaguar-grn/</guid>
+				<guid>http://localhost:1313/Vulgaris/projects/jaguar-grn/</guid>
 				<description>A single-cell ATAC-seq pipeline designed to build a Gene Regulation Network to unveil the regulatory systems on JAGUAR Project Data.</description>
 			</item>
 			<item>
 				<title>Notes from a visit to the Sanger Institute</title>
-				<link>http://localhost:1313/vulgaris/blog/sanger-institute-visit/</link>
+				<link>http://localhost:1313/Vulgaris/blog/sanger-institute-visit/</link>
 				<pubDate>Sun, 26 Jul 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/vulgaris/blog/sanger-institute-visit/</guid>
+				<guid>http://localhost:1313/Vulgaris/blog/sanger-institute-visit/</guid>
 				<description>A short travelogue from a research visit — what stuck with me about how the place runs.</description>
 			</item>
 			<item>
 				<title>JAGUAR-DEMULTIPLEXING</title>
-				<link>http://localhost:1313/vulgaris/projects/jaguar-demultiplexing/</link>
+				<link>http://localhost:1313/Vulgaris/projects/jaguar-demultiplexing/</link>
 				<pubDate>Fri, 26 Jun 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/vulgaris/projects/jaguar-demultiplexing/</guid>
+				<guid>http://localhost:1313/Vulgaris/projects/jaguar-demultiplexing/</guid>
 				<description>Given the information in my garden, an algorithm helps me infer which berry belongs to which bush. In our data, it tells us which cell belongs to which individual.</description>
 			</item>
 			<item>
 				<title>Tepolito</title>
-				<link>http://localhost:1313/vulgaris/projects/tepolito/</link>
+				<link>http://localhost:1313/Vulgaris/projects/tepolito/</link>
 				<pubDate>Mon, 02 Mar 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/vulgaris/projects/tepolito/</guid>
+				<guid>http://localhost:1313/Vulgaris/projects/tepolito/</guid>
 				<description>A lightweight simulation framework for exploring emergent behavior in small agent populations.</description>
 			</item>
 	</channel>

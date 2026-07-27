@@ -1,33 +1,36 @@
 <!doctype html>
 <html lang="en">
-<head><script src="/vulgaris/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=vulgaris/livereload" data-no-instant defer></script>
+<head><script src="/Vulgaris/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=Vulgaris/livereload" data-no-instant defer></script>
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>JAGUAR-DEMULTIPLEXING · Vulgaris</title>
 <meta name="description" content="Given the information in my garden, an algorithm helps me infer which berry belongs to which bush. In our data, it tells us which cell belongs to which …">
 
-<link rel="icon" type="image/svg+xml" href="/vulgaris/img/favicon.svg">
-<link rel="canonical" href="http://localhost:1313/vulgaris/projects/jaguar-demultiplexing/">
+<link rel="icon" type="image/svg+xml" href="/Vulgaris/img/favicon.svg">
+<link rel="canonical" href="http://localhost:1313/Vulgaris/projects/jaguar-demultiplexing/">
 
 
 <meta property="og:title" content="JAGUAR-DEMULTIPLEXING">
 <meta property="og:description" content="Vulgaris — a documentation-first portfolio bridging code and biology, named for Phaseolus vulgaris, the common bean.">
 <meta property="og:type" content="article">
-<meta property="og:url" content="http://localhost:1313/vulgaris/projects/jaguar-demultiplexing/">
+<meta property="og:url" content="http://localhost:1313/Vulgaris/projects/jaguar-demultiplexing/">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="/vulgaris/css/style.css">
+<link rel="stylesheet" href="/Vulgaris/css/style.css">
+<link rel="stylesheet" href="/Vulgaris/css/syntax.css">
+
 
 
 </head>
 <body>
+  
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="/vulgaris/">
+    <a class="brand" href="/Vulgaris/">
       <span class="bean" aria-hidden="true">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M4 14C4 8 9 3 15 3c2.8 0 4.5 1.7 4.5 3.8 0 4.7-4.6 8.4-9.8 9.9C6.4 17.7 4 16.3 4 14Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
@@ -40,21 +43,21 @@
         
         
           <li>
-            <a href="/vulgaris/projects/"
+            <a href="/Vulgaris/projects/"
                aria-current="page">
               ~/projects
             </a>
           </li>
         
           <li>
-            <a href="/vulgaris/blog/"
+            <a href="/Vulgaris/blog/"
                >
               ~/blog
             </a>
           </li>
         
           <li>
-            <a href="/vulgaris/tags/"
+            <a href="/Vulgaris/tags/"
                >
               ~/tags
             </a>
@@ -81,7 +84,7 @@
       
         <span class="sep">/</span>
         <span>
-          <a href="/vulgaris/tags/scatac-seq/">scATAC-seq</a>, <a href="/vulgaris/tags/jaguar/">JAGUAR</a>, <a href="/vulgaris/tags/demultiplexing/">Demultiplexing</a>, <a href="/vulgaris/tags/bash/">Bash</a>, <a href="/vulgaris/tags/lsf/">LSF</a>
+          <a href="/Vulgaris/tags/scatac-seq/">scATAC-seq</a>, <a href="/Vulgaris/tags/jaguar/">JAGUAR</a>, <a href="/Vulgaris/tags/demultiplexing/">Demultiplexing</a>, <a href="/Vulgaris/tags/bash/">Bash</a>, <a href="/Vulgaris/tags/lsf/">LSF</a>
         </span>
       
     </div>
@@ -116,135 +119,135 @@
 <p>Below is the complete, idempotent bash script designed for an LSF cluster environment. Because every step checks if its output already exists, you can safely restart the job if a node fails without losing your progress.</p>
 <h3 id="1-cluster-setup-and-configuration">1. Cluster Setup and Configuration</h3>
 <p>We start by defining the LSF job parameters, loading the necessary modules (<code>bcftools</code>, <code>samtools</code>, and the Singularity-based <code>demuxafy</code>), and setting up our global paths.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#ff79c6">#!/bin/bash
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">#BSUB -G jaguar_analysis</span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">#BSUB -J demuxlet_scATAC</span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">#BSUB -q normal</span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">#BSUB -n 16</span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">#BSUB -R &#34;select[mem&gt;64000] rusage[mem=64000] span[hosts=1]&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">#BSUB -M 64000</span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">#BSUB -q long</span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">#BSUB -o logs/demuxlet_%J.out</span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">#BSUB -e logs/demuxlet_%J.err</span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4">#BSUB -W 48:00</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">set</span> -euo pipefail
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;--- Loading software modules ---&#34;</span>
-</span></span><span style="display:flex;"><span>module load cellgen/bcftools/1.23
-</span></span><span style="display:flex;"><span>module load HGI/common/demuxafy/2.1.0 
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">THREADS</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;</span><span style="color:#f1fa8c">${</span><span style="color:#8be9fd;font-style:italic">LSB_DJOB_NUMPROC</span><span style="color:#ff79c6">:-</span><span style="color:#8be9fd;font-style:italic">16</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">CONFIG_TSV</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;config_pipeline.tsv&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">GLOBAL_ANALYSIS_DIR</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;/lustre/scratch127/humgen/projects_v2/jaguar_analysis/analysis/jv8/Demuxlet-scATAC-bge09&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">JOINT_DONOR_VCF</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;/lustre/scratch127/humgen/projects_v2/jaguar_analysis/analysis/ks37/gt/qc/BGE09/filtered/output/bge09_exome_biallelic_pass_only.snp_indel_le50.setid.autosomes_only.JAGID.dedup.vcf.gz&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">BED_FOLDER</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;/lustre/scratch127/humgen/projects_v2/jaguar_analysis/analysis/jv8/beds&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>mkdir -p logs
-</span></span><span style="display:flex;"><span>log<span style="color:#ff79c6">()</span> <span style="color:#ff79c6">{</span> <span style="color:#8be9fd;font-style:italic">echo</span> <span style="color:#f1fa8c">&#34;[</span><span style="color:#ff79c6">$(</span>date <span style="color:#f1fa8c">&#39;+\%Y-\%m-\%d \%H:\%M:\%S&#39;</span><span style="color:#ff79c6">)</span><span style="color:#f1fa8c">]</span><span style="color:#8be9fd;font-style:italic">$*</span><span style="color:#f1fa8c">&#34;</span>; <span style="color:#ff79c6">}</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="c1">#BSUB -G jaguar_analysis</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#BSUB -J demuxlet_scATAC</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#BSUB -q normal</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#BSUB -n 16</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#BSUB -R &#34;select[mem&gt;64000] rusage[mem=64000] span[hosts=1]&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#BSUB -M 64000</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#BSUB -q long</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#BSUB -o logs/demuxlet_%J.out</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#BSUB -e logs/demuxlet_%J.err</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#BSUB -W 48:00</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">set</span> -euo pipefail
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;--- Loading software modules ---&#34;</span>
+</span></span><span class="line"><span class="cl">module load cellgen/bcftools/1.23
+</span></span><span class="line"><span class="cl">module load HGI/common/demuxafy/2.1.0 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">THREADS</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">LSB_DJOB_NUMPROC</span><span class="k">:-</span><span class="nv">16</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">CONFIG_TSV</span><span class="o">=</span><span class="s2">&#34;config_pipeline.tsv&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">GLOBAL_ANALYSIS_DIR</span><span class="o">=</span><span class="s2">&#34;/lustre/scratch127/humgen/projects_v2/jaguar_analysis/analysis/jv8/Demuxlet-scATAC-bge09&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">JOINT_DONOR_VCF</span><span class="o">=</span><span class="s2">&#34;/lustre/scratch127/humgen/projects_v2/jaguar_analysis/analysis/ks37/gt/qc/BGE09/filtered/output/bge09_exome_biallelic_pass_only.snp_indel_le50.setid.autosomes_only.JAGID.dedup.vcf.gz&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">BED_FOLDER</span><span class="o">=</span><span class="s2">&#34;/lustre/scratch127/humgen/projects_v2/jaguar_analysis/analysis/jv8/beds&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mkdir -p logs
+</span></span><span class="line"><span class="cl">log<span class="o">()</span> <span class="o">{</span> <span class="nb">echo</span> <span class="s2">&#34;[</span><span class="k">$(</span>date <span class="s1">&#39;+\%Y-\%m-\%d \%H:\%M:\%S&#39;</span><span class="k">)</span><span class="s2">]</span><span class="nv">$*</span><span class="s2">&#34;</span><span class="p">;</span> <span class="o">}</span>
 </span></span></code></pre></div><h3 id="2-initialization-and-bam-verification">2. Initialization and BAM Verification</h3>
 <p>The script loops through the configuration file. For each sample, it verifies that the BAM file exists and generates an index if one is missing. It then extracts the chromosome order directly from the BAM header, which is strictly required by popscle later on.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-R" data-lang="R"><span style="display:flex;"><span>tail <span style="color:#ff79c6">-</span>n <span style="color:#bd93f9">+2</span> <span style="color:#f1fa8c">&#34;$CONFIG_TSV&#34;</span> \vert{} <span style="color:#ff79c6">while</span> IFS<span style="color:#ff79c6">=$</span><span style="color:#f1fa8c">&#39;\t&#39;</span> read <span style="color:#ff79c6">-</span>r SAMPLE_ID BAM_FILE BARCODE_FILE DONOR_LIST_FILE NUM_DONORS
-</span></span><span style="display:flex;"><span>do
-</span></span><span style="display:flex;"><span>  BASE_DIR<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;${GLOBAL_ANALYSIS_DIR}/${SAMPLE_ID}&#34;</span>
-</span></span><span style="display:flex;"><span>  DEMUXLET_DIR<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;${BASE_DIR}/demuxlet_out&#34;</span>
-</span></span><span style="display:flex;"><span>  DONOR_VCF_DIR<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;${BASE_DIR}/donor_vcf_prep&#34;</span>
-</span></span><span style="display:flex;"><span>  mkdir <span style="color:#ff79c6">-</span>p <span style="color:#f1fa8c">&#34;$DEMUXLET_DIR&#34;</span> <span style="color:#f1fa8c">&#34;$DONOR_VCF_DIR&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#6272a4"># STEP -1: Verify BAM exists and is indexed</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">if</span> [ <span style="color:#ff79c6">!</span> <span style="color:#ff79c6">-</span>f <span style="color:#f1fa8c">&#34;${BAM_FILE}.bai&#34;</span> ]; then
-</span></span><span style="display:flex;"><span>    log <span style="color:#f1fa8c">&#34;BAM index missing — creating it...&#34;</span>
-</span></span><span style="display:flex;"><span>    samtools index <span style="color:#ff79c6">-@</span> <span style="color:#f1fa8c">&#34;$THREADS&#34;</span> <span style="color:#f1fa8c">&#34;$BAM_FILE&#34;</span>
-</span></span><span style="display:flex;"><span>  fi
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#6272a4"># STEP 0: Extract chromosome order from BAM header (@SQ lines)</span>
-</span></span><span style="display:flex;"><span>  BAM_ORDER_FILE<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;${DONOR_VCF_DIR}/bam.chrom.order.txt&#34;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">if</span> [ <span style="color:#ff79c6">!</span> <span style="color:#ff79c6">-</span>f <span style="color:#f1fa8c">&#34;$BAM_ORDER_FILE&#34;</span> ]; then
-</span></span><span style="display:flex;"><span>    log <span style="color:#f1fa8c">&#34;Extracting chromosome order from BAM header...&#34;</span>
-</span></span><span style="display:flex;"><span>    samtools view <span style="color:#ff79c6">-</span>H <span style="color:#f1fa8c">&#34;$BAM_FILE&#34;</span> \vert{} grep <span style="color:#f1fa8c">&#39;^@SQ&#39;</span> \vert{} cut <span style="color:#ff79c6">-</span>f2 \vert{} sed <span style="color:#f1fa8c">&#39;s/SN://&#39;</span> <span style="color:#ff79c6">&gt;</span> <span style="color:#f1fa8c">&#34;$BAM_ORDER_FILE&#34;</span>
-</span></span><span style="display:flex;"><span>  fi
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-R" data-lang="R"><span class="line"><span class="cl"><span class="n">tail</span> <span class="o">-</span><span class="n">n</span> <span class="m">+2</span> <span class="s">&#34;$CONFIG_TSV&#34;</span> <span class="n">\vert</span><span class="p">{}</span> <span class="kr">while</span> <span class="n">IFS</span><span class="o">=$</span><span class="s">&#39;\t&#39;</span> <span class="n">read</span> <span class="o">-</span><span class="n">r</span> <span class="n">SAMPLE_ID</span> <span class="n">BAM_FILE</span> <span class="n">BARCODE_FILE</span> <span class="n">DONOR_LIST_FILE</span> <span class="n">NUM_DONORS</span>
+</span></span><span class="line"><span class="cl"><span class="n">do</span>
+</span></span><span class="line"><span class="cl">  <span class="n">BASE_DIR</span><span class="o">=</span><span class="s">&#34;${GLOBAL_ANALYSIS_DIR}/${SAMPLE_ID}&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">DEMUXLET_DIR</span><span class="o">=</span><span class="s">&#34;${BASE_DIR}/demuxlet_out&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">DONOR_VCF_DIR</span><span class="o">=</span><span class="s">&#34;${BASE_DIR}/donor_vcf_prep&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="s">&#34;$DEMUXLET_DIR&#34;</span> <span class="s">&#34;$DONOR_VCF_DIR&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># STEP -1: Verify BAM exists and is indexed</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">if</span> <span class="n">[</span> <span class="o">!</span> <span class="o">-</span><span class="n">f</span> <span class="s">&#34;${BAM_FILE}.bai&#34;</span> <span class="n">]</span><span class="p">;</span> <span class="n">then</span>
+</span></span><span class="line"><span class="cl">    <span class="n">log</span> <span class="s">&#34;BAM index missing — creating it...&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">samtools</span> <span class="n">index</span> <span class="o">-@</span> <span class="s">&#34;$THREADS&#34;</span> <span class="s">&#34;$BAM_FILE&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># STEP 0: Extract chromosome order from BAM header (@SQ lines)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">BAM_ORDER_FILE</span><span class="o">=</span><span class="s">&#34;${DONOR_VCF_DIR}/bam.chrom.order.txt&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">if</span> <span class="n">[</span> <span class="o">!</span> <span class="o">-</span><span class="n">f</span> <span class="s">&#34;$BAM_ORDER_FILE&#34;</span> <span class="n">]</span><span class="p">;</span> <span class="n">then</span>
+</span></span><span class="line"><span class="cl">    <span class="n">log</span> <span class="s">&#34;Extracting chromosome order from BAM header...&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">samtools</span> <span class="n">view</span> <span class="o">-</span><span class="n">H</span> <span class="s">&#34;$BAM_FILE&#34;</span> <span class="n">\vert</span><span class="p">{}</span> <span class="n">grep</span> <span class="s">&#39;^@SQ&#39;</span> <span class="n">\vert</span><span class="p">{}</span> <span class="n">cut</span> <span class="o">-</span><span class="n">f2</span> <span class="n">\vert</span><span class="p">{}</span> <span class="n">sed</span> <span class="s">&#39;s/SN://&#39;</span> <span class="o">&gt;</span> <span class="s">&#34;$BAM_ORDER_FILE&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">fi</span>
 </span></span></code></pre></div><h3 id="3-vcf-filtering-donors--biallelic-snps">3. VCF Filtering (Donors &amp; Biallelic SNPs)</h3>
 <p>Running pileups on whole-genome VCFs is highly inefficient. Here, we subset the massive joint VCF specifically to the donors in our pool, and then aggressively filter out indels and multi-allelic sites.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#6272a4"># STEP 1: Subset joint germline VCF to the donors of interest</span>
-</span></span><span style="display:flex;"><span>  SUBSET_VCF<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;${DONOR_VCF_DIR}/donors.subset.vcf.gz&#34;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">if</span> [ <span style="color:#ff79c6">!</span> <span style="color:#ff79c6">-</span>f <span style="color:#f1fa8c">&#34;$SUBSET_VCF&#34;</span> ]; then
-</span></span><span style="display:flex;"><span>    log <span style="color:#f1fa8c">&#34;Subsetting VCF to donors in $DONOR_LIST_FILE ...&#34;</span>
-</span></span><span style="display:flex;"><span>    bcftools view <span style="color:#ff79c6">--</span>threads <span style="color:#f1fa8c">&#34;$THREADS&#34;</span> <span style="color:#ff79c6">-</span>S <span style="color:#f1fa8c">&#34;$DONOR_LIST_FILE&#34;</span> <span style="color:#f1fa8c">&#34;$JOINT_DONOR_VCF&#34;</span> <span style="color:#ff79c6">-</span>Oz <span style="color:#ff79c6">-</span>o <span style="color:#f1fa8c">&#34;${DONOR_VCF_DIR}/tmp.subset.vcf.gz&#34;</span>
-</span></span><span style="display:flex;"><span>    bcftools sort <span style="color:#f1fa8c">&#34;${DONOR_VCF_DIR}/tmp.subset.vcf.gz&#34;</span> <span style="color:#ff79c6">-</span>Oz <span style="color:#ff79c6">-</span>o <span style="color:#f1fa8c">&#34;$SUBSET_VCF&#34;</span>
-</span></span><span style="display:flex;"><span>    tabix <span style="color:#ff79c6">-</span>p vcf <span style="color:#f1fa8c">&#34;$SUBSET_VCF&#34;</span>
-</span></span><span style="display:flex;"><span>  fi
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#6272a4"># STEP 1.5: Filter to strictly biallelic SNPs</span>
-</span></span><span style="display:flex;"><span>  BIALLELIC_SNPS_VCF<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;${DONOR_VCF_DIR}/donors.subset.biallelic_snps.vcf.gz&#34;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">if</span> [ <span style="color:#ff79c6">!</span> <span style="color:#ff79c6">-</span>f <span style="color:#f1fa8c">&#34;$BIALLELIC_SNPS_VCF&#34;</span> ]; then
-</span></span><span style="display:flex;"><span>    log <span style="color:#f1fa8c">&#34;Filtering to biallelic SNPs...&#34;</span>
-</span></span><span style="display:flex;"><span>    bcftools view <span style="color:#ff79c6">--</span>threads <span style="color:#f1fa8c">&#34;$THREADS&#34;</span> <span style="color:#ff79c6">-</span>v snps <span style="color:#ff79c6">-</span>m2 <span style="color:#ff79c6">-</span>M2 <span style="color:#f1fa8c">&#34;$SUBSET_VCF&#34;</span> <span style="color:#ff79c6">-</span>Oz <span style="color:#ff79c6">-</span>o <span style="color:#f1fa8c">&#34;${DONOR_VCF_DIR}/tmp.biallelic_snps.vcf.gz&#34;</span>
-</span></span><span style="display:flex;"><span>    bcftools sort <span style="color:#f1fa8c">&#34;${DONOR_VCF_DIR}/tmp.biallelic_snps.vcf.gz&#34;</span> <span style="color:#ff79c6">-</span>Oz <span style="color:#ff79c6">-</span>o <span style="color:#f1fa8c">&#34;$BIALLELIC_SNPS_VCF&#34;</span>
-</span></span><span style="display:flex;"><span>    tabix <span style="color:#ff79c6">-</span>p vcf <span style="color:#f1fa8c">&#34;$BIALLELIC_SNPS_VCF&#34;</span>
-</span></span><span style="display:flex;"><span>  fi
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-R" data-lang="R"><span class="line"><span class="cl"><span class="c1"># STEP 1: Subset joint germline VCF to the donors of interest</span>
+</span></span><span class="line"><span class="cl">  <span class="n">SUBSET_VCF</span><span class="o">=</span><span class="s">&#34;${DONOR_VCF_DIR}/donors.subset.vcf.gz&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">if</span> <span class="n">[</span> <span class="o">!</span> <span class="o">-</span><span class="n">f</span> <span class="s">&#34;$SUBSET_VCF&#34;</span> <span class="n">]</span><span class="p">;</span> <span class="n">then</span>
+</span></span><span class="line"><span class="cl">    <span class="n">log</span> <span class="s">&#34;Subsetting VCF to donors in $DONOR_LIST_FILE ...&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bcftools</span> <span class="n">view</span> <span class="o">--</span><span class="n">threads</span> <span class="s">&#34;$THREADS&#34;</span> <span class="o">-</span><span class="n">S</span> <span class="s">&#34;$DONOR_LIST_FILE&#34;</span> <span class="s">&#34;$JOINT_DONOR_VCF&#34;</span> <span class="o">-</span><span class="n">Oz</span> <span class="o">-</span><span class="n">o</span> <span class="s">&#34;${DONOR_VCF_DIR}/tmp.subset.vcf.gz&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bcftools</span> <span class="n">sort</span> <span class="s">&#34;${DONOR_VCF_DIR}/tmp.subset.vcf.gz&#34;</span> <span class="o">-</span><span class="n">Oz</span> <span class="o">-</span><span class="n">o</span> <span class="s">&#34;$SUBSET_VCF&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tabix</span> <span class="o">-</span><span class="n">p</span> <span class="n">vcf</span> <span class="s">&#34;$SUBSET_VCF&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># STEP 1.5: Filter to strictly biallelic SNPs</span>
+</span></span><span class="line"><span class="cl">  <span class="n">BIALLELIC_SNPS_VCF</span><span class="o">=</span><span class="s">&#34;${DONOR_VCF_DIR}/donors.subset.biallelic_snps.vcf.gz&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">if</span> <span class="n">[</span> <span class="o">!</span> <span class="o">-</span><span class="n">f</span> <span class="s">&#34;$BIALLELIC_SNPS_VCF&#34;</span> <span class="n">]</span><span class="p">;</span> <span class="n">then</span>
+</span></span><span class="line"><span class="cl">    <span class="n">log</span> <span class="s">&#34;Filtering to biallelic SNPs...&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bcftools</span> <span class="n">view</span> <span class="o">--</span><span class="n">threads</span> <span class="s">&#34;$THREADS&#34;</span> <span class="o">-</span><span class="n">v</span> <span class="n">snps</span> <span class="o">-</span><span class="n">m2</span> <span class="o">-</span><span class="n">M2</span> <span class="s">&#34;$SUBSET_VCF&#34;</span> <span class="o">-</span><span class="n">Oz</span> <span class="o">-</span><span class="n">o</span> <span class="s">&#34;${DONOR_VCF_DIR}/tmp.biallelic_snps.vcf.gz&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bcftools</span> <span class="n">sort</span> <span class="s">&#34;${DONOR_VCF_DIR}/tmp.biallelic_snps.vcf.gz&#34;</span> <span class="o">-</span><span class="n">Oz</span> <span class="o">-</span><span class="n">o</span> <span class="s">&#34;$BIALLELIC_SNPS_VCF&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tabix</span> <span class="o">-</span><span class="n">p</span> <span class="n">vcf</span> <span class="s">&#34;$BIALLELIC_SNPS_VCF&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">fi</span>
 </span></span></code></pre></div><h3 id="4-peak-restriction--header-reordering">4. Peak Restriction &amp; Header Reordering</h3>
 <p>Only SNPs that overlap with accessible chromatin regions (ATAC peaks) are informative for this assay. We restrict the VCF to these coordinates. Finally, we deconstruct and rebuild the VCF header so the ##contig entries perfectly match the BAM chromosome order extracted in Step 0.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#6272a4"># STEP 2: Restrict VCF to ATAC peak regions</span>
-</span></span><span style="display:flex;"><span>  PEAKS_BED<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;${BED_FOLDER}/${SAMPLE_ID}/peaks.bed.gz&#34;</span>
-</span></span><span style="display:flex;"><span>  FILTERED_VCF<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;${DONOR_VCF_DIR}/donors.atac_filtered.biallelic_snps.vcf.gz&#34;</span>
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">if</span> [ <span style="color:#ff79c6">!</span> <span style="color:#ff79c6">-</span>f <span style="color:#f1fa8c">&#34;$FILTERED_VCF&#34;</span> ]; then
-</span></span><span style="display:flex;"><span>    log <span style="color:#f1fa8c">&#34;Restricting VCF to ATAC peak regions...&#34;</span>
-</span></span><span style="display:flex;"><span>    bcftools view <span style="color:#ff79c6">--</span>threads <span style="color:#f1fa8c">&#34;$THREADS&#34;</span> <span style="color:#ff79c6">-</span>R <span style="color:#f1fa8c">&#34;$PEAKS_BED&#34;</span> <span style="color:#f1fa8c">&#34;$BIALLELIC_SNPS_VCF&#34;</span> <span style="color:#ff79c6">-</span>Oz <span style="color:#ff79c6">-</span>o <span style="color:#f1fa8c">&#34;${DONOR_VCF_DIR}/tmp.atac.vcf.gz&#34;</span>
-</span></span><span style="display:flex;"><span>    bcftools sort <span style="color:#f1fa8c">&#34;${DONOR_VCF_DIR}/tmp.atac.vcf.gz&#34;</span> <span style="color:#ff79c6">-</span>Oz <span style="color:#ff79c6">-</span>o <span style="color:#f1fa8c">&#34;$FILTERED_VCF&#34;</span>
-</span></span><span style="display:flex;"><span>    tabix <span style="color:#ff79c6">-</span>p vcf <span style="color:#f1fa8c">&#34;$FILTERED_VCF&#34;</span>
-</span></span><span style="display:flex;"><span>  fi
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#6272a4"># STEP 3: Reorder VCF ##contig header entries</span>
-</span></span><span style="display:flex;"><span>  REORDERED_VCF<span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;${DONOR_VCF_DIR}/donors.atac_filtered.biallelic_snps.reordered.vcf.gz&#34;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">if</span> [ <span style="color:#ff79c6">!</span> <span style="color:#ff79c6">-</span>f <span style="color:#f1fa8c">&#34;$REORDERED_VCF&#34;</span> ]; then
-</span></span><span style="display:flex;"><span>    log <span style="color:#f1fa8c">&#34;Reordering VCF ##contig header...&#34;</span>
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># Split header components</span>
-</span></span><span style="display:flex;"><span>    bcftools view <span style="color:#ff79c6">-</span>h <span style="color:#f1fa8c">&#34;$FILTERED_VCF&#34;</span> \vert{} grep <span style="color:#f1fa8c">&#39;^##contig&#39;</span> <span style="color:#ff79c6">&gt;</span> <span style="color:#f1fa8c">&#34;${DONOR_VCF_DIR}/vcf.contigs.all.txt&#34;</span>
-</span></span><span style="display:flex;"><span>    bcftools view <span style="color:#ff79c6">-</span>h <span style="color:#f1fa8c">&#34;$FILTERED_VCF&#34;</span> \vert{} grep <span style="color:#f1fa8c">&#39;^##&#39;</span> \vert{} grep <span style="color:#ff79c6">-</span>v <span style="color:#f1fa8c">&#39;^##contig&#39;</span> <span style="color:#ff79c6">&gt;</span> <span style="color:#f1fa8c">&#34;${DONOR_VCF_DIR}/vcf.header.meta.txt&#34;</span>
-</span></span><span style="display:flex;"><span>    bcftools view <span style="color:#ff79c6">-</span>h <span style="color:#f1fa8c">&#34;$FILTERED_VCF&#34;</span> \vert{} grep <span style="color:#f1fa8c">&#39;^#CHROM&#39;</span> <span style="color:#ff79c6">&gt;</span> <span style="color:#f1fa8c">&#34;${DONOR_VCF_DIR}/vcf.chromline.txt&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># Re-build in BAM order</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">:</span> <span style="color:#ff79c6">&gt;</span> <span style="color:#f1fa8c">&#34;${DONOR_VCF_DIR}/vcf.contigs.ordered.txt&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">while</span> read <span style="color:#ff79c6">-</span>r CHR; do
-</span></span><span style="display:flex;"><span>      grep <span style="color:#ff79c6">-</span>m1 <span style="color:#ff79c6">-</span>E <span style="color:#f1fa8c">&#34;ID=${CHR}([,&gt;])&#34;</span> <span style="color:#f1fa8c">&#34;${DONOR_VCF_DIR}/vcf.contigs.all.txt&#34;</span> <span style="color:#ff79c6">&gt;&gt;</span> <span style="color:#f1fa8c">&#34;${DONOR_VCF_DIR}/vcf.contigs.ordered.txt&#34;</span> <span style="color:#ff79c6">||</span> true
-</span></span><span style="display:flex;"><span>    done <span style="color:#ff79c6">&lt;</span> <span style="color:#f1fa8c">&#34;$BAM_ORDER_FILE&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6272a4"># Reassemble and zip</span>
-</span></span><span style="display:flex;"><span>    bgzip <span style="color:#ff79c6">-</span>cd <span style="color:#f1fa8c">&#34;$FILTERED_VCF&#34;</span> \vert{} awk <span style="color:#f1fa8c">&#39;!/^#/&#39;</span> <span style="color:#ff79c6">&gt;</span> <span style="color:#f1fa8c">&#34;${DONOR_VCF_DIR}/vcf.body.tmp&#34;</span>
-</span></span><span style="display:flex;"><span>    cat <span style="color:#f1fa8c">&#34;${DONOR_VCF_DIR}/vcf.header.meta.txt&#34;</span> <span style="color:#f1fa8c">&#34;${DONOR_VCF_DIR}/vcf.contigs.ordered.txt&#34;</span> \
-</span></span><span style="display:flex;"><span>        <span style="color:#f1fa8c">&#34;${DONOR_VCF_DIR}/vcf.chromline.txt&#34;</span> <span style="color:#f1fa8c">&#34;${DONOR_VCF_DIR}/vcf.body.tmp&#34;</span> \vert{} bgzip <span style="color:#ff79c6">-</span>c <span style="color:#ff79c6">&gt;</span> <span style="color:#f1fa8c">&#34;$REORDERED_VCF&#34;</span>
-</span></span><span style="display:flex;"><span>    tabix <span style="color:#ff79c6">-</span>p vcf <span style="color:#f1fa8c">&#34;$REORDERED_VCF&#34;</span>
-</span></span><span style="display:flex;"><span>  fi
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-R" data-lang="R"><span class="line"><span class="cl"><span class="c1"># STEP 2: Restrict VCF to ATAC peak regions</span>
+</span></span><span class="line"><span class="cl">  <span class="n">PEAKS_BED</span><span class="o">=</span><span class="s">&#34;${BED_FOLDER}/${SAMPLE_ID}/peaks.bed.gz&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">FILTERED_VCF</span><span class="o">=</span><span class="s">&#34;${DONOR_VCF_DIR}/donors.atac_filtered.biallelic_snps.vcf.gz&#34;</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="kr">if</span> <span class="n">[</span> <span class="o">!</span> <span class="o">-</span><span class="n">f</span> <span class="s">&#34;$FILTERED_VCF&#34;</span> <span class="n">]</span><span class="p">;</span> <span class="n">then</span>
+</span></span><span class="line"><span class="cl">    <span class="n">log</span> <span class="s">&#34;Restricting VCF to ATAC peak regions...&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bcftools</span> <span class="n">view</span> <span class="o">--</span><span class="n">threads</span> <span class="s">&#34;$THREADS&#34;</span> <span class="o">-</span><span class="n">R</span> <span class="s">&#34;$PEAKS_BED&#34;</span> <span class="s">&#34;$BIALLELIC_SNPS_VCF&#34;</span> <span class="o">-</span><span class="n">Oz</span> <span class="o">-</span><span class="n">o</span> <span class="s">&#34;${DONOR_VCF_DIR}/tmp.atac.vcf.gz&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bcftools</span> <span class="n">sort</span> <span class="s">&#34;${DONOR_VCF_DIR}/tmp.atac.vcf.gz&#34;</span> <span class="o">-</span><span class="n">Oz</span> <span class="o">-</span><span class="n">o</span> <span class="s">&#34;$FILTERED_VCF&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tabix</span> <span class="o">-</span><span class="n">p</span> <span class="n">vcf</span> <span class="s">&#34;$FILTERED_VCF&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="c1"># STEP 3: Reorder VCF ##contig header entries</span>
+</span></span><span class="line"><span class="cl">  <span class="n">REORDERED_VCF</span><span class="o">=</span><span class="s">&#34;${DONOR_VCF_DIR}/donors.atac_filtered.biallelic_snps.reordered.vcf.gz&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">if</span> <span class="n">[</span> <span class="o">!</span> <span class="o">-</span><span class="n">f</span> <span class="s">&#34;$REORDERED_VCF&#34;</span> <span class="n">]</span><span class="p">;</span> <span class="n">then</span>
+</span></span><span class="line"><span class="cl">    <span class="n">log</span> <span class="s">&#34;Reordering VCF ##contig header...&#34;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># Split header components</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bcftools</span> <span class="n">view</span> <span class="o">-</span><span class="n">h</span> <span class="s">&#34;$FILTERED_VCF&#34;</span> <span class="n">\vert</span><span class="p">{}</span> <span class="n">grep</span> <span class="s">&#39;^##contig&#39;</span> <span class="o">&gt;</span> <span class="s">&#34;${DONOR_VCF_DIR}/vcf.contigs.all.txt&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bcftools</span> <span class="n">view</span> <span class="o">-</span><span class="n">h</span> <span class="s">&#34;$FILTERED_VCF&#34;</span> <span class="n">\vert</span><span class="p">{}</span> <span class="n">grep</span> <span class="s">&#39;^##&#39;</span> <span class="n">\vert</span><span class="p">{}</span> <span class="n">grep</span> <span class="o">-</span><span class="n">v</span> <span class="s">&#39;^##contig&#39;</span> <span class="o">&gt;</span> <span class="s">&#34;${DONOR_VCF_DIR}/vcf.header.meta.txt&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bcftools</span> <span class="n">view</span> <span class="o">-</span><span class="n">h</span> <span class="s">&#34;$FILTERED_VCF&#34;</span> <span class="n">\vert</span><span class="p">{}</span> <span class="n">grep</span> <span class="s">&#39;^#CHROM&#39;</span> <span class="o">&gt;</span> <span class="s">&#34;${DONOR_VCF_DIR}/vcf.chromline.txt&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Re-build in BAM order</span>
+</span></span><span class="line"><span class="cl">    <span class="o">:</span> <span class="o">&gt;</span> <span class="s">&#34;${DONOR_VCF_DIR}/vcf.contigs.ordered.txt&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">while</span> <span class="n">read</span> <span class="o">-</span><span class="n">r</span> <span class="n">CHR</span><span class="p">;</span> <span class="n">do</span>
+</span></span><span class="line"><span class="cl">      <span class="n">grep</span> <span class="o">-</span><span class="n">m1</span> <span class="o">-</span><span class="n">E</span> <span class="s">&#34;ID=${CHR}([,&gt;])&#34;</span> <span class="s">&#34;${DONOR_VCF_DIR}/vcf.contigs.all.txt&#34;</span> <span class="o">&gt;&gt;</span> <span class="s">&#34;${DONOR_VCF_DIR}/vcf.contigs.ordered.txt&#34;</span> <span class="o">||</span> <span class="n">true</span>
+</span></span><span class="line"><span class="cl">    <span class="n">done</span> <span class="o">&lt;</span> <span class="s">&#34;$BAM_ORDER_FILE&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Reassemble and zip</span>
+</span></span><span class="line"><span class="cl">    <span class="n">bgzip</span> <span class="o">-</span><span class="n">cd</span> <span class="s">&#34;$FILTERED_VCF&#34;</span> <span class="n">\vert</span><span class="p">{}</span> <span class="n">awk</span> <span class="s">&#39;!/^#/&#39;</span> <span class="o">&gt;</span> <span class="s">&#34;${DONOR_VCF_DIR}/vcf.body.tmp&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cat</span> <span class="s">&#34;${DONOR_VCF_DIR}/vcf.header.meta.txt&#34;</span> <span class="s">&#34;${DONOR_VCF_DIR}/vcf.contigs.ordered.txt&#34;</span> <span class="n">\</span>
+</span></span><span class="line"><span class="cl">        <span class="s">&#34;${DONOR_VCF_DIR}/vcf.chromline.txt&#34;</span> <span class="s">&#34;${DONOR_VCF_DIR}/vcf.body.tmp&#34;</span> <span class="n">\vert</span><span class="p">{}</span> <span class="n">bgzip</span> <span class="o">-</span><span class="n">c</span> <span class="o">&gt;</span> <span class="s">&#34;$REORDERED_VCF&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tabix</span> <span class="o">-</span><span class="n">p</span> <span class="n">vcf</span> <span class="s">&#34;$REORDERED_VCF&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">fi</span>
 </span></span></code></pre></div><h3 id="5-executing-demuxlet">5. Executing Demuxlet</h3>
 <p>With the VCF perfectly formatted and trimmed, demuxlet can rapidly assign cells to donors based on the CB (Cell Barcode) tags embedded in the BAM.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#6272a4"># STEP 4: Assign cells to donors</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">if</span> [ <span style="color:#ff79c6">!</span> <span style="color:#ff79c6">-</span>f <span style="color:#f1fa8c">&#34;${DEMUXLET_DIR}/demuxlet.best&#34;</span> ]; then
-</span></span><span style="display:flex;"><span>    log <span style="color:#f1fa8c">&#34;Running demuxlet...&#34;</span>
-</span></span><span style="display:flex;"><span>    popscle demuxlet \
-</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">--</span>tag<span style="color:#ff79c6">-</span>group CB \
-</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">--</span>sam <span style="color:#f1fa8c">&#34;$BAM_FILE&#34;</span> \
-</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">--</span>vcf <span style="color:#f1fa8c">&#34;$REORDERED_VCF&#34;</span> \
-</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">--</span>field GT \
-</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">--</span>sm<span style="color:#ff79c6">-</span>list <span style="color:#f1fa8c">&#34;$DONOR_LIST_FILE&#34;</span> \
-</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">--</span>out <span style="color:#f1fa8c">&#34;${DEMUXLET_DIR}/demuxlet&#34;</span>
-</span></span><span style="display:flex;"><span>    log <span style="color:#f1fa8c">&#34;demuxlet finished for sample: $SAMPLE_ID&#34;</span>
-</span></span><span style="display:flex;"><span>  fi
-</span></span><span style="display:flex;"><span>done
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>log <span style="color:#f1fa8c">&#34;=== scATAC demuxlet pipeline finished ===&#34;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-R" data-lang="R"><span class="line"><span class="cl"><span class="c1"># STEP 4: Assign cells to donors</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">if</span> <span class="n">[</span> <span class="o">!</span> <span class="o">-</span><span class="n">f</span> <span class="s">&#34;${DEMUXLET_DIR}/demuxlet.best&#34;</span> <span class="n">]</span><span class="p">;</span> <span class="n">then</span>
+</span></span><span class="line"><span class="cl">    <span class="n">log</span> <span class="s">&#34;Running demuxlet...&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">popscle</span> <span class="n">demuxlet</span> <span class="n">\</span>
+</span></span><span class="line"><span class="cl">      <span class="o">--</span><span class="n">tag</span><span class="o">-</span><span class="n">group</span> <span class="n">CB</span> <span class="n">\</span>
+</span></span><span class="line"><span class="cl">      <span class="o">--</span><span class="n">sam</span> <span class="s">&#34;$BAM_FILE&#34;</span> <span class="n">\</span>
+</span></span><span class="line"><span class="cl">      <span class="o">--</span><span class="n">vcf</span> <span class="s">&#34;$REORDERED_VCF&#34;</span> <span class="n">\</span>
+</span></span><span class="line"><span class="cl">      <span class="o">--</span><span class="n">field</span> <span class="n">GT</span> <span class="n">\</span>
+</span></span><span class="line"><span class="cl">      <span class="o">--</span><span class="n">sm</span><span class="o">-</span><span class="n">list</span> <span class="s">&#34;$DONOR_LIST_FILE&#34;</span> <span class="n">\</span>
+</span></span><span class="line"><span class="cl">      <span class="o">--</span><span class="n">out</span> <span class="s">&#34;${DEMUXLET_DIR}/demuxlet&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">log</span> <span class="s">&#34;demuxlet finished for sample: $SAMPLE_ID&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">fi</span>
+</span></span><span class="line"><span class="cl"><span class="n">done</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">log</span> <span class="s">&#34;=== scATAC demuxlet pipeline finished ===&#34;</span>
 </span></span></code></pre></div><FollowUp label="Want to parse the demuxlet results?" query="How should I parse the demuxlet.best output file to identify the singlet and doublet assignments for my downstream Seurat object?"/>
   </div>
 
   <nav class="post-nav" aria-label="Project navigation">
     
-      <a class="post-nav-link prev" href="http://localhost:1313/vulgaris/projects/tepolito/">
+      <a class="post-nav-link prev" href="http://localhost:1313/Vulgaris/projects/tepolito/">
         <span class="dir">← previous</span>Tepolito
       </a>
     
     
-      <a class="post-nav-link next" href="http://localhost:1313/vulgaris/projects/jaguar-grn/">
+      <a class="post-nav-link next" href="http://localhost:1313/Vulgaris/projects/jaguar-grn/">
         <span class="dir">next →</span>JAGUAR-GRN
       </a>
     
@@ -259,11 +262,11 @@
     <span>
       <a href="https://github.com/3LCONEJO">github</a>
        · 
-      <a href="https://linkedin.com/in/YOUR-USERNAME">linkedin</a>
+      <a href="https://linkedin.com/in/Notyet">linkedin</a>
     </span>
   </div>
 </footer>
 
-  <script src="/vulgaris/js/main.js" defer></script>
+  <script src="/Vulgaris/js/main.js" defer></script>
 </body>
 </html>

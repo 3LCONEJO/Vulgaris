@@ -13,10 +13,11 @@
 
   /* -- text -- */
   --text:        #e6e8e1;
+  --text-highlight:  #aaddab;
   --text-muted:  #8d9a8f;
   --text-faint:  #5f6b62;
 
-  /* -- phosphor green accent system -- */
+  /* -- olive/lime accent system -- */
   --accent:       #92c22c;
   --accent-bright:#bff27c;
   --accent-dim:   #426e1e;
@@ -62,7 +63,8 @@ body {
   margin: 0;
   background: var(--bg);
   background-image:
-    linear-gradient(var(--border-soft) 1px, transparent 1px);
+    linear-gradient(var(--border-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-soft) 1px, transparent 1px);
   background-size: 42px 42px;
   background-attachment: fixed;
   color: var(--text);
@@ -316,7 +318,7 @@ input:focus-visible {
 }
 .btn--primary:hover {
   border-color: var(--accent);
-  background: rgba(74, 222, 128, 0.14);
+  background: rgba(146, 194, 44, 0.14);
 }
 
 /* ==========================================================================

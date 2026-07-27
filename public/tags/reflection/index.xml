@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Reflection on Vulgaris</title>
-		<link>http://localhost:1313/vulgaris/tags/reflection/</link>
+		<link>http://localhost:1313/Vulgaris/tags/reflection/</link>
 		<description>Recent content in Reflection on Vulgaris</description>
 		<generator>Hugo</generator>
 		<language>en-us</language>
@@ -12,12 +12,12 @@
 		
 			<lastBuildDate>Sun, 26 Jul 2026 00:00:00 +0000</lastBuildDate>
 		
-			<atom:link href="http://localhost:1313/vulgaris/tags/reflection/index.xml" rel="self" type="application/rss+xml" />
+			<atom:link href="http://localhost:1313/Vulgaris/tags/reflection/index.xml" rel="self" type="application/rss+xml" />
 			<item>
 				<title>Notes from a visit to the Sanger Institute</title>
-				<link>http://localhost:1313/vulgaris/blog/sanger-institute-visit/</link>
+				<link>http://localhost:1313/Vulgaris/blog/sanger-institute-visit/</link>
 				<pubDate>Sun, 26 Jul 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/vulgaris/blog/sanger-institute-visit/</guid>
+				<guid>http://localhost:1313/Vulgaris/blog/sanger-institute-visit/</guid>
 				<description>A short travelogue from a research visit — what stuck with me about how the place runs.</description>
 			</item>
 	</channel>

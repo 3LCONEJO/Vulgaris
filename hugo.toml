@@ -24,7 +24,8 @@ summaryLength = 40
 
 [markup]
   [markup.highlight]
-    style = "dracula"
+    style = "dracula"   # unused for color now that noClasses=false below — see static/css/syntax.css
+    noClasses = false
     lineNos = false
     codeFences = true
     guessSyntax = true

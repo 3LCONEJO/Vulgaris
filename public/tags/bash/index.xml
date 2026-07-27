@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Bash on Vulgaris</title>
-		<link>http://localhost:1313/vulgaris/tags/bash/</link>
+		<link>http://localhost:1313/Vulgaris/tags/bash/</link>
 		<description>Recent content in Bash on Vulgaris</description>
 		<generator>Hugo</generator>
 		<language>en-us</language>
@@ -12,12 +12,12 @@
 		
 			<lastBuildDate>Fri, 26 Jun 2026 00:00:00 +0000</lastBuildDate>
 		
-			<atom:link href="http://localhost:1313/vulgaris/tags/bash/index.xml" rel="self" type="application/rss+xml" />
+			<atom:link href="http://localhost:1313/Vulgaris/tags/bash/index.xml" rel="self" type="application/rss+xml" />
 			<item>
 				<title>JAGUAR-DEMULTIPLEXING</title>
-				<link>http://localhost:1313/vulgaris/projects/jaguar-demultiplexing/</link>
+				<link>http://localhost:1313/Vulgaris/projects/jaguar-demultiplexing/</link>
 				<pubDate>Fri, 26 Jun 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/vulgaris/projects/jaguar-demultiplexing/</guid>
+				<guid>http://localhost:1313/Vulgaris/projects/jaguar-demultiplexing/</guid>
 				<description>Given the information in my garden, an algorithm helps me infer which berry belongs to which bush. In our data, it tells us which cell belongs to which individual.</description>
 			</item>
 	</channel>

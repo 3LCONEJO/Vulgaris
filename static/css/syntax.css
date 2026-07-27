@@ -1,0 +1,144 @@
+/* ==========================================================================
+   Vulgaris — syntax highlighting
+   Built for Hugo's Chroma highlighter (markup.highlight.noClasses = false).
+   Uses the same CSS variables as style.css, so editing :root there is
+   enough to re-theme code blocks too — nothing here is a hardcoded color.
+
+   Deliberately restrained to ~5 roles instead of a dozen highlighter colors:
+     text-faint  → comments
+     accent      → keywords / control flow / tags
+     accent-bright → numbers, constants, decorators
+     pod         → strings, errors, exceptions
+     text-muted  → operators, punctuation
+     text        → everything else (identifiers, plain text)
+   ========================================================================== */
+
+.bg, .chroma {
+  color: var(--text);
+  background-color: var(--bg-inset);
+}
+
+.chroma .lnt,
+.chroma .ln {
+  color: var(--text-faint);
+  white-space: pre;
+  user-select: none;
+  margin-right: 0.4em;
+  padding: 0 0.4em;
+}
+.chroma .lntd { vertical-align: top; padding: 0; margin: 0; border: 0; }
+.chroma .lntable { border-spacing: 0; padding: 0; margin: 0; border: 0; }
+.chroma .lnlinks { outline: none; text-decoration: none; color: inherit; }
+.chroma .hl { background-color: var(--border-soft); }
+.chroma .line { display: flex; }
+
+/* comments — quiet, italic, out of the way */
+.chroma .c,
+.chroma .ch,
+.chroma .cm,
+.chroma .c1,
+.chroma .cs {
+  color: var(--text-faint);
+  font-style: italic;
+}
+.chroma .cp,
+.chroma .cpf {
+  color: var(--text-muted);
+}
+
+/* keywords / control flow / tags — the accent color */
+.chroma .k,
+.chroma .kc,
+.chroma .kn,
+.chroma .kp,
+.chroma .kr,
+.chroma .ow,
+.chroma .nt {
+  color: var(--accent);
+}
+.chroma .kd,
+.chroma .kt {
+  color: var(--accent);
+  font-style: italic;
+}
+
+/* names / identifiers — plain text, no extra noise */
+.chroma .py,
+.chroma .nv,
+.chroma .vc,
+.chroma .vg,
+.chroma .vi,
+.chroma .vm {
+  color: var(--text);
+}
+
+.chroma .nb,
+.chroma .nd,
+.chroma .na,
+.chroma .bp,
+.chroma .nc,
+.chroma .nf,
+.chroma .nl,
+.chroma .nn,
+.chroma .nx{
+  color: var(--text-highlight);
+  font-style: italic;
+}
+
+/* constants / decorators / numbers — the brighter accent */
+.chroma .no,
+.chroma .nd,
+.chroma .m,
+.chroma .mb,
+.chroma .mf,
+.chroma .mh,
+.chroma .mi,
+.chroma .il,
+.chroma .mo {
+  color: var(--accent-bright);
+}
+
+/* strings — the warm pod note */
+.chroma .s,
+.chroma .sa,
+.chroma .sb,
+.chroma .sc,
+.chroma .dl,
+.chroma .sd,
+.chroma .s2,
+.chroma .se,
+.chroma .sh,
+.chroma .si,
+.chroma .sx,
+.chroma .sr,
+.chroma .s1,
+.chroma .ss {
+  color: var(--pod);
+}
+
+/* errors / exceptions — also the pod note, so they still read as "warning" */
+.chroma .err,
+.chroma .ne,
+.chroma .ni,
+.chroma .gr,
+.chroma .gt {
+  color: var(--pod);
+}
+
+/* operators / punctuation — muted, structural */
+.chroma .o,
+.chroma .p {
+  color: var(--text-muted);
+}
+
+/* generic diff-style tokens, for the rare diff code fence */
+.chroma .gd { color: var(--pod); }
+.chroma .gi { color: var(--accent); }
+.chroma .gh, .chroma .gu { color: var(--text); font-weight: bold; }
+.chroma .go { color: var(--text-muted); }
+.chroma .gp { color: var(--text-faint); }
+.chroma .ge { font-style: italic; }
+.chroma .gs { font-weight: bold; }
+
+.chroma .x,
+.chroma .w { color: inherit; }

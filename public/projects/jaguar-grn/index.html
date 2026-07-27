@@ -1,33 +1,36 @@
 <!doctype html>
 <html lang="en">
-<head><script src="/vulgaris/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=vulgaris/livereload" data-no-instant defer></script>
+<head><script src="/Vulgaris/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=Vulgaris/livereload" data-no-instant defer></script>
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>JAGUAR-GRN · Vulgaris</title>
 <meta name="description" content="A single-cell ATAC-seq pipeline designed to build a Gene Regulation Network to unveil the regulatory systems on JAGUAR Project Data.">
 
-<link rel="icon" type="image/svg+xml" href="/vulgaris/img/favicon.svg">
-<link rel="canonical" href="http://localhost:1313/vulgaris/projects/jaguar-grn/">
+<link rel="icon" type="image/svg+xml" href="/Vulgaris/img/favicon.svg">
+<link rel="canonical" href="http://localhost:1313/Vulgaris/projects/jaguar-grn/">
 
 
 <meta property="og:title" content="JAGUAR-GRN">
 <meta property="og:description" content="Vulgaris — a documentation-first portfolio bridging code and biology, named for Phaseolus vulgaris, the common bean.">
 <meta property="og:type" content="article">
-<meta property="og:url" content="http://localhost:1313/vulgaris/projects/jaguar-grn/">
+<meta property="og:url" content="http://localhost:1313/Vulgaris/projects/jaguar-grn/">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="/vulgaris/css/style.css">
+<link rel="stylesheet" href="/Vulgaris/css/style.css">
+<link rel="stylesheet" href="/Vulgaris/css/syntax.css">
+
 
 
 </head>
 <body>
+  
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="/vulgaris/">
+    <a class="brand" href="/Vulgaris/">
       <span class="bean" aria-hidden="true">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M4 14C4 8 9 3 15 3c2.8 0 4.5 1.7 4.5 3.8 0 4.7-4.6 8.4-9.8 9.9C6.4 17.7 4 16.3 4 14Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
@@ -40,21 +43,21 @@
         
         
           <li>
-            <a href="/vulgaris/projects/"
+            <a href="/Vulgaris/projects/"
                aria-current="page">
               ~/projects
             </a>
           </li>
         
           <li>
-            <a href="/vulgaris/blog/"
+            <a href="/Vulgaris/blog/"
                >
               ~/blog
             </a>
           </li>
         
           <li>
-            <a href="/vulgaris/tags/"
+            <a href="/Vulgaris/tags/"
                >
               ~/tags
             </a>
@@ -81,7 +84,7 @@
       
         <span class="sep">/</span>
         <span>
-          <a href="/vulgaris/tags/scatac-seq/">scATAC-seq</a>, <a href="/vulgaris/tags/jaguar/">JAGUAR</a>, <a href="/vulgaris/tags/r/">R</a>, <a href="/vulgaris/tags/python/">Python</a>, <a href="/vulgaris/tags/seurat/">Seurat</a>
+          <a href="/Vulgaris/tags/scatac-seq/">scATAC-seq</a>, <a href="/Vulgaris/tags/jaguar/">JAGUAR</a>, <a href="/Vulgaris/tags/r/">R</a>, <a href="/Vulgaris/tags/python/">Python</a>, <a href="/Vulgaris/tags/seurat/">Seurat</a>
         </span>
       
     </div>
@@ -135,154 +138,154 @@
 <h3 id="1-environment-setup-and-argument-parsing">1. Environment Setup and Argument Parsing</h3>
 <p>First, we load the required libraries and parse command-line arguments to avoid hardcoding file paths.</p>
 <p>Here is the usage in case you&rsquo;re code-blinded:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Rscript script_name.R &lt;path_to_seurat.rds&gt; &lt;output_prefix&gt; <span style="color:#ff79c6">[</span>project_root_optional<span style="color:#ff79c6">]</span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Example</span>
-</span></span><span style="display:flex;"><span>Rscript create_cicero_cds.r integrated_seurat.rds cicero_test ~/JAGUAR/GRN/
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#50fa7b">options</span>(repos <span style="color:#ff79c6">=</span> <span style="color:#50fa7b">c</span>(CRAN <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;[https://cloud.r-project.org](https://cloud.r-project.org)&#34;</span>))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>args <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">commandArgs</span>(trailingOnly <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">TRUE</span>)
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">if</span> (<span style="color:#50fa7b">length</span>(args) <span style="color:#ff79c6">&lt;</span> <span style="color:#bd93f9">2</span>) {
-</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">stop</span>(<span style="color:#f1fa8c">&#34;Usage: Rscript script_name.R &lt;path_to_seurat.rds&gt; &lt;output_prefix&gt; [project_root_optional]&#34;</span>, call. <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">FALSE</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>seurat_object_path <span style="color:#ff79c6">&lt;-</span> args[1]
-</span></span><span style="display:flex;"><span>prefix <span style="color:#ff79c6">&lt;-</span> args[2]
-</span></span><span style="display:flex;"><span>project_root <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">ifelse</span>(<span style="color:#50fa7b">length</span>(args) <span style="color:#ff79c6">&gt;=</span> <span style="color:#bd93f9">3</span>, args[3], <span style="color:#50fa7b">file.path</span>(<span style="color:#50fa7b">Sys.getenv</span>(<span style="color:#f1fa8c">&#34;HOME&#34;</span>), <span style="color:#f1fa8c">&#34;JAGUAR/GRN&#34;</span>))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Package Loading (assumes dependencies are installed)</span>
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">suppressPackageStartupMessages</span>({
-</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">library</span>(Seurat)
-</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">library</span>(Signac)
-</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">library</span>(SeuratWrappers)
-</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">library</span>(monocle3)
-</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">library</span>(cicero) 
-</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">library</span>(EnsDb.Hsapiens.v86)
-</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">library</span>(TxDb.Hsapiens.UCSC.hg38.knownGene)
-</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">library</span>(BSgenome.Hsapiens.UCSC.hg38)
-</span></span><span style="display:flex;"><span>})
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Define Paths</span>
-</span></span><span style="display:flex;"><span>output_dir <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">file.path</span>(project_root, <span style="color:#50fa7b">paste0</span>(<span style="color:#f1fa8c">&#34;3_output/cicero_&#34;</span>, prefix))
-</span></span><span style="display:flex;"><span>figure_dir <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">file.path</span>(project_root, <span style="color:#f1fa8c">&#34;4_figures&#34;</span>)
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">dir.create</span>(output_dir, recursive <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">TRUE</span>, showWarnings <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">FALSE</span>)
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">dir.create</span>(figure_dir, recursive <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">TRUE</span>, showWarnings <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">FALSE</span>)
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Rscript script_name.R &lt;path_to_seurat.rds&gt; &lt;output_prefix&gt; <span class="o">[</span>project_root_optional<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Example</span>
+</span></span><span class="line"><span class="cl">Rscript create_cicero_cds.r integrated_seurat.rds cicero_test ~/JAGUAR/GRN/
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-R" data-lang="R"><span class="line"><span class="cl"><span class="nf">options</span><span class="p">(</span><span class="n">repos</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="n">CRAN</span> <span class="o">=</span> <span class="s">&#34;[https://cloud.r-project.org](https://cloud.r-project.org)&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">args</span> <span class="o">&lt;-</span> <span class="nf">commandArgs</span><span class="p">(</span><span class="n">trailingOnly</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kr">if</span> <span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&lt;</span> <span class="m">2</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">stop</span><span class="p">(</span><span class="s">&#34;Usage: Rscript script_name.R &lt;path_to_seurat.rds&gt; &lt;output_prefix&gt; [project_root_optional]&#34;</span><span class="p">,</span> <span class="n">call.</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">seurat_object_path</span> <span class="o">&lt;-</span> <span class="n">args[1]</span>
+</span></span><span class="line"><span class="cl"><span class="n">prefix</span> <span class="o">&lt;-</span> <span class="n">args[2]</span>
+</span></span><span class="line"><span class="cl"><span class="n">project_root</span> <span class="o">&lt;-</span> <span class="nf">ifelse</span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="m">3</span><span class="p">,</span> <span class="n">args[3]</span><span class="p">,</span> <span class="nf">file.path</span><span class="p">(</span><span class="nf">Sys.getenv</span><span class="p">(</span><span class="s">&#34;HOME&#34;</span><span class="p">),</span> <span class="s">&#34;JAGUAR/GRN&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Package Loading (assumes dependencies are installed)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">suppressPackageStartupMessages</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">library</span><span class="p">(</span><span class="n">Seurat</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">library</span><span class="p">(</span><span class="n">Signac</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">library</span><span class="p">(</span><span class="n">SeuratWrappers</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">library</span><span class="p">(</span><span class="n">monocle3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">library</span><span class="p">(</span><span class="n">cicero</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">library</span><span class="p">(</span><span class="n">EnsDb.Hsapiens.v86</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">library</span><span class="p">(</span><span class="n">TxDb.Hsapiens.UCSC.hg38.knownGene</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">library</span><span class="p">(</span><span class="n">BSgenome.Hsapiens.UCSC.hg38</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Define Paths</span>
+</span></span><span class="line"><span class="cl"><span class="n">output_dir</span> <span class="o">&lt;-</span> <span class="nf">file.path</span><span class="p">(</span><span class="n">project_root</span><span class="p">,</span> <span class="nf">paste0</span><span class="p">(</span><span class="s">&#34;3_output/cicero_&#34;</span><span class="p">,</span> <span class="n">prefix</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">figure_dir</span> <span class="o">&lt;-</span> <span class="nf">file.path</span><span class="p">(</span><span class="n">project_root</span><span class="p">,</span> <span class="s">&#34;4_figures&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">dir.create</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">recursive</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="n">showWarnings</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">dir.create</span><span class="p">(</span><span class="n">figure_dir</span><span class="p">,</span> <span class="n">recursive</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="n">showWarnings</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
 </span></span></code></pre></div><h3 id="2-creating-the-cicero-cds-object">2. Creating the Cicero CDS Object</h3>
 <p>Cicero relies on Monocle3&rsquo;s Cell Data Set (CDS) format. We check if an object already exists to save computation time; otherwise, we generate it from the input Seurat object.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-R" data-lang="R"><span style="display:flex;"><span>cicero_cds_path <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">file.path</span>(project_root, <span style="color:#50fa7b">paste0</span>(<span style="color:#f1fa8c">&#34;3_output/cicero_&#34;</span>, prefix, <span style="color:#f1fa8c">&#34;_cds&#34;</span>))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">if</span> (<span style="color:#50fa7b">dir.exists</span>(cicero_cds_path)) {
-</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">print</span>(<span style="color:#f1fa8c">&#34;[DEBUG] Loading existing Cicero object from disk...&#34;</span>)
-</span></span><span style="display:flex;"><span>  cicero_cds <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">load_monocle_objects</span>(directory_path <span style="color:#ff79c6">=</span> cicero_cds_path)
-</span></span><span style="display:flex;"><span>  input_seurat <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">readRDS</span>(seurat_object_path)
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>} <span style="color:#ff79c6">else</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">print</span>(<span style="color:#f1fa8c">&#34;[DEBUG] Creating new Cicero object...&#34;</span>)
-</span></span><span style="display:flex;"><span>  input_seurat <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">readRDS</span>(seurat_object_path)
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>  <span style="color:#6272a4"># Convert Seurat to Monocle3 CDS</span>
-</span></span><span style="display:flex;"><span>  input_cds <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">as.cell_data_set</span>(x <span style="color:#ff79c6">=</span> input_seurat)
-</span></span><span style="display:flex;"><span>  input_cds <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">cluster_cells</span>(input_cds, reduction_method <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;UMAP&#34;</span>)
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>  <span style="color:#6272a4"># Extract UMAP and create Cicero CDS</span>
-</span></span><span style="display:flex;"><span>  umap_coords <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">reducedDims</span>(input_cds)<span style="color:#ff79c6">$</span>UMAP
-</span></span><span style="display:flex;"><span>  cicero_cds <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">make_cicero_cds</span>(input_cds, reduced_coordinates <span style="color:#ff79c6">=</span> umap_coords, k <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">50</span>)
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">save_monocle_objects</span>(cicero_cds, directory_path <span style="color:#ff79c6">=</span> cicero_cds_path)
-</span></span><span style="display:flex;"><span>}
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-R" data-lang="R"><span class="line"><span class="cl"><span class="n">cicero_cds_path</span> <span class="o">&lt;-</span> <span class="nf">file.path</span><span class="p">(</span><span class="n">project_root</span><span class="p">,</span> <span class="nf">paste0</span><span class="p">(</span><span class="s">&#34;3_output/cicero_&#34;</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="s">&#34;_cds&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">if</span> <span class="p">(</span><span class="nf">dir.exists</span><span class="p">(</span><span class="n">cicero_cds_path</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">print</span><span class="p">(</span><span class="s">&#34;[DEBUG] Loading existing Cicero object from disk...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">cicero_cds</span> <span class="o">&lt;-</span> <span class="nf">load_monocle_objects</span><span class="p">(</span><span class="n">directory_path</span> <span class="o">=</span> <span class="n">cicero_cds_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">input_seurat</span> <span class="o">&lt;-</span> <span class="nf">readRDS</span><span class="p">(</span><span class="n">seurat_object_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="kr">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">print</span><span class="p">(</span><span class="s">&#34;[DEBUG] Creating new Cicero object...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">input_seurat</span> <span class="o">&lt;-</span> <span class="nf">readRDS</span><span class="p">(</span><span class="n">seurat_object_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># Convert Seurat to Monocle3 CDS</span>
+</span></span><span class="line"><span class="cl">  <span class="n">input_cds</span> <span class="o">&lt;-</span> <span class="nf">as.cell_data_set</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">input_seurat</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">input_cds</span> <span class="o">&lt;-</span> <span class="nf">cluster_cells</span><span class="p">(</span><span class="n">input_cds</span><span class="p">,</span> <span class="n">reduction_method</span> <span class="o">=</span> <span class="s">&#34;UMAP&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># Extract UMAP and create Cicero CDS</span>
+</span></span><span class="line"><span class="cl">  <span class="n">umap_coords</span> <span class="o">&lt;-</span> <span class="nf">reducedDims</span><span class="p">(</span><span class="n">input_cds</span><span class="p">)</span><span class="o">$</span><span class="n">UMAP</span>
+</span></span><span class="line"><span class="cl">  <span class="n">cicero_cds</span> <span class="o">&lt;-</span> <span class="nf">make_cicero_cds</span><span class="p">(</span><span class="n">input_cds</span><span class="p">,</span> <span class="n">reduced_coordinates</span> <span class="o">=</span> <span class="n">umap_coords</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="m">50</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="nf">save_monocle_objects</span><span class="p">(</span><span class="n">cicero_cds</span><span class="p">,</span> <span class="n">directory_path</span> <span class="o">=</span> <span class="n">cicero_cds_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h3 id="3-calculating-co-accessibility">3. Calculating Co-accessibility</h3>
 <p>Using the hg38 human genome reference, we calculate the connections between accessible peaks.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-R" data-lang="R"><span style="display:flex;"><span>genome <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">seqlengths</span>(BSgenome.Hsapiens.UCSC.hg38)
-</span></span><span style="display:flex;"><span>genome_df <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">data.frame</span>(<span style="color:#f1fa8c">&#34;chr&#34;</span> <span style="color:#ff79c6">=</span> <span style="color:#50fa7b">names</span>(genome), <span style="color:#f1fa8c">&#34;length&#34;</span> <span style="color:#ff79c6">=</span> genome)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">print</span>(<span style="color:#f1fa8c">&#34;[DEBUG] Calculating co-accessibility connections...&#34;</span>)
-</span></span><span style="display:flex;"><span>conns <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">run_cicero</span>(cicero_cds, genome_df, sample_num <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">100</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Export for external tools (e.g., CellOracle)</span>
-</span></span><span style="display:flex;"><span>conns_filtered <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">subset</span>(conns, coaccess <span style="color:#ff79c6">&gt;</span> <span style="color:#bd93f9">0</span>)
-</span></span><span style="display:flex;"><span>coaccess_csv_path <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">file.path</span>(output_dir, <span style="color:#50fa7b">paste0</span>(prefix, <span style="color:#f1fa8c">&#34;_coaccess_cicero.csv&#34;</span>))
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">write.csv</span>(conns_filtered, coaccess_csv_path, row.names <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">FALSE</span>, quote <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">FALSE</span>)
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-R" data-lang="R"><span class="line"><span class="cl"><span class="n">genome</span> <span class="o">&lt;-</span> <span class="nf">seqlengths</span><span class="p">(</span><span class="n">BSgenome.Hsapiens.UCSC.hg38</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">genome_df</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span><span class="s">&#34;chr&#34;</span> <span class="o">=</span> <span class="nf">names</span><span class="p">(</span><span class="n">genome</span><span class="p">),</span> <span class="s">&#34;length&#34;</span> <span class="o">=</span> <span class="n">genome</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">print</span><span class="p">(</span><span class="s">&#34;[DEBUG] Calculating co-accessibility connections...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">conns</span> <span class="o">&lt;-</span> <span class="nf">run_cicero</span><span class="p">(</span><span class="n">cicero_cds</span><span class="p">,</span> <span class="n">genome_df</span><span class="p">,</span> <span class="n">sample_num</span> <span class="o">=</span> <span class="m">100</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Export for external tools (e.g., CellOracle)</span>
+</span></span><span class="line"><span class="cl"><span class="n">conns_filtered</span> <span class="o">&lt;-</span> <span class="nf">subset</span><span class="p">(</span><span class="n">conns</span><span class="p">,</span> <span class="n">coaccess</span> <span class="o">&gt;</span> <span class="m">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">coaccess_csv_path</span> <span class="o">&lt;-</span> <span class="nf">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="nf">paste0</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="s">&#34;_coaccess_cicero.csv&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nf">write.csv</span><span class="p">(</span><span class="n">conns_filtered</span><span class="p">,</span> <span class="n">coaccess_csv_path</span><span class="p">,</span> <span class="n">row.names</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="n">quote</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
 </span></span></code></pre></div><h3 id="4-annotation-and-visualization">4. Annotation and Visualization</h3>
 <p>We fetch human gene annotations to map our peaks to known genes, then generate a visualization of a specific locus (e.g., OAS1).</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#50fa7b">print</span>(<span style="color:#f1fa8c">&#34;[DEBUG] Fetching human gene annotations...&#34;</span>)
-</span></span><span style="display:flex;"><span>tx <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">transcripts</span>(EnsDb.Hsapiens.v86, columns <span style="color:#ff79c6">=</span> <span style="color:#50fa7b">c</span>(<span style="color:#f1fa8c">&#34;gene_id&#34;</span>, <span style="color:#f1fa8c">&#34;tx_id&#34;</span>, <span style="color:#f1fa8c">&#34;gene_name&#34;</span>))
-</span></span><span style="display:flex;"><span>gene_anno <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">as.data.frame</span>(tx)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Match column names for Cicero</span>
-</span></span><span style="display:flex;"><span>gene_anno<span style="color:#ff79c6">$</span>chromosome <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">paste0</span>(<span style="color:#f1fa8c">&#34;chr&#34;</span>, gene_anno<span style="color:#ff79c6">$</span>seqnames)
-</span></span><span style="display:flex;"><span>gene_anno<span style="color:#ff79c6">$</span>gene <span style="color:#ff79c6">&lt;-</span> gene_anno<span style="color:#ff79c6">$</span>gene_id
-</span></span><span style="display:flex;"><span>gene_anno<span style="color:#ff79c6">$</span>transcript <span style="color:#ff79c6">&lt;-</span> gene_anno<span style="color:#ff79c6">$</span>tx_id
-</span></span><span style="display:flex;"><span>gene_anno<span style="color:#ff79c6">$</span>symbol <span style="color:#ff79c6">&lt;-</span> gene_anno<span style="color:#ff79c6">$</span>gene_name
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>pdf_filename <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">paste0</span>(prefix, <span style="color:#f1fa8c">&#34;_Cicero_Connections_OAS1_Locus.pdf&#34;</span>)
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">pdf</span>(<span style="color:#50fa7b">file.path</span>(figure_dir, pdf_filename), width <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">40</span>, height <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">20</span>)
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">plot_connections</span>(conns, <span style="color:#f1fa8c">&#34;chr12&#34;</span>, <span style="color:#bd93f9">112490000</span>, <span style="color:#bd93f9">113200000</span>, <span style="color:#6272a4"># &lt;- Around OAS1 locus</span>
-</span></span><span style="display:flex;"><span>                 gene_model <span style="color:#ff79c6">=</span> gene_anno,
-</span></span><span style="display:flex;"><span>                 coaccess_cutoff <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0.1</span>,
-</span></span><span style="display:flex;"><span>                 connection_width <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0.5</span>,
-</span></span><span style="display:flex;"><span>                 alpha_by_coaccess <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">TRUE</span>,
-</span></span><span style="display:flex;"><span>                 collapseTranscripts <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;longest&#34;</span>)
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">dev.off</span>()
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-R" data-lang="R"><span class="line"><span class="cl"><span class="nf">print</span><span class="p">(</span><span class="s">&#34;[DEBUG] Fetching human gene annotations...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">tx</span> <span class="o">&lt;-</span> <span class="nf">transcripts</span><span class="p">(</span><span class="n">EnsDb.Hsapiens.v86</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;gene_id&#34;</span><span class="p">,</span> <span class="s">&#34;tx_id&#34;</span><span class="p">,</span> <span class="s">&#34;gene_name&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">gene_anno</span> <span class="o">&lt;-</span> <span class="nf">as.data.frame</span><span class="p">(</span><span class="n">tx</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Match column names for Cicero</span>
+</span></span><span class="line"><span class="cl"><span class="n">gene_anno</span><span class="o">$</span><span class="n">chromosome</span> <span class="o">&lt;-</span> <span class="nf">paste0</span><span class="p">(</span><span class="s">&#34;chr&#34;</span><span class="p">,</span> <span class="n">gene_anno</span><span class="o">$</span><span class="n">seqnames</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">gene_anno</span><span class="o">$</span><span class="n">gene</span> <span class="o">&lt;-</span> <span class="n">gene_anno</span><span class="o">$</span><span class="n">gene_id</span>
+</span></span><span class="line"><span class="cl"><span class="n">gene_anno</span><span class="o">$</span><span class="n">transcript</span> <span class="o">&lt;-</span> <span class="n">gene_anno</span><span class="o">$</span><span class="n">tx_id</span>
+</span></span><span class="line"><span class="cl"><span class="n">gene_anno</span><span class="o">$</span><span class="n">symbol</span> <span class="o">&lt;-</span> <span class="n">gene_anno</span><span class="o">$</span><span class="n">gene_name</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">pdf_filename</span> <span class="o">&lt;-</span> <span class="nf">paste0</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="s">&#34;_Cicero_Connections_OAS1_Locus.pdf&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">pdf</span><span class="p">(</span><span class="nf">file.path</span><span class="p">(</span><span class="n">figure_dir</span><span class="p">,</span> <span class="n">pdf_filename</span><span class="p">),</span> <span class="n">width</span> <span class="o">=</span> <span class="m">40</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="m">20</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">plot_connections</span><span class="p">(</span><span class="n">conns</span><span class="p">,</span> <span class="s">&#34;chr12&#34;</span><span class="p">,</span> <span class="m">112490000</span><span class="p">,</span> <span class="m">113200000</span><span class="p">,</span> <span class="c1"># &lt;- Around OAS1 locus</span>
+</span></span><span class="line"><span class="cl">                 <span class="n">gene_model</span> <span class="o">=</span> <span class="n">gene_anno</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                 <span class="n">coaccess_cutoff</span> <span class="o">=</span> <span class="m">0.1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                 <span class="n">connection_width</span> <span class="o">=</span> <span class="m">0.5</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                 <span class="n">alpha_by_coaccess</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                 <span class="n">collapseTranscripts</span> <span class="o">=</span> <span class="s">&#34;longest&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">dev.off</span><span class="p">()</span>
 </span></span></code></pre></div><h3 id="5-identifying-ccans">5. Identifying CCANs</h3>
 <p>We group the co-accessible links into Louvain communities (CCANs) to find broader regulatory blocks.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#50fa7b">print</span>(<span style="color:#f1fa8c">&#34;[DEBUG] Searching for CCAN modules...&#34;</span>)
-</span></span><span style="display:flex;"><span>CCAN_assigns <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">generate_ccans</span>(conns_filtered)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>ccans_csv_path <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">file.path</span>(output_dir, <span style="color:#50fa7b">paste0</span>(prefix, <span style="color:#f1fa8c">&#34;_CCANs.csv&#34;</span>))
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">write.csv</span>(CCAN_assigns, ccans_csv_path, row.names <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">FALSE</span>)
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-R" data-lang="R"><span class="line"><span class="cl"><span class="nf">print</span><span class="p">(</span><span class="s">&#34;[DEBUG] Searching for CCAN modules...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">CCAN_assigns</span> <span class="o">&lt;-</span> <span class="nf">generate_ccans</span><span class="p">(</span><span class="n">conns_filtered</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">ccans_csv_path</span> <span class="o">&lt;-</span> <span class="nf">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="nf">paste0</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="s">&#34;_CCANs.csv&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nf">write.csv</span><span class="p">(</span><span class="n">CCAN_assigns</span><span class="p">,</span> <span class="n">ccans_csv_path</span><span class="p">,</span> <span class="n">row.names</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
 </span></span></code></pre></div><h3 id="6-calculating-gene-activity-scores">6. Calculating Gene Activity Scores</h3>
 <p>By linking distal regulatory elements to local promoters, we estimate the resulting transcriptional activity (translating ATAC signals to expected RNA expression).</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#50fa7b">print</span>(<span style="color:#f1fa8c">&#34;[DEBUG] Calculating Gene Activity Scores...&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Extract Transcription Start Sites (TSS)</span>
-</span></span><span style="display:flex;"><span>pos <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">subset</span>(gene_anno, strand <span style="color:#ff79c6">==</span> <span style="color:#f1fa8c">&#34;+&#34;</span>)
-</span></span><span style="display:flex;"><span>pos <span style="color:#ff79c6">&lt;-</span> pos<span style="color:#50fa7b">[order</span>(pos<span style="color:#ff79c6">$</span>start), ] 
-</span></span><span style="display:flex;"><span>pos <span style="color:#ff79c6">&lt;-</span> pos[<span style="color:#ff79c6">!</span><span style="color:#50fa7b">duplicated</span>(pos<span style="color:#ff79c6">$</span>transcript), ] 
-</span></span><span style="display:flex;"><span>pos<span style="color:#ff79c6">$</span>end <span style="color:#ff79c6">&lt;-</span> pos<span style="color:#ff79c6">$</span>start <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span> 
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>neg <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">subset</span>(gene_anno, strand <span style="color:#ff79c6">==</span> <span style="color:#f1fa8c">&#34;-&#34;</span>)
-</span></span><span style="display:flex;"><span>neg <span style="color:#ff79c6">&lt;-</span> neg<span style="color:#50fa7b">[order</span>(neg<span style="color:#ff79c6">$</span>start, decreasing <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">TRUE</span>), ] 
-</span></span><span style="display:flex;"><span>neg <span style="color:#ff79c6">&lt;-</span> neg[<span style="color:#ff79c6">!</span><span style="color:#50fa7b">duplicated</span>(neg<span style="color:#ff79c6">$</span>transcript), ] 
-</span></span><span style="display:flex;"><span>neg<span style="color:#ff79c6">$</span>start <span style="color:#ff79c6">&lt;-</span> neg<span style="color:#ff79c6">$</span>end <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">1</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>gene_annotation_sub <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">rbind</span>(pos, neg)[, <span style="color:#50fa7b">c</span>(<span style="color:#f1fa8c">&#34;chromosome&#34;</span>, <span style="color:#f1fa8c">&#34;start&#34;</span>, <span style="color:#f1fa8c">&#34;end&#34;</span>, <span style="color:#f1fa8c">&#34;symbol&#34;</span>)]
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">names</span>(gene_annotation_sub)[4] <span style="color:#ff79c6">&lt;-</span> <span style="color:#f1fa8c">&#34;gene&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Annotate CDS and build unnormalized matrix</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">if</span> (<span style="color:#ff79c6">!</span><span style="color:#50fa7b">exists</span>(<span style="color:#f1fa8c">&#34;input_cds&#34;</span>)) input_cds <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">as.cell_data_set</span>(x <span style="color:#ff79c6">=</span> input_seurat)
-</span></span><span style="display:flex;"><span>input_cds <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">annotate_cds_by_site</span>(input_cds, gene_annotation_sub)
-</span></span><span style="display:flex;"><span>unnorm_ga <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">build_gene_activity_matrix</span>(input_cds, conns)
-</span></span><span style="display:flex;"><span>unnorm_ga <span style="color:#ff79c6">&lt;-</span> unnorm_ga[<span style="color:#ff79c6">!</span>Matrix<span style="color:#ff79c6">::</span><span style="color:#50fa7b">rowSums</span>(unnorm_ga) <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">0</span>, <span style="color:#ff79c6">!</span>Matrix<span style="color:#ff79c6">::</span><span style="color:#50fa7b">colSums</span>(unnorm_ga) <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">0</span>]
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Normalize Matrix</span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">if</span> (<span style="color:#50fa7b">is.null</span>(<span style="color:#50fa7b">pData</span>(input_cds)<span style="color:#ff79c6">$</span>num_genes_expressed)) {
-</span></span><span style="display:flex;"><span>  num_genes <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">ifelse</span>(<span style="color:#ff79c6">!</span><span style="color:#50fa7b">is.null</span>(<span style="color:#50fa7b">pData</span>(input_cds)<span style="color:#ff79c6">$</span>nFeature_ATAC), 
-</span></span><span style="display:flex;"><span>                      <span style="color:#50fa7b">pData</span>(input_cds)<span style="color:#ff79c6">$</span>nFeature_ATAC, 
-</span></span><span style="display:flex;"><span>                      Matrix<span style="color:#ff79c6">::</span><span style="color:#50fa7b">colSums</span>(<span style="color:#50fa7b">counts</span>(input_cds) <span style="color:#ff79c6">&gt;</span> <span style="color:#bd93f9">0</span>))
-</span></span><span style="display:flex;"><span>} <span style="color:#ff79c6">else</span> {
-</span></span><span style="display:flex;"><span>  num_genes <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">pData</span>(input_cds)<span style="color:#ff79c6">$</span>num_genes_expressed
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">names</span>(num_genes) <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">row.names</span>(<span style="color:#50fa7b">pData</span>(input_cds))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>cicero_gene_activities <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">normalize_gene_activities</span>(unnorm_ga, num_genes)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>matrix_rds_path <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">file.path</span>(output_dir, <span style="color:#50fa7b">paste0</span>(prefix, <span style="color:#f1fa8c">&#34;_gene_activities_matrix.rds&#34;</span>))
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">saveRDS</span>(cicero_gene_activities, matrix_rds_path)
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-R" data-lang="R"><span class="line"><span class="cl"><span class="nf">print</span><span class="p">(</span><span class="s">&#34;[DEBUG] Calculating Gene Activity Scores...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Extract Transcription Start Sites (TSS)</span>
+</span></span><span class="line"><span class="cl"><span class="n">pos</span> <span class="o">&lt;-</span> <span class="nf">subset</span><span class="p">(</span><span class="n">gene_anno</span><span class="p">,</span> <span class="n">strand</span> <span class="o">==</span> <span class="s">&#34;+&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">pos</span> <span class="o">&lt;-</span> <span class="n">pos</span><span class="nf">[order</span><span class="p">(</span><span class="n">pos</span><span class="o">$</span><span class="n">start</span><span class="p">),</span> <span class="n">]</span> 
+</span></span><span class="line"><span class="cl"><span class="n">pos</span> <span class="o">&lt;-</span> <span class="n">pos[</span><span class="o">!</span><span class="nf">duplicated</span><span class="p">(</span><span class="n">pos</span><span class="o">$</span><span class="n">transcript</span><span class="p">),</span> <span class="n">]</span> 
+</span></span><span class="line"><span class="cl"><span class="n">pos</span><span class="o">$</span><span class="n">end</span> <span class="o">&lt;-</span> <span class="n">pos</span><span class="o">$</span><span class="n">start</span> <span class="o">+</span> <span class="m">1</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">neg</span> <span class="o">&lt;-</span> <span class="nf">subset</span><span class="p">(</span><span class="n">gene_anno</span><span class="p">,</span> <span class="n">strand</span> <span class="o">==</span> <span class="s">&#34;-&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">neg</span> <span class="o">&lt;-</span> <span class="n">neg</span><span class="nf">[order</span><span class="p">(</span><span class="n">neg</span><span class="o">$</span><span class="n">start</span><span class="p">,</span> <span class="n">decreasing</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">),</span> <span class="n">]</span> 
+</span></span><span class="line"><span class="cl"><span class="n">neg</span> <span class="o">&lt;-</span> <span class="n">neg[</span><span class="o">!</span><span class="nf">duplicated</span><span class="p">(</span><span class="n">neg</span><span class="o">$</span><span class="n">transcript</span><span class="p">),</span> <span class="n">]</span> 
+</span></span><span class="line"><span class="cl"><span class="n">neg</span><span class="o">$</span><span class="n">start</span> <span class="o">&lt;-</span> <span class="n">neg</span><span class="o">$</span><span class="n">end</span> <span class="o">-</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">gene_annotation_sub</span> <span class="o">&lt;-</span> <span class="nf">rbind</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">neg</span><span class="p">)</span><span class="n">[</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;chromosome&#34;</span><span class="p">,</span> <span class="s">&#34;start&#34;</span><span class="p">,</span> <span class="s">&#34;end&#34;</span><span class="p">,</span> <span class="s">&#34;symbol&#34;</span><span class="p">)</span><span class="n">]</span>
+</span></span><span class="line"><span class="cl"><span class="nf">names</span><span class="p">(</span><span class="n">gene_annotation_sub</span><span class="p">)</span><span class="n">[4]</span> <span class="o">&lt;-</span> <span class="s">&#34;gene&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Annotate CDS and build unnormalized matrix</span>
+</span></span><span class="line"><span class="cl"><span class="kr">if</span> <span class="p">(</span><span class="o">!</span><span class="nf">exists</span><span class="p">(</span><span class="s">&#34;input_cds&#34;</span><span class="p">))</span> <span class="n">input_cds</span> <span class="o">&lt;-</span> <span class="nf">as.cell_data_set</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">input_seurat</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">input_cds</span> <span class="o">&lt;-</span> <span class="nf">annotate_cds_by_site</span><span class="p">(</span><span class="n">input_cds</span><span class="p">,</span> <span class="n">gene_annotation_sub</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">unnorm_ga</span> <span class="o">&lt;-</span> <span class="nf">build_gene_activity_matrix</span><span class="p">(</span><span class="n">input_cds</span><span class="p">,</span> <span class="n">conns</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">unnorm_ga</span> <span class="o">&lt;-</span> <span class="n">unnorm_ga[</span><span class="o">!</span><span class="n">Matrix</span><span class="o">::</span><span class="nf">rowSums</span><span class="p">(</span><span class="n">unnorm_ga</span><span class="p">)</span> <span class="o">==</span> <span class="m">0</span><span class="p">,</span> <span class="o">!</span><span class="n">Matrix</span><span class="o">::</span><span class="nf">colSums</span><span class="p">(</span><span class="n">unnorm_ga</span><span class="p">)</span> <span class="o">==</span> <span class="m">0</span><span class="n">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Normalize Matrix</span>
+</span></span><span class="line"><span class="cl"><span class="kr">if</span> <span class="p">(</span><span class="nf">is.null</span><span class="p">(</span><span class="nf">pData</span><span class="p">(</span><span class="n">input_cds</span><span class="p">)</span><span class="o">$</span><span class="n">num_genes_expressed</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">num_genes</span> <span class="o">&lt;-</span> <span class="nf">ifelse</span><span class="p">(</span><span class="o">!</span><span class="nf">is.null</span><span class="p">(</span><span class="nf">pData</span><span class="p">(</span><span class="n">input_cds</span><span class="p">)</span><span class="o">$</span><span class="n">nFeature_ATAC</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">                      <span class="nf">pData</span><span class="p">(</span><span class="n">input_cds</span><span class="p">)</span><span class="o">$</span><span class="n">nFeature_ATAC</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                      <span class="n">Matrix</span><span class="o">::</span><span class="nf">colSums</span><span class="p">(</span><span class="nf">counts</span><span class="p">(</span><span class="n">input_cds</span><span class="p">)</span> <span class="o">&gt;</span> <span class="m">0</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="kr">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">num_genes</span> <span class="o">&lt;-</span> <span class="nf">pData</span><span class="p">(</span><span class="n">input_cds</span><span class="p">)</span><span class="o">$</span><span class="n">num_genes_expressed</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nf">names</span><span class="p">(</span><span class="n">num_genes</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="nf">row.names</span><span class="p">(</span><span class="nf">pData</span><span class="p">(</span><span class="n">input_cds</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">cicero_gene_activities</span> <span class="o">&lt;-</span> <span class="nf">normalize_gene_activities</span><span class="p">(</span><span class="n">unnorm_ga</span><span class="p">,</span> <span class="n">num_genes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">matrix_rds_path</span> <span class="o">&lt;-</span> <span class="nf">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="nf">paste0</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="s">&#34;_gene_activities_matrix.rds&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nf">saveRDS</span><span class="p">(</span><span class="n">cicero_gene_activities</span><span class="p">,</span> <span class="n">matrix_rds_path</span><span class="p">)</span>
 </span></span></code></pre></div><h3 id="7-seurat-integration">7. Seurat Integration</h3>
 <p>Finally, we load the Gene Activity matrix back into the original Seurat object as a new assay, allowing us to map activity onto our standard UMAPs.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#50fa7b">print</span>(<span style="color:#f1fa8c">&#34;[DEBUG] Integrating Gene Activity Scores into Seurat...&#34;</span>)
-</span></span><span style="display:flex;"><span>cicero_gene_activities <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">readRDS</span>(matrix_rds_path)
-</span></span><span style="display:flex;"><span>cicero_gene_activities <span style="color:#ff79c6">&lt;-</span> cicero_gene_activities[, <span style="color:#50fa7b">colnames</span>(input_seurat)]
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Create and set the new Assay</span>
-</span></span><span style="display:flex;"><span>input_seurat[[<span style="color:#f1fa8c">&#34;ACTIVITY&#34;</span>]] <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">CreateAssayObject</span>(counts <span style="color:#ff79c6">=</span> cicero_gene_activities)
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">DefaultAssay</span>(input_seurat) <span style="color:#ff79c6">&lt;-</span> <span style="color:#f1fa8c">&#34;ACTIVITY&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Visualize</span>
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">FeaturePlot</span>(input_seurat, features <span style="color:#ff79c6">=</span> <span style="color:#50fa7b">c</span>(<span style="color:#f1fa8c">&#34;MNT&#34;</span>, <span style="color:#f1fa8c">&#34;TTC7A&#34;</span>, <span style="color:#f1fa8c">&#34;CARS2&#34;</span>), pt.size <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0.5</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Verify integration</span>
-</span></span><span style="display:flex;"><span>matches <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">grep</span>(<span style="color:#f1fa8c">&#34;CDC&#34;</span>, <span style="color:#50fa7b">rownames</span>(cicero_gene_activities), ignore.case <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">TRUE</span>, value <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">TRUE</span>) 
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">print</span>(matches)
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-R" data-lang="R"><span class="line"><span class="cl"><span class="nf">print</span><span class="p">(</span><span class="s">&#34;[DEBUG] Integrating Gene Activity Scores into Seurat...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">cicero_gene_activities</span> <span class="o">&lt;-</span> <span class="nf">readRDS</span><span class="p">(</span><span class="n">matrix_rds_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">cicero_gene_activities</span> <span class="o">&lt;-</span> <span class="n">cicero_gene_activities[</span><span class="p">,</span> <span class="nf">colnames</span><span class="p">(</span><span class="n">input_seurat</span><span class="p">)</span><span class="n">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Create and set the new Assay</span>
+</span></span><span class="line"><span class="cl"><span class="n">input_seurat[[</span><span class="s">&#34;ACTIVITY&#34;</span><span class="n">]]</span> <span class="o">&lt;-</span> <span class="nf">CreateAssayObject</span><span class="p">(</span><span class="n">counts</span> <span class="o">=</span> <span class="n">cicero_gene_activities</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">DefaultAssay</span><span class="p">(</span><span class="n">input_seurat</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="s">&#34;ACTIVITY&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Visualize</span>
+</span></span><span class="line"><span class="cl"><span class="nf">FeaturePlot</span><span class="p">(</span><span class="n">input_seurat</span><span class="p">,</span> <span class="n">features</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;MNT&#34;</span><span class="p">,</span> <span class="s">&#34;TTC7A&#34;</span><span class="p">,</span> <span class="s">&#34;CARS2&#34;</span><span class="p">),</span> <span class="n">pt.size</span> <span class="o">=</span> <span class="m">0.5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Verify integration</span>
+</span></span><span class="line"><span class="cl"><span class="n">matches</span> <span class="o">&lt;-</span> <span class="nf">grep</span><span class="p">(</span><span class="s">&#34;CDC&#34;</span><span class="p">,</span> <span class="nf">rownames</span><span class="p">(</span><span class="n">cicero_gene_activities</span><span class="p">),</span> <span class="n">ignore.case</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="nf">print</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
 </span></span></code></pre></div><h2 id="next-steps-pycistopic">NEXT-STEPS: pycisTopic</h2>
 <p>To improve the confidence in our results, we can validate our findings using <strong>pycisTopic</strong>. This tool uses Latent Dirichlet Allocation (LDA) to group co-accessible chromatin regions into distinct regulatory topics and classify cell states.</p>
 <h3 id="1-data-preparation-recoger-nuestras-chivas">1. Data Preparation: &ldquo;Recoger nuestras chivas&rdquo;</h3>
@@ -322,83 +325,83 @@
 <blockquote>
 <p>PERSONAL NOTE: STOP HARDCODING VARIABLES USE ARGs INSTEAD!!!!!!</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#50fa7b">library</span>(Seurat)
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">library</span>(Signac)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Load Seurat object</span>
-</span></span><span style="display:flex;"><span>seurat_obj <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">readRDS</span>(<span style="color:#f1fa8c">&#34;/lustre/scratch127/humgen/projects_v2/jaguar_analysis/analysis/de8/yascp_scatac/Downsampling_analysis/complete_analysis/outs/integrated_filtered.rds&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>outdir <span style="color:#ff79c6">&lt;-</span> <span style="color:#f1fa8c">&#34;/lustre/scratch127/humgen/projects_v2/jaguar_analysis/analysis/jv8/GRN/2_data&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">dir.create</span>(outdir, showWarnings <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">FALSE</span>, recursive <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">TRUE</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">cat</span>(<span style="color:#f1fa8c">&#34;Loading Seurat object... OK\n&#34;</span>)
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">cat</span>(<span style="color:#f1fa8c">&#34;Output directory:&#34;</span>, outdir, <span style="color:#f1fa8c">&#34;\n\n&#34;</span>)
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-R" data-lang="R"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">Seurat</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">Signac</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Load Seurat object</span>
+</span></span><span class="line"><span class="cl"><span class="n">seurat_obj</span> <span class="o">&lt;-</span> <span class="nf">readRDS</span><span class="p">(</span><span class="s">&#34;/lustre/scratch127/humgen/projects_v2/jaguar_analysis/analysis/de8/yascp_scatac/Downsampling_analysis/complete_analysis/outs/integrated_filtered.rds&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">outdir</span> <span class="o">&lt;-</span> <span class="s">&#34;/lustre/scratch127/humgen/projects_v2/jaguar_analysis/analysis/jv8/GRN/2_data&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nf">dir.create</span><span class="p">(</span><span class="n">outdir</span><span class="p">,</span> <span class="n">showWarnings</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="n">recursive</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">cat</span><span class="p">(</span><span class="s">&#34;Loading Seurat object... OK\n&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">cat</span><span class="p">(</span><span class="s">&#34;Output directory:&#34;</span><span class="p">,</span> <span class="n">outdir</span><span class="p">,</span> <span class="s">&#34;\n\n&#34;</span><span class="p">)</span>
 </span></span></code></pre></div><h3 id="step-2-export-peaks-and-valid-barcodes">Step 2: Export Peaks and Valid Barcodes</h3>
 <p>We extract the GRanges object containing our peaks and convert it to a standard BED format, followed by exporting the names of the cells that passed filtering.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#50fa7b">cat</span>(<span style="color:#f1fa8c">&#34;=== EXPORTING PEAKS ===\n&#34;</span>)
-</span></span><span style="display:flex;"><span>peaks_gr <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">granges</span>(seurat_obj[[<span style="color:#f1fa8c">&#34;ATAC&#34;</span>]])
-</span></span><span style="display:flex;"><span>peaks_df <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">as.data.frame</span>(peaks_gr)[, <span style="color:#50fa7b">c</span>(<span style="color:#f1fa8c">&#34;seqnames&#34;</span>, <span style="color:#f1fa8c">&#34;start&#34;</span>, <span style="color:#f1fa8c">&#34;end&#34;</span>)]
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">write.table</span>(peaks_df, <span style="color:#50fa7b">file.path</span>(outdir, <span style="color:#f1fa8c">&#34;integrated_peaks.bed&#34;</span>), 
-</span></span><span style="display:flex;"><span>            sep <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;\t&#34;</span>, quote <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">FALSE</span>, row.names <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">FALSE</span>, col.names <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">FALSE</span>)
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">cat</span>(<span style="color:#f1fa8c">&#34;OK: Peaks exported\n\n&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">cat</span>(<span style="color:#f1fa8c">&#34;=== EXPORTING BARCODES ===\n&#34;</span>)
-</span></span><span style="display:flex;"><span>valid_barcodes <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">colnames</span>(seurat_obj)
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">writeLines</span>(valid_barcodes, <span style="color:#50fa7b">file.path</span>(outdir, <span style="color:#f1fa8c">&#34;valid_barcodes.txt&#34;</span>))
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">cat</span>(<span style="color:#f1fa8c">&#34;OK: Exported&#34;</span>, <span style="color:#50fa7b">length</span>(valid_barcodes), <span style="color:#f1fa8c">&#34;barcodes\n\n&#34;</span>)
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-R" data-lang="R"><span class="line"><span class="cl"><span class="nf">cat</span><span class="p">(</span><span class="s">&#34;=== EXPORTING PEAKS ===\n&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">peaks_gr</span> <span class="o">&lt;-</span> <span class="nf">granges</span><span class="p">(</span><span class="n">seurat_obj[[</span><span class="s">&#34;ATAC&#34;</span><span class="n">]]</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">peaks_df</span> <span class="o">&lt;-</span> <span class="nf">as.data.frame</span><span class="p">(</span><span class="n">peaks_gr</span><span class="p">)</span><span class="n">[</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;seqnames&#34;</span><span class="p">,</span> <span class="s">&#34;start&#34;</span><span class="p">,</span> <span class="s">&#34;end&#34;</span><span class="p">)</span><span class="n">]</span>
+</span></span><span class="line"><span class="cl"><span class="nf">write.table</span><span class="p">(</span><span class="n">peaks_df</span><span class="p">,</span> <span class="nf">file.path</span><span class="p">(</span><span class="n">outdir</span><span class="p">,</span> <span class="s">&#34;integrated_peaks.bed&#34;</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">            <span class="n">sep</span> <span class="o">=</span> <span class="s">&#34;\t&#34;</span><span class="p">,</span> <span class="n">quote</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="n">row.names</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="n">col.names</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">cat</span><span class="p">(</span><span class="s">&#34;OK: Peaks exported\n\n&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">cat</span><span class="p">(</span><span class="s">&#34;=== EXPORTING BARCODES ===\n&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">valid_barcodes</span> <span class="o">&lt;-</span> <span class="nf">colnames</span><span class="p">(</span><span class="n">seurat_obj</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">writeLines</span><span class="p">(</span><span class="n">valid_barcodes</span><span class="p">,</span> <span class="nf">file.path</span><span class="p">(</span><span class="n">outdir</span><span class="p">,</span> <span class="s">&#34;valid_barcodes.txt&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nf">cat</span><span class="p">(</span><span class="s">&#34;OK: Exported&#34;</span><span class="p">,</span> <span class="nf">length</span><span class="p">(</span><span class="n">valid_barcodes</span><span class="p">),</span> <span class="s">&#34;barcodes\n\n&#34;</span><span class="p">)</span>
 </span></span></code></pre></div><h3 id="step-3-extract-and-verify-fragment-paths">Step 3: Extract and Verify Fragment Paths</h3>
 <p>We pull the fragment paths directly from the Seurat ATAC assay and verify that the files actually exist on the lustre file system.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#50fa7b">cat</span>(<span style="color:#f1fa8c">&#34;=== EXTRACTING FRAGMENT PATHS ===\n&#34;</span>)
-</span></span><span style="display:flex;"><span>frag_list <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">Fragments</span>(seurat_obj[[<span style="color:#f1fa8c">&#34;ATAC&#34;</span>]])
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">cat</span>(<span style="color:#f1fa8c">&#34;Number of fragment files:&#34;</span>, <span style="color:#50fa7b">length</span>(frag_list), <span style="color:#f1fa8c">&#34;\n&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Extract paths</span>
-</span></span><span style="display:flex;"><span>frag_paths <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">sapply</span>(frag_list, <span style="color:#ff79c6">function</span>(f) f<span style="color:#ff79c6">@</span>path)
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">names</span>(frag_paths) <span style="color:#ff79c6">&lt;-</span> <span style="color:#ff79c6">NULL</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">cat</span>(<span style="color:#f1fa8c">&#34;=== VERIFYING FILES EXIST ===\n&#34;</span>)
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">for</span> (i <span style="color:#ff79c6">in</span> <span style="color:#50fa7b">seq_along</span>(frag_paths)) {
-</span></span><span style="display:flex;"><span>  exists <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">file.exists</span>(frag_paths[i])
-</span></span><span style="display:flex;"><span>  status <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">ifelse</span>(exists, <span style="color:#f1fa8c">&#34;✓&#34;</span>, <span style="color:#f1fa8c">&#34;✗&#34;</span>)
-</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">cat</span>(status, <span style="color:#f1fa8c">&#34;Fragment&#34;</span>, i, <span style="color:#f1fa8c">&#34;:&#34;</span>, frag_paths[i], <span style="color:#f1fa8c">&#34;\n&#34;</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">cat</span>(<span style="color:#f1fa8c">&#34;\n&#34;</span>)
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-R" data-lang="R"><span class="line"><span class="cl"><span class="nf">cat</span><span class="p">(</span><span class="s">&#34;=== EXTRACTING FRAGMENT PATHS ===\n&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">frag_list</span> <span class="o">&lt;-</span> <span class="nf">Fragments</span><span class="p">(</span><span class="n">seurat_obj[[</span><span class="s">&#34;ATAC&#34;</span><span class="n">]]</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">cat</span><span class="p">(</span><span class="s">&#34;Number of fragment files:&#34;</span><span class="p">,</span> <span class="nf">length</span><span class="p">(</span><span class="n">frag_list</span><span class="p">),</span> <span class="s">&#34;\n&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Extract paths</span>
+</span></span><span class="line"><span class="cl"><span class="n">frag_paths</span> <span class="o">&lt;-</span> <span class="nf">sapply</span><span class="p">(</span><span class="n">frag_list</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="n">f</span><span class="o">@</span><span class="n">path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">names</span><span class="p">(</span><span class="n">frag_paths</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="kc">NULL</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">cat</span><span class="p">(</span><span class="s">&#34;=== VERIFYING FILES EXIST ===\n&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kr">for</span> <span class="p">(</span><span class="n">i</span> <span class="kr">in</span> <span class="nf">seq_along</span><span class="p">(</span><span class="n">frag_paths</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">exists</span> <span class="o">&lt;-</span> <span class="nf">file.exists</span><span class="p">(</span><span class="n">frag_paths[i]</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">status</span> <span class="o">&lt;-</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">exists</span><span class="p">,</span> <span class="s">&#34;✓&#34;</span><span class="p">,</span> <span class="s">&#34;✗&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">cat</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="s">&#34;Fragment&#34;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s">&#34;:&#34;</span><span class="p">,</span> <span class="n">frag_paths[i]</span><span class="p">,</span> <span class="s">&#34;\n&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="nf">cat</span><span class="p">(</span><span class="s">&#34;\n&#34;</span><span class="p">)</span>
 </span></span></code></pre></div><h3 id="step-4-create-the-sample-mapping-dictionary">Step 4: Create the Sample Mapping Dictionary</h3>
 <p>We map the unique datasets found in the metadata to their corresponding fragment files. This will be the foundation of the pycisTopic dictionary.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#50fa7b">cat</span>(<span style="color:#f1fa8c">&#34;=== CREATING SAMPLE MAPPING ===\n&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>unique_datasets <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">sort</span>(<span style="color:#50fa7b">unique</span>(seurat_obj<span style="color:#ff79c6">$</span>dataset[<span style="color:#ff79c6">!</span><span style="color:#50fa7b">is.na</span>(seurat_obj<span style="color:#ff79c6">$</span>dataset)]))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff79c6">if</span> (<span style="color:#50fa7b">length</span>(unique_datasets) <span style="color:#ff79c6">!=</span> <span style="color:#50fa7b">length</span>(frag_paths)) {
-</span></span><span style="display:flex;"><span>  <span style="color:#50fa7b">cat</span>(<span style="color:#f1fa8c">&#34;WARNING: Number of datasets (&#34;</span>, <span style="color:#50fa7b">length</span>(unique_datasets), 
-</span></span><span style="display:flex;"><span>      <span style="color:#f1fa8c">&#34;) does not match number of fragment files (&#34;</span>, <span style="color:#50fa7b">length</span>(frag_paths), <span style="color:#f1fa8c">&#34;)\n&#34;</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>mapping_df <span style="color:#ff79c6">&lt;-</span> <span style="color:#50fa7b">data.frame</span>(
-</span></span><span style="display:flex;"><span>  sample_id <span style="color:#ff79c6">=</span> <span style="color:#50fa7b">seq_along</span>(frag_paths),
-</span></span><span style="display:flex;"><span>  dataset <span style="color:#ff79c6">=</span> unique_datasets<span style="color:#50fa7b">[seq_along</span>(frag_paths)],
-</span></span><span style="display:flex;"><span>  fragment_path <span style="color:#ff79c6">=</span> frag_paths,
-</span></span><span style="display:flex;"><span>  stringsAsFactors <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">FALSE</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">write.table</span>(mapping_df, <span style="color:#50fa7b">file.path</span>(outdir, <span style="color:#f1fa8c">&#34;sample_fragment_mapping.tsv&#34;</span>),
-</span></span><span style="display:flex;"><span>            sep <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;\t&#34;</span>, quote <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">FALSE</span>, row.names <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">FALSE</span>)
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">cat</span>(<span style="color:#f1fa8c">&#34;OK: Mapping saved to sample_fragment_mapping.tsv\n\n&#34;</span>)
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-R" data-lang="R"><span class="line"><span class="cl"><span class="nf">cat</span><span class="p">(</span><span class="s">&#34;=== CREATING SAMPLE MAPPING ===\n&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">unique_datasets</span> <span class="o">&lt;-</span> <span class="nf">sort</span><span class="p">(</span><span class="nf">unique</span><span class="p">(</span><span class="n">seurat_obj</span><span class="o">$</span><span class="n">dataset[</span><span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">seurat_obj</span><span class="o">$</span><span class="n">dataset</span><span class="p">)</span><span class="n">]</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">if</span> <span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">unique_datasets</span><span class="p">)</span> <span class="o">!=</span> <span class="nf">length</span><span class="p">(</span><span class="n">frag_paths</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">cat</span><span class="p">(</span><span class="s">&#34;WARNING: Number of datasets (&#34;</span><span class="p">,</span> <span class="nf">length</span><span class="p">(</span><span class="n">unique_datasets</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">      <span class="s">&#34;) does not match number of fragment files (&#34;</span><span class="p">,</span> <span class="nf">length</span><span class="p">(</span><span class="n">frag_paths</span><span class="p">),</span> <span class="s">&#34;)\n&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">mapping_df</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="n">sample_id</span> <span class="o">=</span> <span class="nf">seq_along</span><span class="p">(</span><span class="n">frag_paths</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="n">dataset</span> <span class="o">=</span> <span class="n">unique_datasets</span><span class="nf">[seq_along</span><span class="p">(</span><span class="n">frag_paths</span><span class="p">)</span><span class="n">]</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">fragment_path</span> <span class="o">=</span> <span class="n">frag_paths</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">stringsAsFactors</span> <span class="o">=</span> <span class="kc">FALSE</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">write.table</span><span class="p">(</span><span class="n">mapping_df</span><span class="p">,</span> <span class="nf">file.path</span><span class="p">(</span><span class="n">outdir</span><span class="p">,</span> <span class="s">&#34;sample_fragment_mapping.tsv&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">            <span class="n">sep</span> <span class="o">=</span> <span class="s">&#34;\t&#34;</span><span class="p">,</span> <span class="n">quote</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="n">row.names</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">cat</span><span class="p">(</span><span class="s">&#34;OK: Mapping saved to sample_fragment_mapping.tsv\n\n&#34;</span><span class="p">)</span>
 </span></span></code></pre></div><h3 id="step-5-update-and-export-metadata">Step 5: Update and Export Metadata</h3>
 <p>Finally, we append the specific fragment path to every individual cell in the metadata and export the complete table.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-R" data-lang="R"><span style="display:flex;"><span><span style="color:#50fa7b">cat</span>(<span style="color:#f1fa8c">&#34;=== ADDING SAMPLE INFO TO METADATA ===\n&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6272a4"># Map dataset to fragment_path using the mapping_df</span>
-</span></span><span style="display:flex;"><span>seurat_obj<span style="color:#ff79c6">$</span>fragment_path <span style="color:#ff79c6">&lt;-</span> mapping_df<span style="color:#ff79c6">$</span>fragment_path<span style="color:#50fa7b">[match</span>(seurat_obj<span style="color:#ff79c6">$</span>dataset, mapping_df<span style="color:#ff79c6">$</span>dataset)]
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">cat</span>(<span style="color:#f1fa8c">&#34;Fragment path assignment check:\n&#34;</span>)
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">print</span>(<span style="color:#50fa7b">table</span>(<span style="color:#ff79c6">!</span><span style="color:#50fa7b">is.na</span>(seurat_obj<span style="color:#ff79c6">$</span>fragment_path)))
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">cat</span>(<span style="color:#f1fa8c">&#34;\n&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">cat</span>(<span style="color:#f1fa8c">&#34;=== EXPORTING METADATA ===\n&#34;</span>)
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">write.table</span>(seurat_obj<span style="color:#ff79c6">@</span>meta.data, <span style="color:#50fa7b">file.path</span>(outdir, <span style="color:#f1fa8c">&#34;seurat_metadata_with_fragments.tsv&#34;</span>),
-</span></span><span style="display:flex;"><span>            sep <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">&#34;\t&#34;</span>, quote <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">FALSE</span>, col.names <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">NA</span>)
-</span></span><span style="display:flex;"><span><span style="color:#50fa7b">cat</span>(<span style="color:#f1fa8c">&#34;OK: Full metadata exported\n&#34;</span>)
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-R" data-lang="R"><span class="line"><span class="cl"><span class="nf">cat</span><span class="p">(</span><span class="s">&#34;=== ADDING SAMPLE INFO TO METADATA ===\n&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Map dataset to fragment_path using the mapping_df</span>
+</span></span><span class="line"><span class="cl"><span class="n">seurat_obj</span><span class="o">$</span><span class="n">fragment_path</span> <span class="o">&lt;-</span> <span class="n">mapping_df</span><span class="o">$</span><span class="n">fragment_path</span><span class="nf">[match</span><span class="p">(</span><span class="n">seurat_obj</span><span class="o">$</span><span class="n">dataset</span><span class="p">,</span> <span class="n">mapping_df</span><span class="o">$</span><span class="n">dataset</span><span class="p">)</span><span class="n">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">cat</span><span class="p">(</span><span class="s">&#34;Fragment path assignment check:\n&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">print</span><span class="p">(</span><span class="nf">table</span><span class="p">(</span><span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">seurat_obj</span><span class="o">$</span><span class="n">fragment_path</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl"><span class="nf">cat</span><span class="p">(</span><span class="s">&#34;\n&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">cat</span><span class="p">(</span><span class="s">&#34;=== EXPORTING METADATA ===\n&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">write.table</span><span class="p">(</span><span class="n">seurat_obj</span><span class="o">@</span><span class="n">meta.data</span><span class="p">,</span> <span class="nf">file.path</span><span class="p">(</span><span class="n">outdir</span><span class="p">,</span> <span class="s">&#34;seurat_metadata_with_fragments.tsv&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">            <span class="n">sep</span> <span class="o">=</span> <span class="s">&#34;\t&#34;</span><span class="p">,</span> <span class="n">quote</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="n">col.names</span> <span class="o">=</span> <span class="kc">NA</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">cat</span><span class="p">(</span><span class="s">&#34;OK: Full metadata exported\n&#34;</span><span class="p">)</span>
 </span></span></code></pre></div><h2 id="future-work">FUTURE WORK</h2>
 <p>Now I will try to complete pycistopic tutorial. At this point if you have a seurat object with the previous data you could follow it too. btw cloud computing sucks buy me a home lab plspls #grant #jovenpromesa</p>
 
@@ -406,7 +409,7 @@
 
   <nav class="post-nav" aria-label="Project navigation">
     
-      <a class="post-nav-link prev" href="http://localhost:1313/vulgaris/projects/jaguar-demultiplexing/">
+      <a class="post-nav-link prev" href="http://localhost:1313/Vulgaris/projects/jaguar-demultiplexing/">
         <span class="dir">← previous</span>JAGUAR-DEMULTIPLEXING
       </a>
     
@@ -422,11 +425,11 @@
     <span>
       <a href="https://github.com/3LCONEJO">github</a>
        · 
-      <a href="https://linkedin.com/in/YOUR-USERNAME">linkedin</a>
+      <a href="https://linkedin.com/in/Notyet">linkedin</a>
     </span>
   </div>
 </footer>
 
-  <script src="/vulgaris/js/main.js" defer></script>
+  <script src="/Vulgaris/js/main.js" defer></script>
 </body>
 </html>

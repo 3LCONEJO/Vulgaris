@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Tags on Vulgaris</title>
-		<link>http://localhost:1313/vulgaris/tags/</link>
+		<link>http://localhost:1313/Vulgaris/tags/</link>
 		<description>Recent content in Tags on Vulgaris</description>
 		<generator>Hugo</generator>
 		<language>en-us</language>
@@ -12,103 +12,103 @@
 		
 			<lastBuildDate>Sun, 26 Jul 2026 00:00:00 +0000</lastBuildDate>
 		
-			<atom:link href="http://localhost:1313/vulgaris/tags/index.xml" rel="self" type="application/rss+xml" />
+			<atom:link href="http://localhost:1313/Vulgaris/tags/index.xml" rel="self" type="application/rss+xml" />
 			<item>
 				<title>JAGUAR</title>
-				<link>http://localhost:1313/vulgaris/tags/jaguar/</link>
+				<link>http://localhost:1313/Vulgaris/tags/jaguar/</link>
 				<pubDate>Sun, 26 Jul 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/vulgaris/tags/jaguar/</guid>
+				<guid>http://localhost:1313/Vulgaris/tags/jaguar/</guid>
 				<description></description>
 			</item>
 			<item>
 				<title>Personal</title>
-				<link>http://localhost:1313/vulgaris/tags/personal/</link>
+				<link>http://localhost:1313/Vulgaris/tags/personal/</link>
 				<pubDate>Sun, 26 Jul 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/vulgaris/tags/personal/</guid>
+				<guid>http://localhost:1313/Vulgaris/tags/personal/</guid>
 				<description></description>
 			</item>
 			<item>
 				<title>Python</title>
-				<link>http://localhost:1313/vulgaris/tags/python/</link>
+				<link>http://localhost:1313/Vulgaris/tags/python/</link>
 				<pubDate>Sun, 26 Jul 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/vulgaris/tags/python/</guid>
+				<guid>http://localhost:1313/Vulgaris/tags/python/</guid>
 				<description></description>
 			</item>
 			<item>
 				<title>R</title>
-				<link>http://localhost:1313/vulgaris/tags/r/</link>
+				<link>http://localhost:1313/Vulgaris/tags/r/</link>
 				<pubDate>Sun, 26 Jul 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/vulgaris/tags/r/</guid>
+				<guid>http://localhost:1313/Vulgaris/tags/r/</guid>
 				<description></description>
 			</item>
 			<item>
 				<title>Reflection</title>
-				<link>http://localhost:1313/vulgaris/tags/reflection/</link>
+				<link>http://localhost:1313/Vulgaris/tags/reflection/</link>
 				<pubDate>Sun, 26 Jul 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/vulgaris/tags/reflection/</guid>
+				<guid>http://localhost:1313/Vulgaris/tags/reflection/</guid>
 				<description></description>
 			</item>
 			<item>
 				<title>ScATAC-Seq</title>
-				<link>http://localhost:1313/vulgaris/tags/scatac-seq/</link>
+				<link>http://localhost:1313/Vulgaris/tags/scatac-seq/</link>
 				<pubDate>Sun, 26 Jul 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/vulgaris/tags/scatac-seq/</guid>
+				<guid>http://localhost:1313/Vulgaris/tags/scatac-seq/</guid>
 				<description></description>
 			</item>
 			<item>
 				<title>Seurat</title>
-				<link>http://localhost:1313/vulgaris/tags/seurat/</link>
+				<link>http://localhost:1313/Vulgaris/tags/seurat/</link>
 				<pubDate>Sun, 26 Jul 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/vulgaris/tags/seurat/</guid>
+				<guid>http://localhost:1313/Vulgaris/tags/seurat/</guid>
 				<description></description>
 			</item>
 			<item>
 				<title>Travelogue</title>
-				<link>http://localhost:1313/vulgaris/tags/travelogue/</link>
+				<link>http://localhost:1313/Vulgaris/tags/travelogue/</link>
 				<pubDate>Sun, 26 Jul 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/vulgaris/tags/travelogue/</guid>
+				<guid>http://localhost:1313/Vulgaris/tags/travelogue/</guid>
 				<description></description>
 			</item>
 			<item>
 				<title>Vulgarisnotes</title>
-				<link>http://localhost:1313/vulgaris/tags/vulgarisnotes/</link>
+				<link>http://localhost:1313/Vulgaris/tags/vulgarisnotes/</link>
 				<pubDate>Sun, 26 Jul 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/vulgaris/tags/vulgarisnotes/</guid>
+				<guid>http://localhost:1313/Vulgaris/tags/vulgarisnotes/</guid>
 				<description></description>
 			</item>
 			<item>
 				<title>Bash</title>
-				<link>http://localhost:1313/vulgaris/tags/bash/</link>
+				<link>http://localhost:1313/Vulgaris/tags/bash/</link>
 				<pubDate>Fri, 26 Jun 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/vulgaris/tags/bash/</guid>
+				<guid>http://localhost:1313/Vulgaris/tags/bash/</guid>
 				<description></description>
 			</item>
 			<item>
 				<title>Demultiplexing</title>
-				<link>http://localhost:1313/vulgaris/tags/demultiplexing/</link>
+				<link>http://localhost:1313/Vulgaris/tags/demultiplexing/</link>
 				<pubDate>Fri, 26 Jun 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/vulgaris/tags/demultiplexing/</guid>
+				<guid>http://localhost:1313/Vulgaris/tags/demultiplexing/</guid>
 				<description></description>
 			</item>
 			<item>
 				<title>LSF</title>
-				<link>http://localhost:1313/vulgaris/tags/lsf/</link>
+				<link>http://localhost:1313/Vulgaris/tags/lsf/</link>
 				<pubDate>Fri, 26 Jun 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/vulgaris/tags/lsf/</guid>
+				<guid>http://localhost:1313/Vulgaris/tags/lsf/</guid>
 				<description></description>
 			</item>
 			<item>
 				<title>Complex Systems</title>
-				<link>http://localhost:1313/vulgaris/tags/complex-systems/</link>
+				<link>http://localhost:1313/Vulgaris/tags/complex-systems/</link>
 				<pubDate>Mon, 02 Mar 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/vulgaris/tags/complex-systems/</guid>
+				<guid>http://localhost:1313/Vulgaris/tags/complex-systems/</guid>
 				<description></description>
 			</item>
 			<item>
 				<title>Simulation</title>
-				<link>http://localhost:1313/vulgaris/tags/simulation/</link>
+				<link>http://localhost:1313/Vulgaris/tags/simulation/</link>
 				<pubDate>Mon, 02 Mar 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/vulgaris/tags/simulation/</guid>
+				<guid>http://localhost:1313/Vulgaris/tags/simulation/</guid>
 				<description></description>
 			</item>
 	</channel>
