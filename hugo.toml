@@ -1,7 +1,6 @@
 baseURL = "https://YOUR-USERNAME.github.io/vulgaris/"
 languageCode = "en-us"
 title = "Vulgaris"
-theme = ""
 enableRobotsTXT = true
 summaryLength = 40
 
@@ -48,22 +47,22 @@ summaryLength = 40
     weight = 30
 
 [params]
-  author = "Jorge Alfredo Suazo Victoria"
+  author = "Your Name"
   tagline = "Complex Systems & Single-Cell // building from seed to pipeline"
   description = "Vulgaris — a documentation-first portfolio bridging code and biology, named for Phaseolus vulgaris, the common bean."
-  email = "jasvpj@gmail.com"
-  github = "https://github.com/3LCONEJO"
+  email = "you@example.com"
+  github = "https://github.com/YOUR-USERNAME"
   linkedin = "https://linkedin.com/in/YOUR-USERNAME"
   siteVersion = "alpha 0.1"
-  accessibilityNote = ""
+  accessibilityNote = "Designed with reduced-motion support and high-contrast text for neuro-inclusive reading."
 
   # Home hero — the ~$ whoami terminal block
   [params.whoami]
     lines = [
-      "guest@vulgaris:~$ WhoAmI",
-      "student — complex systems, single-cell genomics, iterating everyday.",
+      "guest@vulgaris:~$ whoami",
+      "student — complex systems, single-cell genomics, HPC pipelines",
       "guest@vulgaris:~$ cat mission.txt",
-      "turning lab notebooks and repos into documentation people can learn from (also a CV, hopefully)",
+      "turning lab notebooks and repos into documentation people can learn from",
     ]
 
   # Featured project slugs shown on the home page, in order

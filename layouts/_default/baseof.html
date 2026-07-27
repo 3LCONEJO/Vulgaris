@@ -4,6 +4,7 @@
   {{ partial "head.html" . }}
 </head>
 <body>
+  {{ if .IsHome }}{{ partial "starfield.html" . }}{{ end }}
   <a class="skip-link" href="#main">Skip to content</a>
   {{ partial "header.html" . }}
   <main id="main">

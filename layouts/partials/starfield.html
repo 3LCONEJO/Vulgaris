@@ -1,0 +1,5 @@
+{{/* Decorative warp-field background. Purely visual: aria-hidden, no
+     pointer events, and fully disabled under prefers-reduced-motion via CSS. */}}
+<div class="starfield" aria-hidden="true">
+  {{ range seq 200 }}<span class="tri"></span>{{ end }}
+</div>
