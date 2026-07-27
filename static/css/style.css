@@ -63,8 +63,7 @@ body {
   margin: 0;
   background: var(--bg);
   background-image:
-    linear-gradient(var(--border-soft) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border-soft) 1px, transparent 1px);
+    linear-gradient(var(--border-soft) 0.2px, transparent 3px);
   background-size: 42px 42px;
   background-attachment: fixed;
   color: var(--text);
