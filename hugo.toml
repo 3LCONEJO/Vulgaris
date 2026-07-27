@@ -61,7 +61,7 @@ summaryLength = 40
   [params.whoami]
     lines = [
       "guest@vulgaris:~$ whoami",
-      "student — complex systems, single-cell genomics, HPC pipelines",
+      "student — complex systems, single-cell genomics",
       "guest@vulgaris:~$ cat mission.txt",
       "turning lab notebooks and repos into documentation people can learn from",
     ]
