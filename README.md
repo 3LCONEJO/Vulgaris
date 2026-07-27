@@ -17,4 +17,4 @@ archetypes/    → front-matter templates for `hugo new`
 .github/
   workflows/hugo.yml → builds + deploys to Pages on every push to main
 ```
-
+no se xd
