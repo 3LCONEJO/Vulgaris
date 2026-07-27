@@ -1,0 +1,20 @@
+{{ define "main" }}
+<div class="wrap">
+  <p class="eyebrow">./{{ .Section }}</p>
+  <h1>{{ .Title }}</h1>
+  {{ with .Content }}<div class="post-body">{{ . }}</div>{{ end }}
+
+  {{ if .Pages }}
+    <div style="margin:1.5rem 0 3rem;">
+      {{ range .Pages }}
+        <a class="list-row" href="{{ .Permalink }}">
+          <span class="list-row-title">{{ .Title }}</span>
+          <span class="list-row-date">{{ .Date.Format "2006-01-02" }}</span>
+        </a>
+      {{ end }}
+    </div>
+  {{ else }}
+    <p class="empty-state"># nothing here yet</p>
+  {{ end }}
+</div>
+{{ end }}

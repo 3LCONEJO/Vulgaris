@@ -1,0 +1,38 @@
+{{ define "main" }}
+<div class="wrap">
+  <p class="eyebrow">./tags/{{ .Title | urlize }}</p>
+  <h1>[{{ .Title }}]</h1>
+  <p style="color:var(--text-muted);">
+    {{ .Pages | len }} item{{ if ne (.Pages | len) 1 }}s{{ end }} tagged
+    <code>{{ .Title }}</code>
+  </p>
+
+  {{ $projects := where .Pages "Section" "projects" }}
+  {{ $posts := where .Pages "Section" "blog" }}
+
+  {{ if $projects }}
+    <div class="section-heading"><h2>projects</h2><span class="rule" aria-hidden="true"></span></div>
+    <div class="card-grid" style="margin-bottom:2.5rem;">
+      {{ range $projects }}{{ partial "card.html" . }}{{ end }}
+    </div>
+  {{ end }}
+
+  {{ if $posts }}
+    <div class="section-heading"><h2>blog</h2><span class="rule" aria-hidden="true"></span></div>
+    <div style="margin-bottom:2.5rem;">
+      {{ range $posts }}
+        <a class="list-row" href="{{ .Permalink }}">
+          <span class="list-row-title">{{ .Title }}</span>
+          <span class="list-row-date">{{ .Date.Format "2006-01-02" }}</span>
+        </a>
+      {{ end }}
+    </div>
+  {{ end }}
+
+  {{ if not (or $projects $posts) }}
+    <p class="empty-state"># nothing tagged this yet</p>
+  {{ end }}
+
+  <p><a href="{{ "tags/" | relLangURL }}" class="mono">← all tags</a></p>
+</div>
+{{ end }}

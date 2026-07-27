@@ -1,0 +1,70 @@
+baseURL = "https://YOUR-USERNAME.github.io/vulgaris/"
+languageCode = "en-us"
+title = "Vulgaris"
+theme = ""
+enableRobotsTXT = true
+summaryLength = 40
+
+# --- GitHub Pages note ---
+# If this repo will be served at https://USERNAME.github.io/  (a "user/org site")
+# set baseURL = "https://USERNAME.github.io/" and remove the /vulgaris/ subpath below.
+# If it will be served at https://USERNAME.github.io/vulgaris/ (a "project site")
+# keep the subpath as-is. See README.md for the full explanation.
+
+[pagination]
+  pagerSize = 9
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
+[permalinks]
+  [permalinks.page]
+    projects = "/projects/:slug/"
+    blog = "/blog/:slug/"
+
+[markup]
+  [markup.highlight]
+    style = "dracula"
+    lineNos = false
+    codeFences = true
+    guessSyntax = true
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[menu]
+  [[menu.main]]
+    name = "~/projects"
+    pageRef = "/projects"
+    weight = 10
+  [[menu.main]]
+    name = "~/blog"
+    pageRef = "/blog"
+    weight = 20
+  [[menu.main]]
+    name = "~/tags"
+    pageRef = "/tags"
+    weight = 30
+
+[params]
+  author = "Jorge Alfredo Suazo Victoria"
+  tagline = "Complex Systems & Single-Cell // building from seed to pipeline"
+  description = "Vulgaris — a documentation-first portfolio bridging code and biology, named for Phaseolus vulgaris, the common bean."
+  email = "jasvpj@gmail.com"
+  github = "https://github.com/3LCONEJO"
+  linkedin = "https://linkedin.com/in/YOUR-USERNAME"
+  siteVersion = "alpha 0.1"
+  accessibilityNote = ""
+
+  # Home hero — the ~$ whoami terminal block
+  [params.whoami]
+    lines = [
+      "guest@vulgaris:~$ WhoAmI",
+      "student — complex systems, single-cell genomics, iterating everyday.",
+      "guest@vulgaris:~$ cat mission.txt",
+      "turning lab notebooks and repos into documentation people can learn from (also a CV, hopefully)",
+    ]
+
+  # Featured project slugs shown on the home page, in order
+  featuredProjects = ["tepolito", "jaguar", "scatac-chromatin-pipeline"]

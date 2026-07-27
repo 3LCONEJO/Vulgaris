@@ -1,0 +1,93 @@
+{{ define "main" }}
+<div class="wrap">
+
+  <section class="hero">
+    <div class="terminal">
+      <div class="terminal-titlebar">
+        <span class="dot" aria-hidden="true"></span>
+        <span class="dot" aria-hidden="true"></span>
+        <span class="dot" aria-hidden="true"></span>
+        <span class="label">guest@vulgaris — 80x24</span>
+      </div>
+      <div class="terminal-body">
+        {{ range $i, $line := site.Params.whoami.lines }}
+          {{ if math.ModBool $i 2 }}
+            <p class="terminal-line is-output">{{ $line }}</p>
+          {{ else }}
+            <p class="terminal-line"><span class="cmd">{{ $line }}</span></p>
+          {{ end }}
+        {{ end }}
+        <p class="terminal-line"><span class="cmd">guest@vulgaris:~$</span> <span class="cursor" aria-hidden="true"></span></p>
+      </div>
+    </div>
+
+    <div class="hero-links">
+      {{ with site.Params.github }}<a class="btn btn--primary" href="{{ . }}" target="_blank" rel="noopener">↗ github</a>{{ end }}
+      {{ with site.Params.linkedin }}<a class="btn" href="{{ . }}" target="_blank" rel="noopener">↗ linkedin</a>{{ end }}
+      {{ with site.Params.email }}<a class="btn" href="mailto:{{ . }}">↗ email</a>{{ end }}
+    </div>
+  </section>
+
+  <section aria-labelledby="featured-heading">
+    <div class="section-heading">
+      <h2 id="featured-heading">featured_projects</h2>
+      <span class="rule" aria-hidden="true"></span>
+    </div>
+
+    {{ $projects := where site.RegularPages "Section" "projects" }}
+    {{ $featured := slice }}
+    {{ range site.Params.featuredProjects }}
+      {{ $slug := . }}
+      {{ with $projects | where "Params.slug" $slug }}
+        {{ $featured = $featured | append (index . 0) }}
+      {{ else }}
+        {{/* fall back to matching by File.BaseFileName if no explicit slug param */}}
+        {{ range $projects }}
+          {{ if eq .File.BaseFileName $slug }}
+            {{ $featured = $featured | append . }}
+          {{ end }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+
+    {{ if eq (len $featured) 0 }}
+      {{ $featured = first 4 (sort $projects ".Date" "desc") }}
+    {{ end }}
+
+    {{ if $featured }}
+      <div class="card-grid">
+        {{ range $featured }}
+          {{ partial "card.html" . }}
+        {{ end }}
+      </div>
+    {{ else }}
+      <p class="empty-state"># no projects published yet — check back soon</p>
+    {{ end }}
+
+    <p style="margin-top:1.5rem;">
+      <a href="{{ "projects/" | relLangURL }}" class="mono">→ view all projects</a>
+    </p>
+  </section>
+
+  <section aria-labelledby="recent-heading">
+    <div class="section-heading">
+      <h2 id="recent-heading">recent_log</h2>
+      <span class="rule" aria-hidden="true"></span>
+    </div>
+    {{ $posts := first 3 (where site.RegularPages "Section" "blog") }}
+    {{ if $posts }}
+      <div>
+        {{ range $posts }}
+          <a class="list-row" href="{{ .Permalink }}">
+            <span class="list-row-title">{{ .Title }}</span>
+            <span class="list-row-date">{{ .Date.Format "2006-01-02" }}</span>
+          </a>
+        {{ end }}
+      </div>
+    {{ else }}
+      <p class="empty-state"># no log entries yet</p>
+    {{ end }}
+  </section>
+
+</div>
+{{ end }}

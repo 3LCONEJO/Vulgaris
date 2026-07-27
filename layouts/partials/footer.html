@@ -1,0 +1,11 @@
+<footer class="site-footer">
+  <div class="wrap">
+    <span>vulgaris {{ site.Params.siteVersion | default "alpha" }} · © {{ now.Year }}</span>
+    <span>{{ site.Params.accessibilityNote }}</span>
+    <span>
+      {{ with site.Params.github }}<a href="{{ . }}">github</a>{{ end }}
+      {{ if and site.Params.github site.Params.linkedin }} · {{ end }}
+      {{ with site.Params.linkedin }}<a href="{{ . }}">linkedin</a>{{ end }}
+    </span>
+  </div>
+</footer>

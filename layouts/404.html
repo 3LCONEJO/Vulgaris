@@ -1,0 +1,19 @@
+{{ define "main" }}
+<div class="wrap">
+  <div class="terminal" style="max-width:520px;margin:4rem auto;">
+    <div class="terminal-titlebar">
+      <span class="dot" aria-hidden="true"></span>
+      <span class="dot" aria-hidden="true"></span>
+      <span class="dot" aria-hidden="true"></span>
+      <span class="label">error</span>
+    </div>
+    <div class="terminal-body">
+      <p class="terminal-line"><span class="cmd">guest@vulgaris:~$</span> cd {{ .Permalink | urlize }}</p>
+      <p class="terminal-line is-output">bash: cd: no such file or directory (404)</p>
+      <p class="terminal-line"><span class="cmd">guest@vulgaris:~$</span> cd ~</p>
+      <p class="terminal-line is-output">→ <a href="{{ "" | relLangURL }}">back to the homepage</a></p>
+      <p class="terminal-line"><span class="cmd">guest@vulgaris:~$</span> <span class="cursor" aria-hidden="true"></span></p>
+    </div>
+  </div>
+</div>
+{{ end }}

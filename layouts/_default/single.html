@@ -1,0 +1,44 @@
+{{ define "main" }}
+{{ with .Params.github }}
+  <a class="btn btn--primary floating-src-btn" href="{{ . }}" target="_blank" rel="noopener">↗ source</a>
+{{ end }}
+
+<article class="wrap">
+  <header class="post-header">
+    <p class="eyebrow">./{{ .Section }}</p>
+    <h1>{{ .Title }}</h1>
+    <div class="post-meta">
+      <span>{{ .Date.Format "2006-01-02" }}</span>
+      {{ with .Params.status }}<span class="sep">/</span><span>{{ . }}</span>{{ end }}
+      {{ if .Params.tags }}
+        <span class="sep">/</span>
+        <span>
+          {{ range $i, $t := .Params.tags }}{{ if $i }}, {{ end }}<a href="{{ (printf "tags/%s/" ($t | urlize)) | relLangURL }}">{{ $t }}</a>{{ end }}
+        </span>
+      {{ end }}
+    </div>
+    {{ with .Params.github }}
+      <div class="post-source-btn">
+        <a class="btn" href="{{ . }}" target="_blank" rel="noopener">↗ view source on github</a>
+      </div>
+    {{ end }}
+  </header>
+
+  <div class="post-body">
+    {{ .Content }}
+  </div>
+
+  <nav class="post-nav" aria-label="Project navigation">
+    {{ with .PrevInSection }}
+      <a class="post-nav-link prev" href="{{ .Permalink }}">
+        <span class="dir">← previous</span>{{ .Title }}
+      </a>
+    {{ else }}<span></span>{{ end }}
+    {{ with .NextInSection }}
+      <a class="post-nav-link next" href="{{ .Permalink }}">
+        <span class="dir">next →</span>{{ .Title }}
+      </a>
+    {{ else }}<span></span>{{ end }}
+  </nav>
+</article>
+{{ end }}

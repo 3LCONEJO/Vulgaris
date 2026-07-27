@@ -1,0 +1,23 @@
+{{ define "main" }}
+<div class="wrap">
+  <p class="eyebrow">./{{ .Data.Plural }}</p>
+  <h1>Browse by skill / technology</h1>
+  <p style="color:var(--text-muted);max-width:60ch;">
+    Every project and log entry is tagged with the languages, tools, and methods it uses.
+    Pick a tag to filter — handy if you're scanning for a specific stack.
+  </p>
+
+  {{ $terms := .Data.Terms.Alphabetical }}
+  {{ if $terms }}
+    <div class="taxonomy-cloud">
+      {{ range $terms }}
+        <a href="{{ .Page.Permalink }}">
+          [{{ .Page.Title }}]<span class="count">{{ .Count }}</span>
+        </a>
+      {{ end }}
+    </div>
+  {{ else }}
+    <p class="empty-state"># no tags yet</p>
+  {{ end }}
+</div>
+{{ end }}

@@ -1,0 +1,20 @@
+{{ define "main" }}
+<div class="wrap">
+  <div class="post-header" style="border-bottom:none;padding-bottom:0;">
+    <p class="eyebrow">./projects</p>
+    <h1>{{ .Title }}</h1>
+    {{ with .Content }}<div class="post-body" style="padding-top:0.5rem;">{{ . }}</div>{{ end }}
+  </div>
+
+  {{ $pages := .Pages }}
+  {{ if $pages }}
+    <div class="card-grid" style="margin:2rem 0 3rem;">
+      {{ range $pages }}
+        {{ partial "card.html" . }}
+      {{ end }}
+    </div>
+  {{ else }}
+    <p class="empty-state"># no projects published yet — check back soon</p>
+  {{ end }}
+</div>
+{{ end }}

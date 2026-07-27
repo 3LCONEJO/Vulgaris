@@ -1,0 +1,11 @@
+{{/* Renders one .card for a given Page */}}
+<a class="card" href="{{ .Permalink }}">
+  <div class="card-eyebrow">{{ .Section }} / {{ .Date.Format "2006" }}</div>
+  <h3>{{ .Title }}</h3>
+  <p>{{ with .Params.summary }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 110 }}{{ end }}</p>
+  <div class="tag-row">
+    {{ range first 4 .Params.tags }}
+      <span class="tag">{{ . }}</span>
+    {{ end }}
+  </div>
+</a>
