@@ -5,11 +5,11 @@
 
 :root {
   /* -- surfaces: ultra-dark charcoal, never pure black -- */
-  --bg:          #15181a;
-  --bg-raised:   #1c211e;
-  --bg-inset:    #0f120f;
-  --border:      #2a322c;
-  --border-soft: #232a25;
+  --bg:          #1a1615;
+  --bg-raised:   #211d1c;
+  --bg-inset:    #12120f;
+  --border:      #322e2a;
+  --border-soft: #2a2723;
 
   /* -- text -- */
   --text:        #e6e8e1;
@@ -17,12 +17,12 @@
   --text-faint:  #5f6b62;
 
   /* -- phosphor green accent system -- */
-  --accent:       #4ade80;
-  --accent-bright:#7cf29c;
-  --accent-dim:   #2f6b45;
+  --accent:       #92c22c;
+  --accent-bright:#bff27c;
+  --accent-dim:   #426e1e;
 
   /* -- bean-pod warm note: used sparingly (logo mark, one tag family) -- */
-  --pod: #c99a5b;
+  --pod: #c95b5b;
 
   /* -- type -- */
   --font-mono: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -62,8 +62,7 @@ body {
   margin: 0;
   background: var(--bg);
   background-image:
-    linear-gradient(var(--border-soft) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border-soft) 1px, transparent 1px);
+    linear-gradient(var(--border-soft) 1px, transparent 1px);
   background-size: 42px 42px;
   background-attachment: fixed;
   color: var(--text);
