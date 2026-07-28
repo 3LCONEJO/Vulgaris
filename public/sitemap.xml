@@ -2,6 +2,33 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>http://localhost:1313/Vulgaris/tags/complex-systems/</loc>
+    <lastmod>2026-07-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/Vulgaris/tags/deep-learning/</loc>
+    <lastmod>2026-07-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/Vulgaris/projects/</loc>
+    <lastmod>2026-07-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/Vulgaris/tags/python/</loc>
+    <lastmod>2026-07-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/Vulgaris/tags/pytorch/</loc>
+    <lastmod>2026-07-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/Vulgaris/tags/simulation/</loc>
+    <lastmod>2026-07-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/Vulgaris/tags/</loc>
+    <lastmod>2026-07-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/Vulgaris/projects/teporingo/</loc>
+    <lastmod>2026-07-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/Vulgaris/</loc>
+    <lastmod>2026-07-27T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>http://localhost:1313/Vulgaris/blog/</loc>
     <lastmod>2026-07-26T00:00:00+00:00</lastmod>
   </url><url>
@@ -20,12 +47,6 @@
     <loc>http://localhost:1313/Vulgaris/tags/personal/</loc>
     <lastmod>2026-07-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/Vulgaris/projects/</loc>
-    <lastmod>2026-07-26T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/Vulgaris/tags/python/</loc>
-    <lastmod>2026-07-26T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/Vulgaris/tags/r/</loc>
     <lastmod>2026-07-26T00:00:00+00:00</lastmod>
   </url><url>
@@ -38,13 +59,7 @@
     <loc>http://localhost:1313/Vulgaris/tags/seurat/</loc>
     <lastmod>2026-07-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/Vulgaris/tags/</loc>
-    <lastmod>2026-07-26T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/Vulgaris/tags/travelogue/</loc>
-    <lastmod>2026-07-26T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/Vulgaris/</loc>
     <lastmod>2026-07-26T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/Vulgaris/tags/vulgarisnotes/</loc>
@@ -62,15 +77,8 @@
     <loc>http://localhost:1313/Vulgaris/tags/lsf/</loc>
     <lastmod>2026-06-26T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/Vulgaris/tags/complex-systems/</loc>
-    <lastmod>2026-03-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/Vulgaris/tags/simulation/</loc>
-    <lastmod>2026-03-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/Vulgaris/projects/tepolito/</loc>
-    <lastmod>2026-03-02T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/Vulgaris/categories/</loc>
+  </url><url>
+    <loc>http://localhost:1313/Vulgaris/cv/</loc>
   </url>
 </urlset>

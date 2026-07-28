@@ -5,11 +5,13 @@ draft: false
 status: "complete"
 summary: "Given the information in my garden, an algorithm helps me infer which berry belongs to which bush. In our data, it tells us which cell belongs to which individual."
 tags: ["scATAC-seq", "JAGUAR", "Demultiplexing", "Bash", "LSF"]
-github: "https://github.com/YOUR-USERNAME/jaguar"
+github: "https://github.com/JAGUAR-LATAM/Jaguar-Fastdemux/"
 stack: ["popscle", "bcftools", "samtools", "bash"]
 ---
 
 > DIEGO RAMIREZ HELP ME WITH THIS SCRIPT
+
+> THE GITHUB SENDO YOU TO THE FASTDEMUX VERSION OF THE PIPELINE BUT ESSENTIALY IS THE SAME, THE ONLY THING THAT CHANGE IS THE FASTEDMUX PART AND REPLACE IT WITH DEMUXLET
 
 ## The Problem
 

@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head><script src="/Vulgaris/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=Vulgaris/livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teporingo · Vulgaris</title>
+<meta name="description" content="An academic AI demultiplexing tool leveraging Siamese networks and cosine similarity to map cells to donors.">
+
+<link rel="icon" type="image/svg+xml" href="/Vulgaris/img/favicon.svg">
+<link rel="canonical" href="http://localhost:1313/Vulgaris/projects/teporingo/">
+
+
+<meta property="og:title" content="Teporingo">
+<meta property="og:description" content="Vulgaris — a documentation-first portfolio bridging code and biology, named for Phaseolus vulgaris, the common bean.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://localhost:1313/Vulgaris/projects/teporingo/">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/Vulgaris/css/style.css">
+<link rel="stylesheet" href="/Vulgaris/css/syntax.css">
+
+
+
+</head>
+<body>
+  
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/Vulgaris/">
+      <img src="/Vulgaris/img/favicon.svg" alt="Vulgaris logo" class="logo-img">
+      <span class="brand-text">Vulgaris</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="main-nav">
+        
+        
+          <li>
+            <a href="/Vulgaris/cv/"
+               >
+              ~/cv
+            </a>
+          </li>
+        
+          <li>
+            <a href="/Vulgaris/projects/"
+               aria-current="page">
+              ~/projects
+            </a>
+          </li>
+        
+          <li>
+            <a href="/Vulgaris/blog/"
+               >
+              ~/blog
+            </a>
+          </li>
+        
+          <li>
+            <a href="/Vulgaris/tags/"
+               >
+              ~/tags
+            </a>
+          </li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+  <main id="main">
+    
+
+  <a class="btn btn--primary floating-src-btn" href="https://github.com/3LCONEJO/Teporingo/" target="_blank" rel="noopener">↗ source</a>
+
+
+<article class="wrap">
+  <header class="post-header">
+    <p class="eyebrow">./projects</p>
+    <h1>Teporingo</h1>
+    <div class="post-meta">
+      <span>2026-07-27</span>
+      <span class="sep">/</span><span>in progress</span>
+      
+        <span class="sep">/</span>
+        <span>
+          <a href="/Vulgaris/tags/python/">Python</a>, <a href="/Vulgaris/tags/complex-systems/">Complex Systems</a>, <a href="/Vulgaris/tags/simulation/">Simulation</a>, <a href="/Vulgaris/tags/deep-learning/">Deep Learning</a>, <a href="/Vulgaris/tags/pytorch/">PyTorch</a>
+        </span>
+      
+    </div>
+    
+      
+      <div class="post-source-btn">
+        <a class="btn" href="https://github.com/3LCONEJO/Teporingo/" target="_blank" rel="noopener">↗ view source on github</a>
+      </div>
+      <div class="badge-row" style="margin-top:0.75rem;">
+        <img src="https://img.shields.io/github/license/3LCONEJO/Teporingo?style=flat-square&color=92c22c&labelColor=1a1615" alt="license">
+        <img src="https://img.shields.io/github/last-commit/3LCONEJO/Teporingo?style=flat-square&color=92c22c&labelColor=1a1615" alt="last commit">
+        <img src="https://img.shields.io/github/languages/top/3LCONEJO/Teporingo?style=flat-square&color=92c22c&labelColor=1a1615" alt="top language">
+      </div>
+    
+  </header>
+
+  <div class="post-body">
+    <h2 id="the-problem">The Problem</h2>
+<p>Standard demultiplexing tools (like <code>demuxlet</code>) are robust, but they suffer from two major drawbacks when applied to our datasets: they are incredibly slow, and they aren&rsquo;t explicitly designed for the extreme sparsity of scATAC-seq data.</p>
+<p>For my final AI course project, I decided to try to solve this my self. I built <strong>Teporingo</strong> — a deep learning module within the broader Tepolito pipeline (Just Planed, not even started (ง •̀_•́)ง). Teporingo uses a <strong>Siamese Network</strong> to project both the single-cell ATAC reads and the donor VCF genotypes into the same embedded latent space, allowing us to rapidly calculate the similarity (cosine distance) between a cell and a potential donor.</p>
+<blockquote>
+<p><strong>Try it out:</strong> You can explore the interactive visualization of this latent space here: <a href="https://3lconejo.github.io/Teporingo/">Teporingo Web Demo</a></p>
+</blockquote>
+<hr>
+<h2 id="approach-siamese-networks">Approach: Siamese Networks</h2>
+<p>Instead of calculating rigid statistical likelihoods for every single SNP across every single cell, a Siamese Network learns the fundamental <em>patterns</em> of genetic similarity.</p>
+<h3 id="pipeline-flow">Pipeline Flow</h3>
+<p><code>[Cell ATAC Matrix]</code> -&gt; <code>[Sub-network A]</code> v</p>
+<pre><code>`[Latent Space Embedding] -&gt; Cosine Similarity -&gt; [Match/No Match]`
+</code></pre>
+<p><code>[Donor VCF Matrix]</code> -&gt; <code>[Sub-network B]</code> ^</p>
+<hr>
+<h2 id="implementation-guide-the-training-pipeline">Implementation Guide: The Training Pipeline</h2>
+<p>Below is the structured PyTorch training pipeline for Teporingo. It is designed to be highly modular, supporting YAML-driven configurations, Leave-One-Out (LOO) cross-validation for batch effects, and automated early stopping.</p>
+<h3 id="1-configuration--setup">1. Configuration &amp; Setup</h3>
+<p>The pipeline relies on YAML configuration to manage hyperparameters dynamically. This block merges the config file settings with command-line arguments to build a unified training configuration.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="ch">#!/usr/bin/env python3</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">argparse</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">csv</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">json</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">subprocess</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sys</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">torch</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="n">load_npz</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">torch.optim</span> <span class="kn">import</span> <span class="n">AdamW</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">torch.optim.lr_scheduler</span> <span class="kn">import</span> <span class="n">ReduceLROnPlateau</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">random_split</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">buildnload</span> <span class="kn">import</span> <span class="n">GenotypeMatchingDataset</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">teporingo_demultiplexing.config</span> <span class="kn">import</span> <span class="n">load_simple_yaml</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">teporingo_demultiplexing.pipeline</span> <span class="kn">import</span> <span class="n">normalize_pair_mode</span><span class="p">,</span> <span class="n">run_pipeline</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">teporingo_demultiplexing.models.siamese_network</span> <span class="kn">import</span> <span class="n">SiameseNetwork</span><span class="p">,</span> <span class="n">ShallowSiameseNetwork</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># --- CONFIGURATION BUILDERS ---</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">build_training_config</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Merge training settings from dedicated and legacy YAML sections.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pipeline_config</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pipeline&#39;</span><span class="p">,</span> <span class="p">{})</span> <span class="ow">or</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">training_config</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;training&#39;</span><span class="p">,</span> <span class="p">{})</span> <span class="ow">or</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;model_training&#39;</span><span class="p">,</span> <span class="p">{})</span> <span class="ow">or</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;output_dir&#39;</span><span class="p">:</span> <span class="n">training_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;output_dir&#39;</span><span class="p">,</span> <span class="n">pipeline_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;output_dir&#39;</span><span class="p">,</span> <span class="s1">&#39;models/siamese&#39;</span><span class="p">)),</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;split_mode&#39;</span><span class="p">:</span> <span class="n">training_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;split_mode&#39;</span><span class="p">,</span> <span class="n">pipeline_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;split_mode&#39;</span><span class="p">,</span> <span class="s1">&#39;single-batch&#39;</span><span class="p">)),</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;batch_label&#39;</span><span class="p">:</span> <span class="n">training_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;batch_label&#39;</span><span class="p">,</span> <span class="n">pipeline_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;batch_label&#39;</span><span class="p">)),</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;epochs&#39;</span><span class="p">:</span> <span class="n">training_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;epochs&#39;</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;batch_size&#39;</span><span class="p">:</span> <span class="n">training_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;batch_size&#39;</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="n">training_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;optimizer&#39;</span><span class="p">:</span> <span class="n">training_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;optimizer&#39;</span><span class="p">,</span> <span class="s1">&#39;adamw&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;embedding_dim&#39;</span><span class="p">:</span> <span class="n">training_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;embedding_dim&#39;</span><span class="p">,</span> <span class="mi">512</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;network&#39;</span><span class="p">:</span> <span class="n">training_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;network&#39;</span><span class="p">,</span> <span class="s1">&#39;siamese&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;patience&#39;</span><span class="p">:</span> <span class="n">training_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;patience&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;seed&#39;</span><span class="p">:</span> <span class="n">training_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;seed&#39;</span><span class="p">,</span> <span class="mi">42</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;pair_mode&#39;</span><span class="p">:</span> <span class="n">normalize_pair_mode</span><span class="p">(</span><span class="n">training_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pair_mode&#39;</span><span class="p">,</span> <span class="s1">&#39;sampled&#39;</span><span class="p">)),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></div><h3 id="2-data-loading--splits">2. Data Loading &amp; Splits</h3>
+<p>Because scATAC-seq data is highly sparse, we load the BAM matrices using scipy.sparse. The pipeline supports random splitting for standard training, as well as leave-one-batch-out to ensure the model generalizes across different sequencing runs (e.g., Batches A, B, and C).</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">vcf_path</span><span class="p">,</span> <span class="n">bam_path</span><span class="p">,</span> <span class="n">metadata_path</span><span class="p">,</span> <span class="n">assignments_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Load VCF tensors, sparse BAM matrices, and metadata.&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">vcf_data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">vcf_path</span><span class="p">,</span> <span class="n">weights_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">X_VCF</span><span class="p">,</span> <span class="n">donors</span> <span class="o">=</span> <span class="n">vcf_data</span><span class="p">[</span><span class="s1">&#39;X_VCF&#39;</span><span class="p">],</span> <span class="n">vcf_data</span><span class="p">[</span><span class="s1">&#39;donors&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">X_BAM</span> <span class="o">=</span> <span class="n">load_npz</span><span class="p">(</span><span class="n">bam_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">metadata</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">metadata_path</span><span class="p">,</span> <span class="n">weights_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">barcodes</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;barcodes&#39;</span><span class="p">,</span> <span class="p">[])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">assignments</span> <span class="o">=</span> <span class="n">load_assignments_table</span><span class="p">(</span><span class="n">assignments_path</span><span class="p">)</span> <span class="k">if</span> <span class="n">assignments_path</span> <span class="k">else</span> <span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;assignments&#39;</span><span class="p">,</span> <span class="p">{})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">X_VCF</span><span class="p">,</span> <span class="n">X_BAM</span><span class="p">,</span> <span class="n">donors</span><span class="p">,</span> <span class="n">barcodes</span><span class="p">,</span> <span class="n">assignments</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">create_random_dataloaders</span><span class="p">(</span><span class="n">X_VCF</span><span class="p">,</span> <span class="n">X_BAM</span><span class="p">,</span> <span class="n">donors</span><span class="p">,</span> <span class="n">barcodes</span><span class="p">,</span> <span class="n">assignments</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">negative_ratio</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">pair_mode</span><span class="o">=</span><span class="s1">&#39;sampled&#39;</span><span class="p">,</span> <span class="n">pin_memory</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">hard_negatives_k</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;Split the dataset into Train (70%), Val (15%), and Test (15%).&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">full_dataset</span> <span class="o">=</span> <span class="n">GenotypeMatchingDataset</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">X_vcf</span><span class="o">=</span><span class="n">X_VCF</span><span class="p">,</span> <span class="n">X_bam_sparse</span><span class="o">=</span><span class="n">X_BAM</span><span class="p">,</span> <span class="n">cell_to_donor</span><span class="o">=</span><span class="n">assignments</span><span class="p">,</span> <span class="n">barcodes</span><span class="o">=</span><span class="n">barcodes</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">donors</span><span class="o">=</span><span class="n">donors</span><span class="p">,</span> <span class="n">negative_ratio</span><span class="o">=</span><span class="n">negative_ratio</span><span class="p">,</span> <span class="n">pair_mode</span><span class="o">=</span><span class="n">pair_mode</span><span class="p">,</span> <span class="n">hard_negatives_k</span><span class="o">=</span><span class="n">hard_negatives_k</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">n_total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">full_dataset</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">n_train</span><span class="p">,</span> <span class="n">n_val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_total</span> <span class="o">*</span> <span class="mf">0.7</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_total</span> <span class="o">*</span> <span class="mf">0.15</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">generator</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Generator</span><span class="p">()</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">train_ds</span><span class="p">,</span> <span class="n">val_ds</span><span class="p">,</span> <span class="n">test_ds</span> <span class="o">=</span> <span class="n">random_split</span><span class="p">(</span><span class="n">full_dataset</span><span class="p">,</span> <span class="p">[</span><span class="n">n_train</span><span class="p">,</span> <span class="n">n_val</span><span class="p">,</span> <span class="n">n_total</span> <span class="o">-</span> <span class="n">n_train</span> <span class="o">-</span> <span class="n">n_val</span><span class="p">],</span> <span class="n">generator</span><span class="o">=</span><span class="n">generator</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">train_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">train_ds</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="n">num_workers</span><span class="p">,</span> <span class="n">pin_memory</span><span class="o">=</span><span class="n">pin_memory</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">val_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">val_ds</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="n">num_workers</span><span class="p">,</span> <span class="n">pin_memory</span><span class="o">=</span><span class="n">pin_memory</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">test_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">test_ds</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="n">num_workers</span><span class="p">,</span> <span class="n">pin_memory</span><span class="o">=</span><span class="n">pin_memory</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">val_loader</span><span class="p">,</span> <span class="n">test_loader</span>
+</span></span></code></pre></div><h3 id="3-the-core-training-loop">3. The Core Training Loop</h3>
+<p>The network trains using SmoothL1Loss to handle outliers in the similarity scores. During validation, we track both Area Under the ROC Curve (AUC) and Average Precision (AP) to ensure the model distinguishes true donor matches from hard negatives.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">train_epoch</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">loader</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">total_loss</span><span class="p">,</span> <span class="n">correct</span><span class="p">,</span> <span class="n">total</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">loader</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s1"> [Train]&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">cell_batch</span><span class="p">,</span> <span class="n">geno_batch</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cell_batch</span><span class="p">,</span> <span class="n">geno_batch</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">cell_batch</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">geno_batch</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">labels</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">cell_batch</span><span class="p">,</span> <span class="n">geno_batch</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">clip_grad_norm_</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">max_norm</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">total_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">correct</span> <span class="o">+=</span> <span class="p">((</span><span class="n">predictions</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span> <span class="o">==</span> <span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">total</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">pbar</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">({</span><span class="s1">&#39;loss&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;acc&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="mi">100</span> <span class="o">*</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">total</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">%&#39;</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">total_loss</span> <span class="o">/</span> <span class="n">total</span><span class="p">,</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">total</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@torch.no_grad</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">validate_epoch</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">loader</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">phase</span><span class="o">=</span><span class="s1">&#39;Val&#39;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">average_precision_score</span><span class="p">,</span> <span class="n">roc_auc_score</span>
+</span></span><span class="line"><span class="cl">    <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">total_loss</span><span class="p">,</span> <span class="n">correct</span><span class="p">,</span> <span class="n">total</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">all_predictions</span><span class="p">,</span> <span class="n">all_labels</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">loader</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s1"> [</span><span class="si">{</span><span class="n">phase</span><span class="si">}</span><span class="s1">]&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">cell_batch</span><span class="p">,</span> <span class="n">geno_batch</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cell_batch</span><span class="p">,</span> <span class="n">geno_batch</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">cell_batch</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">geno_batch</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">labels</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">cell_batch</span><span class="p">,</span> <span class="n">geno_batch</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">total_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">correct</span> <span class="o">+=</span> <span class="p">((</span><span class="n">predictions</span> <span class="o">&gt;</span> <span class="mf">0.9</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span> <span class="o">==</span> <span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">total</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">all_predictions</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">predictions</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="n">all_labels</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">all_labels</span><span class="p">,</span> <span class="n">all_predictions</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">all_labels</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;nan&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ap</span> <span class="o">=</span> <span class="n">average_precision_score</span><span class="p">(</span><span class="n">all_labels</span><span class="p">,</span> <span class="n">all_predictions</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">total_loss</span> <span class="o">/</span> <span class="n">total</span><span class="p">,</span> <span class="n">correct</span> <span class="o">/</span> <span class="n">total</span><span class="p">,</span> <span class="n">auc</span><span class="p">,</span> <span class="n">ap</span>
+</span></span></code></pre></div><h3 id="4-orchestration--checkpointing">4. Orchestration &amp; Checkpointing</h3>
+<p>We wrap the epochs in an orchestration function that manages the learning rate scheduler (ReduceLROnPlateau) and enforces early stopping if the validation loss stops improving, saving only the best_model.pt.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">train_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">val_loader</span><span class="p">,</span> <span class="n">test_loader</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">scheduler</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">epochs</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">output_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">output_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">best_val_loss</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">epochs_no_improve</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">epochs</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">train_loss</span><span class="p">,</span> <span class="n">train_acc</span> <span class="o">=</span> <span class="n">train_epoch</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">epoch</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">val_loss</span><span class="p">,</span> <span class="n">val_acc</span><span class="p">,</span> <span class="n">val_auc</span><span class="p">,</span> <span class="n">val_ap</span> <span class="o">=</span> <span class="n">validate_epoch</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">val_loader</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">epoch</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scheduler</span><span class="p">,</span> <span class="n">ReduceLROnPlateau</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">scheduler</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">val_loss</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">scheduler</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">val_loss</span> <span class="o">&lt;</span> <span class="n">best_val_loss</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">best_val_loss</span> <span class="o">=</span> <span class="n">val_loss</span>
+</span></span><span class="line"><span class="cl">            <span class="n">epochs_no_improve</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">            <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;epoch&#39;</span><span class="p">:</span> <span class="n">epoch</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;model_state_dict&#39;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;optimizer_state_dict&#39;</span><span class="p">:</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">            <span class="p">},</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="s1">&#39;best_model.pt&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  ✓ New best model saved (val_loss: </span><span class="si">{</span><span class="n">val_loss</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">epochs_no_improve</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">epochs_no_improve</span> <span class="o">&gt;=</span> <span class="n">patience</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Early stopping after </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s1"> epochs&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">break</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># Final Evaluation</span>
+</span></span><span class="line"><span class="cl">    <span class="n">checkpoint</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">output_dir</span> <span class="o">/</span> <span class="s1">&#39;best_model.pt&#39;</span><span class="p">,</span> <span class="n">weights_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">[</span><span class="s1">&#39;model_state_dict&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">    <span class="n">validate_epoch</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">test_loader</span><span class="p">,</span> <span class="n">criterion</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="s1">&#39;Final&#39;</span><span class="p">,</span> <span class="n">phase</span><span class="o">=</span><span class="s1">&#39;Test&#39;</span><span class="p">)</span>
+</span></span></code></pre></div>
+  </div>
+
+  <nav class="post-nav" aria-label="Project navigation">
+    
+      <a class="post-nav-link prev" href="http://localhost:1313/Vulgaris/projects/jaguar-grn/">
+        <span class="dir">← previous</span>JAGUAR-GRN
+      </a>
+    
+    <span></span>
+  </nav>
+</article>
+
+  </main>
+  <footer class="site-footer">
+  <div class="wrap">
+    <span>vulgaris alpha 0.1 · © 2026</span>
+    <span></span>
+    <span>
+      <a href="https://github.com/3LCONEJO">github</a>
+       · 
+      <a href="https://linkedin.com/in/Notyet">linkedin</a>
+    </span>
+  </div>
+</footer>
+
+  <script src="/Vulgaris/js/main.js" defer></script>
+</body>
+</html>

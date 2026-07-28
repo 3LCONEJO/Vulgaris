@@ -10,15 +10,15 @@
 		
 		
 		
-			<lastBuildDate>Mon, 02 Mar 2026 00:00:00 +0000</lastBuildDate>
+			<lastBuildDate>Mon, 27 Jul 2026 00:00:00 +0000</lastBuildDate>
 		
 			<atom:link href="http://localhost:1313/Vulgaris/tags/complex-systems/index.xml" rel="self" type="application/rss+xml" />
 			<item>
-				<title>Tepolito</title>
-				<link>http://localhost:1313/Vulgaris/projects/tepolito/</link>
-				<pubDate>Mon, 02 Mar 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/projects/tepolito/</guid>
-				<description>A lightweight simulation framework for exploring emergent behavior in small agent populations.</description>
+				<title>Teporingo</title>
+				<link>http://localhost:1313/Vulgaris/projects/teporingo/</link>
+				<pubDate>Mon, 27 Jul 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/Vulgaris/projects/teporingo/</guid>
+				<description>An academic AI demultiplexing tool leveraging Siamese networks and cosine similarity to map cells to donors.</description>
 			</item>
 	</channel>
 </rss>

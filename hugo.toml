@@ -35,6 +35,10 @@ summaryLength = 40
 
 [menu]
   [[menu.main]]
+    name = "~/cv"
+    pageRef = "/cv"
+    weight = 5
+  [[menu.main]]
     name = "~/projects"
     pageRef = "/projects"
     weight = 10
@@ -61,9 +65,11 @@ summaryLength = 40
   [params.whoami]
     lines = [
       "guest@vulgaris:~$ whoami",
-      "student — complex systems, single-cell genomics",
+      "student — complex systems, single-cell genomics.",
+      "guest@vulgaris:~$ cv | grep important", 
+      "see my cv here -> https://3lconejo.github.io/Vulgaris/cv/",
       "guest@vulgaris:~$ cat mission.txt",
-      "turning lab notebooks and repos into documentation people can learn from",
+      "turning lab notebooks and repos into documentation people can learn from"
     ]
 
   # Featured project slugs shown on the home page, in order

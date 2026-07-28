@@ -2,4 +2,4 @@
 title: "Blog"
 ---
 
-Short entries — research logs, things I learned the hard way, and the occasional travelogue.
+Short entries — research logs, things I learned, and the occasional travelogue, maybe I never write again here but who knows.

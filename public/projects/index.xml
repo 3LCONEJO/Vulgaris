@@ -10,9 +10,16 @@
 		
 		
 		
-			<lastBuildDate>Sun, 26 Jul 2026 00:00:00 +0000</lastBuildDate>
+			<lastBuildDate>Mon, 27 Jul 2026 00:00:00 +0000</lastBuildDate>
 		
 			<atom:link href="http://localhost:1313/Vulgaris/projects/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Teporingo</title>
+				<link>http://localhost:1313/Vulgaris/projects/teporingo/</link>
+				<pubDate>Mon, 27 Jul 2026 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/Vulgaris/projects/teporingo/</guid>
+				<description>An academic AI demultiplexing tool leveraging Siamese networks and cosine similarity to map cells to donors.</description>
+			</item>
 			<item>
 				<title>JAGUAR-GRN</title>
 				<link>http://localhost:1313/Vulgaris/projects/jaguar-grn/</link>
@@ -26,13 +33,6 @@
 				<pubDate>Fri, 26 Jun 2026 00:00:00 +0000</pubDate>
 				<guid>http://localhost:1313/Vulgaris/projects/jaguar-demultiplexing/</guid>
 				<description>Given the information in my garden, an algorithm helps me infer which berry belongs to which bush. In our data, it tells us which cell belongs to which individual.</description>
-			</item>
-			<item>
-				<title>Tepolito</title>
-				<link>http://localhost:1313/Vulgaris/projects/tepolito/</link>
-				<pubDate>Mon, 02 Mar 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/projects/tepolito/</guid>
-				<description>A lightweight simulation framework for exploring emergent behavior in small agent populations.</description>
 			</item>
 	</channel>
 </rss>

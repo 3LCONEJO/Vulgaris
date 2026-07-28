@@ -5,7 +5,7 @@ draft: false
 status: "in_progress"
 summary: "A single-cell ATAC-seq pipeline designed to build a Gene Regulation Network to unveil the regulatory systems on JAGUAR Project Data."
 tags: ["scATAC-seq", "JAGUAR", "R", "Python", "Seurat"]
-github: "https://github.com/YOUR-USERNAME/jaguar"
+github: "https://github.com/JAGUAR-LATAM/CCAN-Visualizer/"
 stack: ["Snakemake", "R", "Seurat", "SLURM"]
 ---
 

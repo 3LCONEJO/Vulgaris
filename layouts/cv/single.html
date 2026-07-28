@@ -1,0 +1,154 @@
+{{ define "main" }}
+<div class="wrap cv-page">
+
+  <header class="cv-header">
+    <div class="cv-header-row">
+      {{ with .Params.portrait }}
+        <img class="cv-portrait" src="{{ . | relURL }}" alt="Portrait" width="110" height="110">
+      {{ end }}
+      <div class="cv-header-text">
+        <p class="eyebrow">whoami --full</p>
+        <h1>{{ .Params.name | default site.Params.author }}</h1>
+        <p class="cv-meta">
+          {{ with .Params.location }}{{ . }}{{ end }}
+          {{ with .Params.email }}<span class="sep">/</span><a href="mailto:{{ . }}">{{ . }}</a>{{ end }}
+          {{ with .Params.phone }}<span class="sep">/</span>{{ . }}{{ end }}
+          {{ with site.Params.github }}<span class="sep">/</span><a href="{{ . }}" target="_blank" rel="noopener">github</a>{{ end }}
+          {{ with site.Params.linkedin }}<span class="sep">/</span><a href="{{ . }}" target="_blank" rel="noopener">linkedin</a>{{ end }}
+        </p>
+        {{ with .Params.downloadLink }}
+          <a class="btn btn--primary" style="margin-top:1rem;margin-right:0.5rem;" href="{{ . | relURL }}" download>↓ download cv</a>
+        {{ end }}
+        <button class="btn cv-print-btn" style="margin-top:1rem;" onclick="window.print()">🖨 print / save as pdf</button>
+      </div>
+    </div>
+  </header>
+
+  {{ with .Params.research_interests }}
+  <section aria-labelledby="ri-heading">
+    <div class="section-heading"><h2 id="ri-heading">research_interests</h2><span class="rule" aria-hidden="true"></span></div>
+    <p class="cv-prose">{{ . }}</p>
+  </section>
+  {{ end }}
+
+  {{ if .Params.education }}
+  <section aria-labelledby="edu-heading">
+    <div class="section-heading"><h2 id="edu-heading">education</h2><span class="rule" aria-hidden="true"></span></div>
+    {{ range .Params.education }}
+      <div class="cv-entry">
+        <div class="cv-entry-head">
+          <span class="cv-entry-title">{{ .degree }}</span>
+          <span class="cv-entry-dates">{{ .dates }}</span>
+        </div>
+        <p class="cv-entry-sub">{{ .institution }}</p>
+      </div>
+    {{ end }}
+  </section>
+  {{ end }}
+
+  {{ if .Params.experience }}
+  <section aria-labelledby="exp-heading">
+    <div class="section-heading"><h2 id="exp-heading">research_experience</h2><span class="rule" aria-hidden="true"></span></div>
+    {{ range .Params.experience }}
+      <div class="cv-entry">
+        <div class="cv-entry-head">
+          <span class="cv-entry-title">{{ .role }}</span>
+          <span class="cv-entry-dates">{{ .dates }}</span>
+        </div>
+        <p class="cv-entry-sub">{{ .org }}</p>
+        {{ if .bullets }}
+          <ul class="cv-bullets">
+            {{ range .bullets }}<li>{{ . }}</li>{{ end }}
+          </ul>
+        {{ end }}
+      </div>
+    {{ end }}
+  </section>
+  {{ end }}
+
+  {{ if .Params.talks }}
+  <section aria-labelledby="talks-heading">
+    <div class="section-heading"><h2 id="talks-heading">talks_and_presentations</h2><span class="rule" aria-hidden="true"></span></div>
+    {{ range .Params.talks }}
+      <div class="cv-entry">
+        <div class="cv-entry-head">
+          <span class="cv-entry-title">{{ .title }}</span>
+          <span class="cv-entry-dates">{{ .dates }}</span>
+        </div>
+        <p class="cv-entry-sub">{{ .venue }}</p>
+      </div>
+    {{ end }}
+  </section>
+  {{ end }}
+
+  {{ if .Params.outreach }}
+  <section aria-labelledby="outreach-heading">
+    <div class="section-heading"><h2 id="outreach-heading">academic_and_outreach</h2><span class="rule" aria-hidden="true"></span></div>
+    {{ range .Params.outreach }}
+      <div class="cv-entry">
+        <div class="cv-entry-head">
+          <span class="cv-entry-title">{{ .title }}</span>
+          <span class="cv-entry-dates">{{ .dates }}</span>
+        </div>
+        <p class="cv-entry-sub">{{ .detail }}</p>
+      </div>
+    {{ end }}
+  </section>
+  {{ end }}
+
+  {{ if .Params.projects }}
+  <section aria-labelledby="proj-heading">
+    <div class="section-heading"><h2 id="proj-heading">other_projects</h2><span class="rule" aria-hidden="true"></span></div>
+    {{ range .Params.projects }}
+      <div class="cv-entry">
+        <div class="cv-entry-head">
+          <span class="cv-entry-title">{{ .title }}</span>
+          <span class="cv-entry-dates">{{ .dates }}</span>
+        </div>
+        <p class="cv-entry-sub">{{ .detail }}</p>
+      </div>
+    {{ end }}
+  </section>
+  {{ end }}
+
+  {{ if .Params.skills }}
+  <section aria-labelledby="skills-heading">
+    <div class="section-heading"><h2 id="skills-heading">technical_skills</h2><span class="rule" aria-hidden="true"></span></div>
+    <div class="badge-row">
+      {{ range .Params.skills }}
+        {{ $name := replace (replace .name " " "%20") "#" "%23" }}
+        {{ $level := replace (replace .level " " "%20") "#" "%23" }}
+        <img src="https://img.shields.io/badge/{{ $name }}-{{ $level }}-92c22c?style=flat-square&labelColor=1a1615" alt="{{ .name }}: {{ .level }}">
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{ if .Params.languages }}
+  <section aria-labelledby="lang-heading">
+    <div class="section-heading"><h2 id="lang-heading">languages</h2><span class="rule" aria-hidden="true"></span></div>
+    <div class="badge-row">
+      {{ range .Params.languages }}
+        {{ $name := replace (replace .name " " "%20") "#" "%23" }}
+        {{ $level := replace (replace .level " " "%20") "#" "%23" }}
+        <img src="https://img.shields.io/badge/{{ $name }}-{{ $level }}-92c22c?style=flat-square&labelColor=1a1615" alt="{{ .name }}: {{ .level }}">
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{ if .Params.interests }}
+  <section aria-labelledby="int-heading">
+    <div class="section-heading"><h2 id="int-heading">interests</h2><span class="rule" aria-hidden="true"></span></div>
+    <div class="cv-pills">
+      {{ range .Params.interests }}<span class="tag">{{ . }}</span>{{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{ with .Content }}
+    <div class="post-body">{{ . }}</div>
+  {{ end }}
+
+</div>
+{{ end }}

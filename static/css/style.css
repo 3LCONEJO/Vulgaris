@@ -634,3 +634,137 @@ input:focus-visible {
   .post-nav-link.next { text-align: left; }
   h1 { font-size: 1.7rem; }
 }
+
+/* ==========================================================================
+   CV page
+   ========================================================================== */
+
+.cv-header {
+  padding: 2.75rem 0 2rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.5rem;
+}
+.cv-header-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.cv-portrait {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  object-fit: cover;
+  flex: none;
+}
+.cv-header-text { min-width: 0; }
+.cv-header h1 { margin: 0 0 0.6rem; }
+.cv-meta {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+}
+.cv-meta a { color: var(--text-muted); text-decoration: none; }
+.cv-meta a:hover { color: var(--accent-bright); }
+.cv-meta .sep { color: var(--border); margin: 0 0.15rem; }
+
+.cv-prose {
+  color: var(--text-muted);
+  max-width: 68ch;
+  margin: 0;
+}
+
+.cv-entry { padding: 1.1rem 0; border-bottom: 1px solid var(--border-soft); }
+.cv-entry:last-child { border-bottom: none; }
+
+.cv-entry-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.cv-entry-title {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--text);
+  font-size: 1rem;
+}
+.cv-entry-dates {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+.cv-entry-sub {
+  margin: 0.3rem 0 0;
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 0.94rem;
+}
+
+.cv-bullets {
+  margin: 0.6rem 0 0;
+  padding-left: 1.1rem;
+  color: var(--text);
+}
+.cv-bullets li { margin-bottom: 0.3rem; }
+.cv-bullets li::marker { color: var(--accent); }
+
+.cv-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+.badge-row img {
+  height: 22px;
+  display: block;
+  border-radius: 3px;
+}
+
+.cv-print-btn {
+  color: var(--text-muted);
+  background: var(--bg-raised);
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Print — makes the CV page itself the printable/PDF source, so it can
+   never drift out of sync with a separately-maintained file. Triggered by
+   the "print / save as pdf" button (window.print()) or Ctrl/Cmd+P.
+   ========================================================================== */
+@media print {
+  .site-header, .site-footer, .starfield,
+  .skip-link, .cv-print-btn, .main-nav {
+    display: none !important;
+  }
+  html, body {
+    background: #964d4d !important;
+    background-image: none !important;
+  }
+  body { color: #440c0c !important; font-size: 12pt; }
+  .wrap { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+  .cv-header { border-bottom: 1px solid #999; padding: 0 0 0.75rem; margin-bottom: 0.5rem; }
+  h1, h2, .cv-entry-title { color: #111 !important; }
+  .section-heading { break-after: avoid; }
+  .section-heading .rule { display: none; }
+  .section-heading .rule::after { display: none; }
+  .cv-entry { border-bottom: 1px solid #fb2323 !important; break-inside: avoid; padding: 0.6rem 0; }
+  .cv-entry-dates, .cv-meta, .cv-entry-sub, .cv-prose { color: #444 !important; }
+  .cv-portrait { border-color: #999 !important; }
+  .cv-meta a, a { color: #111 !important; text-decoration: underline; }
+  .tag { border-color: #999 !important; color: #111 !important; }
+  a[href]::after { content: none !important; } /* no printed URLs cluttering the page */
+}
