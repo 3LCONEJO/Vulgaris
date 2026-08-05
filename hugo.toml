@@ -66,7 +66,7 @@ summaryLength = 40
     lines = [
       "guest@vulgaris:~$ whoami",
       "student — complex systems, single-cell genomics.",
-      "guest@vulgaris:~$ cv | grep important", 
+      "guest@vulgaris:~$ whoami --full", 
       "see my cv here -> https://3lconejo.github.io/Vulgaris/cv/",
       "guest@vulgaris:~$ cat mission.txt",
       "turning lab notebooks and repos into documentation people can learn from"

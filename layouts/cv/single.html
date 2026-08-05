@@ -91,6 +91,11 @@
           <span class="cv-entry-dates">{{ .dates }}</span>
         </div>
         <p class="cv-entry-sub">{{ .detail }}</p>
+        {{ if .bullets }}
+          <ul class="cv-bullets">
+            {{ range .bullets }}<li>{{ . }}</li>{{ end }}
+          </ul>
+        {{ end }}
       </div>
     {{ end }}
   </section>
@@ -105,6 +110,11 @@
           <span class="cv-entry-title">{{ .title }}</span>
           <span class="cv-entry-dates">{{ .dates }}</span>
         </div>
+        {{ if .bullets }}
+          <ul class="cv-bullets">
+            {{ range .bullets }}<li>{{ . }}</li>{{ end }}
+          </ul>
+        {{ end }}
         <p class="cv-entry-sub">{{ .detail }}</p>
       </div>
     {{ end }}

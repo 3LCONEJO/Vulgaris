@@ -1,87 +1,94 @@
-/* ==========================================================================
-   Vulgaris — design tokens
-   Terminal Tech / Dark Minimalism, named for Phaseolus vulgaris (common bean)
-   ========================================================================== */
+/* STREAMING_CHUNK:Configuring root variables and theme settings... /
+/ ==========================================================================
+Vulgaris — design tokens
+Terminal Tech / Dark Minimalism, named for Phaseolus vulgaris (common bean)
+========================================================================== */
 
 :root {
-  /* -- surfaces: ultra-dark charcoal, never pure black -- */
-  --bg:          #1a1615;
-  --bg-raised:   #211d1c;
-  --bg-inset:    #12120f;
-  --border:      #322e2a;
-  --border-soft: #2a2723;
+/* -- surfaces: ultra-dark charcoal, never pure black -- */
+--bg:          #1a1615;
+--bg-raised:   #211d1c;
+--bg-inset:    #12120f;
+--border:      #322e2a;
+--border-soft: #2a2723;
 
-  /* -- text -- */
-  --text:        #e6e8e1;
-  --text-highlight:  #aaddab;
-  --text-muted:  #8d9a8f;
-  --text-faint:  #5f6b62;
-  --brand:       #cad54e;
+/* -- text -- */
+--text:        #e6e8e1;
+--text-highlight:  #aaddab;
+--text-muted:  #8d9a8f;
+--text-faint:  #5f6b62;
+--brand:       #cad54e;
 
-  /* -- olive/lime accent system -- */
-  --accent:       #92c22c;
-  --accent-bright:#bff27c;
-  --accent-dim:   #426e1e;
+/* -- olive/lime accent system -- */
+--accent:        #92c22c;
+--accent-bright: #bff27c;
+--accent-dim:    #426e1e;
 
-  /* -- bean-pod warm note: used sparingly (logo mark, one tag family) -- */
-  --pod: #c95b5b;
+/* -- gradient accents -- */
+--accent-gradient: linear-gradient(135deg, var(--accent-bright), var(--accent));
+--accent-gradient-dim: linear-gradient(135deg, var(--accent), var(--accent-dim));
 
-  /* -- type -- */
-  --font-mono: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  --font-body: "Karla", -apple-system, BlinkMacSystemFont, sans-serif;
+/* -- bean-pod warm note: used sparingly (logo mark, one tag family) -- */
+--pod: #c95b5b;
 
-  /* -- shape / rhythm: tighter radii read more "engineered", less "soft" -- */
-  --radius-sm: 3px;
-  --radius:    6px;
-  --radius-lg: 8px;
-  --gap:       1.5rem;
-  --maxw:      920px;
-  --speed:     0.12s;
+/* -- type -- */
+--font-mono: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+--font-body: "Karla", -apple-system, BlinkMacSystemFont, sans-serif;
+
+/* -- shape / rhythm: tighter radii read more "engineered", less "soft" -- */
+--radius-sm: 3px;
+--radius:    6px;
+--radius-lg: 8px;
+--gap:       1.5rem;
+--maxw:      920px;
+--speed:     0.12s;
 }
 
+/* STREAMING_CHUNK:Setting up global resets and basic HTML elements... /
 @media (prefers-color-scheme: light) {
-  /* Site is intentionally dark-first per brief; no light variant is defined.
-     This block is left as a hook if a light mode is ever desired. */
+/ Site is intentionally dark-first per brief; no light variant is defined.
+This block is left as a hook if a light mode is ever desired. */
 }
 
-* { box-sizing: border-box; }
+{ box-sizing: border-box; }
 
 html {
-  background: var(--bg);
-  scroll-behavior: smooth;
+background: var(--bg);
+scroll-behavior: smooth;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-  }
+html { scroll-behavior: auto; }
+*, *::before, *::after {
+animation-duration: 0.001ms !important;
+animation-iteration-count: 1 !important;
+transition-duration: 0.001ms !important;
+}
 }
 
 body {
-  margin: 0;
-  background: var(--bg);
-  background-image:
-    linear-gradient(var(--border-soft) 0.2px, transparent 3px);
-  background-size: 42px 42px;
-  background-attachment: fixed;
-  color: var(--text);
-  font-family: var(--font-body);
-  font-size: 17px;
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
+margin: 0;
+background: var(--bg);
+background-image:
+linear-gradient(var(--border-soft) 0.2px, transparent 3px);
+background-size: 42px 42px;
+background-attachment: fixed;
+color: var(--text);
+font-family: var(--font-body);
+font-size: 17px;
+line-height: 1.65;
+-webkit-font-smoothing: antialiased;
 }
 
+/* STREAMING_CHUNK:Styling typography and inline elements... */
 a { color: var(--accent); }
 
 h1, h2, h3, h4, .mono {
-  font-family: var(--font-mono);
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  line-height: 1.25;
-  color: var(--text);
+font-family: var(--font-mono);
+font-weight: 700;
+letter-spacing: -0.01em;
+line-height: 1.25;
+color: var(--text);
 }
 
 h1 { font-size: 2.1rem; }
@@ -91,680 +98,717 @@ h3 { font-size: 1.15rem; }
 p, li { color: var(--text); }
 
 code, pre, kbd {
-  font-family: var(--font-mono);
+font-family: var(--font-mono);
 }
 
 code {
-  background: var(--bg-inset);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 0.1em 0.4em;
-  font-size: 0.88em;
-  color: var(--accent-bright);
+background: var(--bg-inset);
+border: 1px solid var(--border);
+border-radius: var(--radius-sm);
+padding: 0.1em 0.4em;
+font-size: 0.88em;
+color: var(--accent-bright);
 }
 
 pre {
-  background: var(--bg-inset);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.1rem 1.25rem;
-  overflow-x: auto;
+background: var(--bg-inset);
+border: 1px solid var(--border);
+border-radius: var(--radius);
+padding: 1.1rem 1.25rem;
+overflow-x: auto;
 }
 pre code {
-  background: none;
-  border: none;
-  padding: 0;
-  color: var(--text);
+background: none;
+border: none;
+padding: 0;
+color: var(--text);
 }
 
+/* STREAMING_CHUNK:Configuring accessibility links and utility classes... */
 .skip-link {
-  position: absolute;
-  left: -9999px;
-  top: 0;
-  background: var(--accent);
-  color: var(--bg);
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  padding: 0.6rem 1rem;
-  border-radius: var(--radius-sm);
-  z-index: 100;
+position: absolute;
+left: -9999px;
+top: 0;
+background: var(--accent);
+color: var(--bg);
+font-family: var(--font-mono);
+font-size: 0.85rem;
+padding: 0.6rem 1rem;
+border-radius: var(--radius-sm);
+z-index: 100;
 }
 .skip-link:focus {
-  left: 1rem;
-  top: 1rem;
+left: 1rem;
+top: 1rem;
 }
 
 /* Focus states: always visible, never suppressed */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-  border-radius: var(--radius-sm);
+outline: 2px solid var(--accent);
+outline-offset: 3px;
+border-radius: var(--radius-sm);
 }
 
 ::selection {
-  background: var(--accent-dim);
-  color: var(--text);
+background: var(--accent-dim);
+color: var(--text);
+}
+
+/* -- Gradient Text Utility -- /
+.text-gradient {
+background: var(--accent-gradient);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+color: var(--accent); / Fallback for older browsers */
 }
 
 /* ==========================================================================
-   Layout shell
-   ========================================================================== */
+Layout shell
+========================================================================== */
 
+/* STREAMING_CHUNK:Defining layout shells and header components... */
 .wrap {
-  position: relative;
-  z-index: 1;
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 0 1.5rem;
+position: relative;
+z-index: 1;
+max-width: var(--maxw);
+margin: 0 auto;
+padding: 0 1.5rem;
 }
 
 /* ==========================================================================
-   Header / nav
-   ========================================================================== */
+Header / nav
+========================================================================== */
 
 .site-header {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg);
+position: sticky;
+top: 0;
+z-index: 2;
+border-bottom: 1px solid var(--border);
+background: var(--bg);
 }
 
 .site-header .wrap {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 0.9rem;
-  padding-bottom: 0.9rem;
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding-top: 0.9rem;
+padding-bottom: 0.9rem;
 }
 
 .brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family:   var(--font-mono);
-  font-weight: 700;
-  font-size: 1.05rem;
-  text-decoration: none;
-  color: var(--text);
+display: inline-flex;
+align-items: center;
+gap: 0.5rem;
+font-family:   var(--font-mono);
+font-weight: 700;
+font-size: 1.05rem;
+text-decoration: none;
+color: var(--text);
 }
 .brand .bean { color: var(--pod); }
-.brand .prompt { color: var(--accent); }
+
+.brand .prompt {
+background: var(--accent-gradient);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+color: var(--accent); /* Fallback */
+}
+
 .brand .logo-img {
-  height: 50px; /* Adjust height as needed */
-  width: auto;
-  vertical-align: middle; /* Helps with alignment */
+height: 50px; /* Adjust height as needed /
+width: auto;
+vertical-align: middle; / Helps with alignment */
 }
 .brand .brand-text {
-  font-size: 1.05rem;
-  color: var(--brand);
-  vertical-align: middle;
+font-size: 1.05rem;
+color: var(--brand);
+vertical-align: middle;
 }
 
-
+/* STREAMING_CHUNK:Styling navigation links and terminal hero section... /
 .main-nav {
-  display: flex;
-  gap: 1.5rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  font-family: var(--font-mono);
-  font-size: 0.92rem;
+display: flex;
+gap: 1.5rem;
+list-style: none;
+margin: 0;
+padding: 0;
+font-family: var(--font-mono);
+font-size: 0.92rem;
 }
 .main-nav a {
-  color: var(--text-muted);
-  text-decoration: none;
-  position: relative;
-  padding-bottom: 3px;
+color: var(--text-muted);
+text-decoration: none;
+position: relative;
+padding-bottom: 3px;
 }
 .main-nav a::after {
-  content: "";
-  position: absolute;
-  left: 0; bottom: 0;
-  height: 1px;
-  width: 0;
-  background: var(--accent);
-  transition: width 0.25s ease;
+content: "";
+position: absolute;
+left: 0; bottom: 0;
+height: 1px;
+width: 0;
+background: var(--accent-gradient); / Updated to gradient */
+transition: width 0.25s ease;
 }
 .main-nav a:hover,
 .main-nav a[aria-current="page"] {
-  color: var(--accent);
+color: var(--accent);
 }
 .main-nav a:hover::after,
 .main-nav a[aria-current="page"]::after {
-  width: 100%;
+width: 100%;
 }
 
 /* ==========================================================================
-   Hero / whoami terminal
-   ========================================================================== */
+Hero / whoami terminal
+========================================================================== */
 
 .hero {
-  padding: 3.5rem 0 2.5rem;
+padding: 3.5rem 0 2.5rem;
 }
 
 .terminal {
-  background: var(--bg-inset);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
+background: var(--bg-inset);
+border: 1px solid var(--border);
+border-radius: var(--radius);
+overflow: hidden;
 }
 
+/* STREAMING_CHUNK:Designing terminal titlebar and body outputs... */
 .terminal-titlebar {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.6rem 0.9rem;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg-raised);
+display: flex;
+align-items: center;
+gap: 0.4rem;
+padding: 0.6rem 0.9rem;
+border-bottom: 1px solid var(--border);
+background: var(--bg-raised);
 }
 .terminal-titlebar .dot {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  background: var(--border);
+width: 10px; height: 10px;
+border-radius: 50%;
+background: var(--border);
 }
 .terminal-titlebar .label {
-  margin-left: 0.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-faint);
+margin-left: 0.5rem;
+font-family: var(--font-mono);
+font-size: 0.74rem;
+letter-spacing: 0.06em;
+text-transform: uppercase;
+color: var(--text-faint);
 }
 
 .terminal-body {
-  padding: 1.4rem 1.5rem 1.6rem;
-  font-family: var(--font-mono);
-  font-size: 0.98rem;
+padding: 1.4rem 1.5rem 1.6rem;
+font-family: var(--font-mono);
+font-size: 0.98rem;
 }
 
 .terminal-line {
-  color: var(--text-muted);
-  margin: 0 0 0.55rem;
-  white-space: pre-wrap;
+color: var(--text-muted);
+margin: 0 0 0.55rem;
+white-space: pre-wrap;
 }
 .terminal-line .cmd { color: var(--accent-bright); }
 .terminal-line.is-output { color: var(--text); padding-left: 0; }
 
 .cursor {
-  display: inline-block;
-  width: 0.55em;
-  height: 1em;
-  background: var(--accent);
-  vertical-align: -0.15em;
-  animation: blink 1.05s steps(1) infinite;
+display: inline-block;
+width: 0.55em;
+height: 1em;
+background: var(--accent-gradient); /* Changed to gradient */
+vertical-align: -0.15em;
+animation: blink 1.05s steps(1) infinite;
 }
 @keyframes blink { 50% { opacity: 0; } }
 
+/* STREAMING_CHUNK:Rendering buttons and stylized section headings... */
 .hero-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: 1.5rem;
+display: flex;
+flex-wrap: wrap;
+gap: 0.75rem;
+margin-top: 1.5rem;
 }
 
 .btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-family: var(--font-mono);
-  font-size: 0.88rem;
-  text-decoration: none;
-  padding: 0.55rem 1rem;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  color: var(--text);
-  transition: border-color var(--speed) ease, color var(--speed) ease, background-color var(--speed) ease;
+display: inline-flex;
+align-items: center;
+gap: 0.4rem;
+font-family: var(--font-mono);
+font-size: 0.88rem;
+text-decoration: none;
+padding: 0.55rem 1rem;
+border-radius: var(--radius);
+border: 1px solid var(--border);
+color: var(--text);
+transition: border-color var(--speed) ease, color var(--speed) ease, background-color var(--speed) ease;
 }
 .btn:hover {
-  border-color: var(--accent);
-  color: var(--accent-bright);
+border-color: var(--accent);
+color: var(--accent-bright);
 }
 .btn--primary {
-  background: var(--accent-dim);
-  border-color: var(--accent-dim);
-  color: var(--accent-bright);
+background: var(--accent-dim);
+border-color: var(--accent-dim);
+color: var(--accent-bright);
 }
 .btn--primary:hover {
-  border-color: var(--accent);
-  background: rgba(146, 194, 44, 0.14);
+border-color: var(--accent);
+background: rgba(146, 194, 44, 0.14);
 }
 
 /* ==========================================================================
-   Section headings ("growth" signature rule)
-   ========================================================================== */
+Section headings ("growth" signature rule)
+========================================================================== */
 
 .section-heading {
-  display: flex;
-  align-items: baseline;
-  gap: 0.75rem;
-  margin: 3rem 0 1.25rem;
+display: flex;
+align-items: baseline;
+gap: 0.75rem;
+margin: 3rem 0 1.25rem;
 }
 .section-heading h2 { margin: 0; }
 .section-heading .rule {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, var(--border) 0%, transparent 100%);
-  position: relative;
-  overflow: visible;
+flex: 1;
+height: 1px;
+background: linear-gradient(90deg, var(--border) 0%, transparent 100%);
+position: relative;
+overflow: visible;
 }
 .section-heading .rule::after {
-  content: "";
-  position: absolute;
-  left: 0; top: -1px;
-  height: 2px;
-  width: 0;
-  background: var(--accent);
-  transition: width 0.5s ease;
+content: "";
+position: absolute;
+left: 0; top: -1px;
+height: 2px;
+width: 0;
+background: var(--accent-gradient); /* Changed to gradient */
+transition: width 0.5s ease;
 }
 .section-heading:hover .rule::after,
 .section-heading.in-view .rule::after { width: 46px; }
 
-/* ==========================================================================
-   Cards (projects + posts)
-   ========================================================================== */
+/* STREAMING_CHUNK:Constructing card layouts with gradient accents... /
+/ ==========================================================================
+Cards (projects + posts)
+========================================================================== */
 
 .card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: var(--gap);
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+gap: var(--gap);
 }
 
 .card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  background: var(--bg-raised);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 1.4rem 1.4rem 1.3rem;
-  text-decoration: none;
-  color: var(--text);
-  overflow: hidden;
-  transition: border-color var(--speed) ease;
+position: relative;
+display: flex;
+flex-direction: column;
+background: var(--bg-raised);
+border: 1px solid var(--border);
+border-radius: var(--radius-lg);
+padding: 1.4rem 1.4rem 1.3rem;
+text-decoration: none;
+color: var(--text);
+overflow: hidden;
+transition: border-color var(--speed) ease;
 }
 .card::before {
-  /* the "growing stem" — the site's signature hover element */
-  content: "";
-  position: absolute;
-  left: 0; top: 0;
-  width: 3px;
-  height: 0%;
-  background: var(--accent);
-  transition: height 0.25s ease;
+/* the "growing stem" — the site's signature hover element /
+content: "";
+position: absolute;
+left: 0; top: 0;
+width: 3px;
+height: 0%;
+background: var(--accent-gradient); / Changed to gradient */
+transition: height 0.25s ease;
 }
 .card:hover {
-  border-color: var(--accent-dim);
+border-color: var(--accent-dim);
 }
 .card:hover::before { height: 100%; }
 
 .card-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: var(--accent);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-variant-numeric: tabular-nums;
-  margin-bottom: 0.5rem;
+font-family: var(--font-mono);
+font-size: 0.72rem;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+font-variant-numeric: tabular-nums;
+margin-bottom: 0.5rem;
+/* Gradient Effect /
+background: var(--accent-gradient);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+color: var(--accent); / Fallback */
 }
 
+/* STREAMING_CHUNK:Building taxonomy tags and listing views... */
 .card h3 {
-  margin: 0 0 0.55rem;
-  font-size: 1.15rem;
+margin: 0 0 0.55rem;
+font-size: 1.15rem;
 }
 
 .card p {
-  color: var(--text-muted);
-  font-size: 0.94rem;
-  margin: 0 0 1rem;
-  flex: 1;
+color: var(--text-muted);
+font-size: 0.94rem;
+margin: 0 0 1rem;
+flex: 1;
 }
 
 .tag-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
+display: flex;
+flex-wrap: wrap;
+gap: 0.4rem;
 }
 
 .tag {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 0.2rem 0.6rem;
-  text-decoration: none;
-  transition: color var(--speed) ease, border-color var(--speed) ease;
+font-family: var(--font-mono);
+font-size: 0.72rem;
+color: var(--text-muted);
+border: 1px solid var(--border);
+border-radius: 999px;
+padding: 0.2rem 0.6rem;
+text-decoration: none;
+transition: color var(--speed) ease, border-color var(--speed) ease;
 }
 .tag:hover {
-  color: var(--accent-bright);
-  border-color: var(--accent-dim);
+color: var(--accent-bright);
+border-color: var(--accent-dim);
 }
 
 /* ==========================================================================
-   Taxonomy / list views
-   ========================================================================== */
+Taxonomy / list views
+========================================================================== */
 
 .taxonomy-cloud {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  margin: 1.5rem 0 2.5rem;
+display: flex;
+flex-wrap: wrap;
+gap: 0.6rem;
+margin: 1.5rem 0 2.5rem;
 }
 .taxonomy-cloud a {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  text-decoration: none;
-  color: var(--text);
-  background: var(--bg-raised);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 0.45rem 0.85rem;
+font-family: var(--font-mono);
+font-size: 0.85rem;
+text-decoration: none;
+color: var(--text);
+background: var(--bg-raised);
+border: 1px solid var(--border);
+border-radius: var(--radius);
+padding: 0.45rem 0.85rem;
 }
 .taxonomy-cloud a:hover {
-  border-color: var(--accent);
-  color: var(--accent-bright);
+border-color: var(--accent);
+color: var(--accent-bright);
 }
 .taxonomy-cloud .count {
-  color: var(--text-faint);
-  margin-left: 0.35rem;
+color: var(--text-faint);
+margin-left: 0.35rem;
 }
 
 .list-row {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--border-soft);
-  text-decoration: none;
+display: flex;
+align-items: baseline;
+justify-content: space-between;
+gap: 1rem;
+padding: 1rem 0;
+border-bottom: 1px solid var(--border-soft);
+text-decoration: none;
 }
 .list-row:hover .list-row-title { color: var(--accent-bright); }
 .list-row-title {
-  font-family: var(--font-mono);
-  color: var(--text);
-  font-size: 1.02rem;
+font-family: var(--font-mono);
+color: var(--text);
+font-size: 1.02rem;
 }
 .list-row-date {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  font-variant-numeric: tabular-nums;
-  color: var(--text-faint);
-  white-space: nowrap;
+font-family: var(--font-mono);
+font-size: 0.8rem;
+font-variant-numeric: tabular-nums;
+color: var(--text-faint);
+white-space: nowrap;
 }
 
-/* ==========================================================================
-   Single post / project
-   ========================================================================== */
+/* STREAMING_CHUNK:Styling single post layouts and prose elements... /
+/ ==========================================================================
+Single post / project
+========================================================================== */
 
 .post-header {
-  padding: 2.5rem 0 1.5rem;
-  border-bottom: 1px solid var(--border);
+padding: 2.5rem 0 1.5rem;
+border-bottom: 1px solid var(--border);
 }
 .post-meta {
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  font-variant-numeric: tabular-nums;
-  color: var(--text-faint);
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-top: 0.75rem;
+font-family: var(--font-mono);
+font-size: 0.82rem;
+font-variant-numeric: tabular-nums;
+color: var(--text-faint);
+display: flex;
+gap: 1rem;
+flex-wrap: wrap;
+margin-top: 0.75rem;
 }
 .post-meta .sep { color: var(--border); }
 
 .post-source-btn {
-  margin-top: 1.25rem;
+margin-top: 1.25rem;
 }
 
 /* Floating "view source" button — desktop only; inline on mobile */
 .floating-src-btn {
-  position: fixed;
-  top: 5.5rem;
-  right: 1.75rem;
-  z-index: 5;
+position: fixed;
+top: 5.5rem;
+right: 1.75rem;
+z-index: 5;
 }
 @media (max-width: 900px) {
-  .floating-src-btn { position: static; margin-top: 1.25rem; }
+.floating-src-btn { position: static; margin-top: 1.25rem; }
 }
 
 .post-body {
-  padding: 2.25rem 0;
-  font-size: 1.03rem;
+padding: 2.25rem 0;
+font-size: 1.03rem;
 }
 .post-body h2 { margin-top: 2.2rem; }
 .post-body h3 { margin-top: 1.8rem; }
 .post-body img {
-  max-width: 100%;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
+max-width: 100%;
+border-radius: var(--radius);
+border: 1px solid var(--border);
 }
 .post-body blockquote {
-  margin: 1.5rem 0;
-  padding: 0.4rem 1.2rem;
-  border-left: 2px solid var(--accent-dim);
-  color: var(--text-muted);
+margin: 1.5rem 0;
+padding: 0.4rem 1.2rem;
+border-left: 2px solid var(--accent-dim);
+color: var(--text-muted);
 }
 .post-body table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.92rem;
+width: 100%;
+border-collapse: collapse;
+font-size: 0.92rem;
 }
 .post-body th, .post-body td {
-  border: 1px solid var(--border);
-  padding: 0.5rem 0.75rem;
-  text-align: left;
+border: 1px solid var(--border);
+padding: 0.5rem 0.75rem;
+text-align: left;
 }
 .post-body th { font-family: var(--font-mono); color: var(--text-muted); }
 
+/* STREAMING_CHUNK:Applying styles to footer and utility elements... */
 .post-nav {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--gap);
-  padding: 2rem 0 3.5rem;
-  border-top: 1px solid var(--border);
-  margin-top: 1rem;
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: var(--gap);
+padding: 2rem 0 3.5rem;
+border-top: 1px solid var(--border);
+margin-top: 1rem;
 }
 .post-nav-link {
-  text-decoration: none;
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1rem 1.1rem;
-  display: block;
-  transition: border-color var(--speed) ease;
+text-decoration: none;
+color: var(--text);
+border: 1px solid var(--border);
+border-radius: var(--radius);
+padding: 1rem 1.1rem;
+display: block;
+transition: border-color var(--speed) ease;
 }
 .post-nav-link:hover { border-color: var(--accent-dim); }
 .post-nav-link .dir {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: var(--text-faint);
-  display: block;
-  margin-bottom: 0.3rem;
+font-family: var(--font-mono);
+font-size: 0.72rem;
+color: var(--text-faint);
+display: block;
+margin-bottom: 0.3rem;
 }
 .post-nav-link.next { text-align: right; }
 
 /* ==========================================================================
-   Footer
-   ========================================================================== */
+Footer
+========================================================================== */
 
 .site-footer {
-  border-top: 1px solid var(--border);
-  margin-top: 4rem;
-  position: relative;
-  z-index: 1;
+border-top: 1px solid var(--border);
+margin-top: 4rem;
+position: relative;
+z-index: 1;
 }
 .site-footer .wrap {
-  padding: 1.75rem 1.5rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem 1.5rem;
-  justify-content: space-between;
-  align-items: center;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  color: var(--text-faint);
+padding: 1.75rem 1.5rem;
+display: flex;
+flex-wrap: wrap;
+gap: 0.75rem 1.5rem;
+justify-content: space-between;
+align-items: center;
+font-family: var(--font-mono);
+font-size: 0.78rem;
+color: var(--text-faint);
 }
 .site-footer a { color: var(--text-faint); }
 .site-footer a:hover { color: var(--accent); }
 
 /* ==========================================================================
-   Utility
-   ========================================================================== */
+Utility
+========================================================================== */
 
 .eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin: 0 0 0.5rem;
+font-family: var(--font-mono);
+font-size: 0.8rem;
+letter-spacing: 0.06em;
+text-transform: uppercase;
+margin: 0 0 0.5rem;
+/* Gradient Effect /
+background: var(--accent-gradient);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+color: var(--accent); / Fallback */
 }
 .empty-state {
-  padding: 3rem 0;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
+padding: 3rem 0;
+color: var(--text-muted);
+font-family: var(--font-mono);
 }
 
 @media (max-width: 640px) {
-  .site-header .wrap { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
-  .post-nav { grid-template-columns: 1fr; }
-  .post-nav-link.next { text-align: left; }
-  h1 { font-size: 1.7rem; }
+.site-header .wrap { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+.post-nav { grid-template-columns: 1fr; }
+.post-nav-link.next { text-align: left; }
+h1 { font-size: 1.7rem; }
 }
 
-/* ==========================================================================
-   CV page
-   ========================================================================== */
+/* STREAMING_CHUNK:Structuring CV layouts and print media queries... /
+/ ==========================================================================
+CV page
+========================================================================== */
 
 .cv-header {
-  padding: 2.75rem 0 2rem;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 0.5rem;
+padding: 2.75rem 0 2rem;
+border-bottom: 1px solid var(--border);
+margin-bottom: 0.5rem;
 }
 .cv-header-row {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
+display: flex;
+align-items: center;
+gap: 1.5rem;
 }
 .cv-portrait {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  border: 2px solid var(--accent);
-  object-fit: cover;
-  flex: none;
+width: 110px;
+height: 110px;
+border-radius: 50%;
+border: 2px solid var(--accent);
+object-fit: cover;
+flex: none;
 }
 .cv-header-text { min-width: 0; }
 .cv-header h1 { margin: 0 0 0.6rem; }
 .cv-meta {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin: 0;
+font-family: var(--font-mono);
+font-size: 0.85rem;
+color: var(--text-muted);
+display: flex;
+flex-wrap: wrap;
+gap: 0.4rem;
+margin: 0;
 }
 .cv-meta a { color: var(--text-muted); text-decoration: none; }
 .cv-meta a:hover { color: var(--accent-bright); }
 .cv-meta .sep { color: var(--border); margin: 0 0.15rem; }
 
 .cv-prose {
-  color: var(--text-muted);
-  max-width: 68ch;
-  margin: 0;
+color: var(--text-muted);
+max-width: 68ch;
+margin: 0;
 }
 
 .cv-entry { padding: 1.1rem 0; border-bottom: 1px solid var(--border-soft); }
 .cv-entry:last-child { border-bottom: none; }
 
 .cv-entry-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
+display: flex;
+align-items: baseline;
+justify-content: space-between;
+gap: 1rem;
+flex-wrap: wrap;
 }
 .cv-entry-title {
-  font-family: var(--font-mono);
-  font-weight: 700;
-  color: var(--text);
-  font-size: 1rem;
+font-family: var(--font-mono);
+font-weight: 700;
+color: var(--text);
+font-size: 1rem;
 }
 .cv-entry-dates {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  font-variant-numeric: tabular-nums;
-  color: var(--text-faint);
-  white-space: nowrap;
+font-family: var(--font-mono);
+font-size: 0.8rem;
+font-variant-numeric: tabular-nums;
+color: var(--text-faint);
+white-space: nowrap;
 }
 .cv-entry-sub {
-  margin: 0.3rem 0 0;
-  color: var(--text-muted);
-  font-style: italic;
-  font-size: 0.94rem;
+margin: 0.3rem 0 0;
+color: var(--text-muted);
+font-style: italic;
+font-size: 0.94rem;
 }
 
 .cv-bullets {
-  margin: 0.6rem 0 0;
-  padding-left: 1.1rem;
-  color: var(--text);
+margin: 0.6rem 0 0;
+padding-left: 1.1rem;
+color: var(--text);
 }
 .cv-bullets li { margin-bottom: 0.3rem; }
 .cv-bullets li::marker { color: var(--accent); }
 
 .cv-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+display: flex;
+flex-wrap: wrap;
+gap: 0.5rem;
 }
 
 .badge-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.4rem;
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+gap: 0.4rem;
 }
 .badge-row img {
-  height: 22px;
-  display: block;
-  border-radius: 3px;
+height: 22px;
+display: block;
+border-radius: 3px;
 }
 
 .cv-print-btn {
-  color: var(--text-muted);
-  background: var(--bg-raised);
-  cursor: pointer;
+color: var(--text-muted);
+background: var(--bg-raised);
+cursor: pointer;
 }
 
 /* ==========================================================================
-   Print — makes the CV page itself the printable/PDF source, so it can
-   never drift out of sync with a separately-maintained file. Triggered by
-   the "print / save as pdf" button (window.print()) or Ctrl/Cmd+P.
-   ========================================================================== */
+Print — makes the CV page itself the printable/PDF source, so it can
+never drift out of sync with a separately-maintained file. Triggered by
+the "print / save as pdf" button (window.print()) or Ctrl/Cmd+P.
+========================================================================== 
+*/
 @media print {
-  .site-header, .site-footer, .starfield,
-  .skip-link, .cv-print-btn, .main-nav {
-    display: none !important;
-  }
-  html, body {
-    background: #964d4d !important;
-    background-image: none !important;
-  }
-  body { color: #440c0c !important; font-size: 12pt; }
-  .wrap { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
-  .cv-header { border-bottom: 1px solid #999; padding: 0 0 0.75rem; margin-bottom: 0.5rem; }
-  h1, h2, .cv-entry-title { color: #111 !important; }
-  .section-heading { break-after: avoid; }
-  .section-heading .rule { display: none; }
-  .section-heading .rule::after { display: none; }
-  .cv-entry { border-bottom: 1px solid #fb2323 !important; break-inside: avoid; padding: 0.6rem 0; }
-  .cv-entry-dates, .cv-meta, .cv-entry-sub, .cv-prose { color: #444 !important; }
-  .cv-portrait { border-color: #999 !important; }
-  .cv-meta a, a { color: #111 !important; text-decoration: underline; }
-  .tag { border-color: #999 !important; color: #111 !important; }
-  a[href]::after { content: none !important; } /* no printed URLs cluttering the page */
+.site-header, .site-footer, .starfield,
+.skip-link, .cv-print-btn, .main-nav {
+display: none !important;
+}
+html, body {
+background: #964d4d !important;
+background-image: none !important;
+}
+body { color: #440c0c !important; font-size: 12pt; }
+.wrap { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+.cv-header { border-bottom: 1px solid #999; padding: 0 0 0.75rem; margin-bottom: 0.5rem; }
+h1, h2, .cv-entry-title { color: #111 !important; }
+.section-heading { break-after: avoid; }
+.section-heading .rule { display: none; }
+.section-heading .rule::after { display: none; }
+.cv-entry { border-bottom: 1px solid #fb2323 !important; break-inside: avoid; padding: 0.6rem 0; }
+.cv-entry-dates, .cv-meta, .cv-entry-sub, .cv-prose { color: #444 !important; }
+.cv-portrait { border-color: #999 !important; }
+.cv-meta a, a { color: #111 !important; text-decoration: underline; }
+.tag { border-color: #999 !important; color: #111 !important; }
+a[href]::after { content: none !important; } / no printed URLs cluttering the page */
 }
