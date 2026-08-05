@@ -23,9 +23,9 @@ experience:
     org: "Regulatory Genomics and Bioinformatics Lab — PI: Dr. Alejandra Eugenia Medina Rivera · Laboratorio Internacional de Investigación sobre el Genoma Humano (LIIGH), UNAM"
     dates: "2024 – present"
     bullets:
-      - "Helped with the demultiplexing pipeline development."
-      - "Learned about QC basics on scATAC-seq data."
-      - "Currently Working on developing a Gene Regulatory Network pipeline with JAGUAR data."
+      - "Helped with the demultiplexing pipeline development"
+      - "Learned about QC basics on scATAC-seq data"
+      - "Currently Working on developing a Gene Regulatory Network pipeline with JAGUAR data"
 
 
 talks:
@@ -45,23 +45,18 @@ projects:
   - title: "Independent Game Project"
     detail: "Godot Engine — developing a game in GDScript, currently extending it into C#"
     dates: "ongoing"
-  - title: "Academic Bioinformatics Projects (GWAS, Trio Analysis & Transcriptomics)"
-    detail: "UNAM"
-    dates: "2024 – 2026"
-    bullets:
-      - "Conducted Genome-Wide Association Studies (GWAS) and family trio analyses utilizing PLINK and statistical packages."
-      - "Performed comprehensive transcriptomic data analysis covering bulk RNA-seq, single-cell RNA-seq (scRNA-seq), and spatial transcriptomics workflows."
-      - "Processed, cleaned, and manipulated large-scale biological datasets using R (dplyr) and Bash scripting."
 
 skills:
-  - name: "Programming & Data Analysis"
-    level: "R (dplyr, ggplot2), Python, Bash, PHP (basic)"
-  - name: "HPC"
-    level: "LSF Workload Manager, Linux environments (CachyOS)"
-  - name: "Machine Learning & Deep Learning"
-    level: "PyTorch (Siamese networks with cosine similarity), Perceptron, ADALINE"
-  - name: "Version Control & Tools"
-    level: "Git, Godot Engine (GDScript | C#)"
+  - name: "R"
+    level: "Proficient"
+  - name: "Python"
+    level: "Basic"
+  - name: "GDScript"
+    level: "Familiar"
+  - name: "C#"
+    level: "Learning"
+  - name: "Git"
+    level: "Basic"
 
 languages:
   - name: "Spanish"
