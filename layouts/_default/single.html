@@ -30,6 +30,22 @@
     {{ end }}
   </header>
 
+  {{ $toc := .TableOfContents }}
+  {{ if and (ne .Params.toc false) (ge (len (findRE "<li>" $toc)) 2) }}
+    <input type="checkbox" id="toc-toggle" class="toc-toggle-input">
+    <label for="toc-toggle" class="toc-toggle-btn"><span>≡ contents</span></label>
+    <label for="toc-toggle" class="toc-backdrop" aria-hidden="true"></label>
+    <aside class="post-toc" aria-label="Table of contents">
+      <div class="post-toc-head">
+        <span>./table-of-contents</span>
+        <label for="toc-toggle" class="post-toc-close" aria-label="Close table of contents">×</label>
+      </div>
+      <div class="post-toc-body">
+        {{ $toc }}
+      </div>
+    </aside>
+  {{ end }}
+
   <div class="post-body">
     {{ .Content }}
   </div>

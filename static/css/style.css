@@ -530,6 +530,140 @@ input:focus-visible {
   .floating-src-btn { position: static; margin-top: 1.25rem; }
 }
 
+/* Floating, sliding table of contents — pure CSS (checkbox-hack), no JS required.
+   Slides in from the right on desktop, from the bottom on mobile. */
+.toc-toggle-input {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.toc-toggle-btn {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 20;
+  writing-mode: vertical-rl;
+  padding: 0.85rem 0.55rem;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-right: none;
+  border-radius: var(--radius) 0 0 var(--radius);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color var(--speed), border-color var(--speed);
+}
+.toc-toggle-btn:hover { color: var(--accent-bright); border-color: var(--accent-dim); }
+.toc-toggle-input:checked ~ .toc-toggle-btn { color: var(--accent-bright); border-color: var(--accent-dim); }
+.toc-toggle-input:focus-visible ~ .toc-toggle-btn { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.toc-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--speed);
+  z-index: 15;
+}
+.toc-toggle-input:checked ~ .toc-backdrop { opacity: 1; pointer-events: auto; }
+
+.post-toc {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(320px, 85vw);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-raised);
+  border-left: 1px solid var(--border);
+  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.35);
+  transform: translateX(100%);
+  transition: transform 0.28s ease;
+  z-index: 20;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+}
+.toc-toggle-input:checked ~ .post-toc { transform: translateX(0); }
+
+.post-toc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.8rem;
+}
+.post-toc-close {
+  cursor: pointer;
+  color: var(--text-faint);
+  font-size: 1.2rem;
+  line-height: 1;
+}
+.post-toc-close:hover { color: var(--accent-bright); }
+
+.post-toc-body {
+  padding: 1rem 1.25rem;
+  overflow-y: auto;
+}
+.post-toc-body ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 1rem;
+  border-left: 1px solid var(--border-soft);
+}
+.post-toc-body > nav > ul { padding-left: 0; border-left: none; }
+.post-toc-body li { margin: 0.35rem 0; }
+.post-toc-body a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+.post-toc-body a:hover { color: var(--accent-bright); }
+
+@media (max-width: 900px) {
+  .toc-toggle-btn {
+    top: auto;
+    bottom: 1.25rem;
+    right: 1rem;
+    transform: none;
+    writing-mode: horizontal-tb;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.55rem 0.9rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  }
+
+  .post-toc {
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: auto;
+    max-height: 75vh;
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid var(--border);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.35);
+    transform: translateY(100%);
+  }
+  .toc-toggle-input:checked ~ .post-toc { transform: translateY(0); }
+}
+
 .post-body {
   padding: 2.25rem 0;
   font-size: 1.03rem;
