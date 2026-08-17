@@ -9,7 +9,7 @@ portrait: "/Vulgaris/img/portrait-placeholder.png"
 
 research_interests: >
   Regulatory genomics and gene regulatory networks; the molecular logic of
-  biological regeneration and cellular reprogramming — an interest shaped in
+  biological regeneration and cellular reprogramming - an interest shaped in
   part by the work of Sir John Gurdon on nuclear reprogramming, which I
   presented on and found deeply influential to how I think about research.
 
@@ -20,7 +20,7 @@ education:
 
 experience:
   - role: "Undergraduate Researcher"
-    org: "Regulatory Genomics and Bioinformatics Lab — PI: Dr. Alejandra Eugenia Medina Rivera · Laboratorio Internacional de Investigación sobre el Genoma Humano (LIIGH), UNAM"
+    org: "Regulatory Genomics and Bioinformatics Lab - PI: Dr. Alejandra Eugenia Medina Rivera · Laboratorio Internacional de Investigación sobre el Genoma Humano (LIIGH), UNAM"
     dates: "2024 – present"
     bullets:
       - "Helped with the demultiplexing pipeline development"
@@ -34,16 +34,16 @@ talks:
     dates: "2025"
 
 outreach:
-  - title: "Viernes de Bioinformática — Part 3"
+  - title: "Viernes de Bioinformática - Part 3"
     detail: "Participant · LIIGH, UNAM"
     dates: "Feb – Jun 2025"
-  - title: "Viernes de Bioinformática 2024 — Website Development"
+  - title: "Viernes de Bioinformática 2024 - Website Development"
     detail: "Contributed to building and maintaining the event website"
     dates: "2024"
 
 projects:
   - title: "Independent Game Project"
-    detail: "Godot Engine — developing a game in GDScript, currently extending it into C#"
+    detail: "Godot Engine - developing a game in GDScript, currently extending it into C#"
     dates: "ongoing"
 
 skills:
