@@ -28,10 +28,16 @@ summaryLength = 40
     noClasses = false
     lineNos = false
     codeFences = true
-    guessSyntax = true
+    guessSyntax = false
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block = [["\\[", "\\]"], ["$$", "$$"]]
+          inline = [["\\(", "\\)"]]
 
 [menu]
   [[menu.main]]

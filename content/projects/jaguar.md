@@ -7,6 +7,7 @@ summary: "A single-cell ATAC-seq pipeline designed to build a Gene Regulation Ne
 tags: ["scATAC-seq", "JAGUAR", "R", "Python", "Seurat"]
 github: "https://github.com/JAGUAR-LATAM/CCAN-Visualizer/"
 stack: ["Snakemake", "R", "Seurat", "SLURM"]
+mermaid: true
 ---
 
 ## The Problem
@@ -27,32 +28,52 @@ My work in this phase is to unveil how these patterns manifest and verify whethe
 
 To build the main highway of our network, I use **Cicero**. Cicero reads scATAC-seq data to identify when peaks are co-accessible (accessible simultaneously). Because our data lacks a time-series dimension, we calculate a consensus across all cells.
 
-This allows us to construct **CCANs** (Cis-Co-Accessibility Networks) — clusters of near-proximity peaks that form interacting blocks, rather than just simple pairwise interactions. 
+This allows us to construct **CCANs** (Cis-Co-Accessibility Networks) - clusters of near-proximity peaks that form interacting blocks, rather than just simple pairwise interactions. 
 
 ### Pipeline Flow
-`[Input: Seurat .rds]` -> 
 
-`[Monocle3 CDS]` -> 
+```mermaid
+flowchart TD
+    subgraph STEP1["Step 1 - create_cicero_cds.r (long, LSF, ~48h budget)"]
+        direction LR
+        A["Input:\nSeurat .rds"] --> B["Monocle3\nCDS"]
+        B --> C["Cicero\nCo-accessibility"]
+        C --> D["CCAN\nModules"]
+        D --> E["Gene Activity\nScores"]
+        E --> F["Output:\nIntegrated Seurat"]
+    end
 
-`[Cicero Co-accessibility]` -> 
+    F --> STEP2["Step 2 - TestingCCANSandCONNS.R\nper-CCAN track-plot PDFs"]
+    F --> STEP3["Step 3 - assign_ccan_genes.r\nGREAT regulatory-domain gene assignment"]
+    F --> STEP4A["Step 4 - annotate_ccans_go.r\n(LSF array, N chunks)\nGO:BP enrichment per CCAN"]
+    F -. optional, off by default .-> RDB1["annotate_ccans_regulomedb.r\n(LSF array, N shards)"]
 
-`[CCAN Modules]` -> 
+    STEP4A --> STEP4B["merge GO part-files\n-> one CSV"]
 
-`[Gene Activity Scores]` -> 
+    STEP3 --> STEP5["Step 5 - cluster_ccans_by_go.r\nCCAN x GO TF-IDF\n-> PCA -> UMAP -> Leiden"]
+    STEP4B --> STEP5
 
-`[Output: Integrated Seurat]`
+    STEP3 --> STEP6["Step 6 - build_ccan_index_go.r\nfinal per-CCAN JSON manifest"]
+    STEP5 --> STEP6
+    STEP2 -. PDF check only,\nnot a hard blocker .-> STEP6
 
-That little diagram above is really just step 1. In practice all of the Cicero-branch scripts get chained together by one driver, `1_scripts/cicero/run_pipeline.sh`, which submits each step to LSF and wires a `-w "done(...)"` dependency onto whatever it needs finished first — so the whole 6-step branch can be launched with a single `./run_pipeline.sh` and left to run unattended (steps 3-6 for one prefix take minutes-to-hours; step 1 is the multi-day one). Here's the full chain, with a checkbox for whether I've actually written up that step in this post yet:
+    RDB1 --> RDB2["merge_regulomedb_shards.r"]
+    RDB2 -. not yet wired\ninto step 6's JSON .-> STEP6
+
+    STEP6 --> OUT["Output:\nccan_index_&lt;prefix&gt;.json\n(external visualizer)"]
+```
+
+That little diagram above is really just step 1. In practice all of the Cicero-branch scripts get chained together by one driver, `1_scripts/cicero/run_pipeline.sh`, which submits each step to LSF and wires a `-w "done(...)"` dependency onto whatever it needs finished first - so the whole 6-step branch can be launched with a single `./run_pipeline.sh` and left to run unattended (steps 3-6 for one prefix take minutes-to-hours; step 1 is the multi-day one). Here's the full chain, with a checkbox for whether I've actually written up that step in this post yet:
 
 - [x] **Step 1 - `create_cicero_cds.r`**: Seurat → Cicero CDS → co-accessibility → CCANs → gene-activity matrix. The long one (~48h budget, only resumable up to the cached CDS). Walked through below in ["Create a cds object and Run Cicero"](#create-a-cds-object-and-run-cicero).
 - [x] **Step 2 - `TestingCCANSandCONNS.R`**: generates the per-CCAN track-plot PDFs (peaks + arcs + genes). Runs in parallel with steps 3-6, gated only on step 1. Walked through below in ["Analyze and Plot each CCANs"](#analyze-and-plot-each-ccans).
 - [ ] **Step 3 - `assign_ccan_genes.r`**: assigns genes to each CCAN via GREAT's regulatory-domain lookup (cheap, no statistical test). *Working on it...*
-- [ ] **Step 4 - `annotate_ccans_go.r`** (LSF array, one task per CCAN stripe) + merge: runs GREAT GO-term enrichment per CCAN (GO:BP by default, ~80-100s/CCAN — the expensive one) and merges the array's part-files back into one CSV. *Not written up yet.*
+- [ ] **Step 4 - `annotate_ccans_go.r`** (LSF array, one task per CCAN stripe) + merge: runs GREAT GO-term enrichment per CCAN (GO:BP by default, ~80-100s/CCAN - the expensive one) and merges the array's part-files back into one CSV. *Not written up yet.*
 - [ ] **Step 5 - `cluster_ccans_by_go.r`**: builds a CCAN × GO-term TF-IDF matrix from step 3's output and runs PCA → UMAP → Leiden clustering, validated against genomic locality and GO/immune-keyword ground truth. Needs steps 3 and 4. *Not written up yet.*
 - [ ] **Step 6 - `build_ccan_index_go.r`**: assembles the final per-CCAN JSON manifest (region/size/PDF/GO/cluster fields combined) for an external visualizer. Needs steps 3 and 5. *Not written up yet.*
-- [ ] **Optional - RegulomeDB branch** (`annotate_ccans_regulomedb.r` LSF array + `merge_regulomedb_shards.r`): off by default (`--run-regulomedb`); queries the RegulomeDB REST API per peak for independent chromatin/TF-binding evidence. Runs in parallel with steps 3-6, gated only on step 1. Not yet wired into step 6's JSON either way — still future work. *Not written up yet.*
+- [ ] **Optional - RegulomeDB branch** (`annotate_ccans_regulomedb.r` LSF array + `merge_regulomedb_shards.r`): off by default (`--run-regulomedb`); queries the RegulomeDB REST API per peak for independent chromatin/TF-binding evidence. Runs in parallel with steps 3-6, gated only on step 1. Not yet wired into step 6's JSON either way - still future work. *Not written up yet.*
 
-So this post currently covers steps 1 and 2 of the six — steps 3-6 (plus the optional RegulomeDB branch) are next on the list to document.
+So this post currently covers steps 1 and 2 of the six - steps 3-6 (plus the optional RegulomeDB branch) are next on the list to document.
 
 ---
 
@@ -491,9 +512,9 @@ deg <- degree(g)
 hubs <- names(sort(deg, decreasing = TRUE)[1:20])
 ```
 
-Now that we have our top 20 "hub" peaks (the ones with the most connections in the graph), we turn them into an actual data frame so we can eventually plot them: split each peak ID (`chr-start-end`) apart and compute its midpoint (`center`) — that midpoint is the x-coordinate we'll later hand to ggplot to draw something at that spot.
+Now that we have our top 20 "hub" peaks (the ones with the most connections in the graph), we turn them into an actual data frame so we can eventually plot them: split each peak ID (`chr-start-end`) apart and compute its midpoint (`center`) - that midpoint is the x-coordinate we'll later hand to ggplot to draw something at that spot.
 
-Then, separately, we score peaks a different way: instead of just counting connections (degree), we add up how *strong* those connections are. For every peak, sum the `coaccess` value of every connection it's part of — that gives `total_strength`. Taking the top 10 peaks by that score gives us a coaccess-weighted hub list, which is a bit more informative than raw degree alone.
+Then, separately, we score peaks a different way: instead of just counting connections (degree), we add up how *strong* those connections are. For every peak, sum the `coaccess` value of every connection it's part of - that gives `total_strength`. Taking the top 10 peaks by that score gives us a coaccess-weighted hub list, which is a bit more informative than raw degree alone.
 
 ```r
 # Make a data frame that contain the center of each peak
@@ -536,7 +557,7 @@ top10 <- node_strength |>
   head(10)
 ```
 
-Quick gut-check before going further: I hardcoded the coordinates of the single biggest hub peak I'd already spotted (`chr12:113040427-113041384`) and just asked, in the console, "what genes are actually near this thing?" using `findOverlaps()` and `distanceToNearest()`. Nothing here gets saved — it's scratch code, not part of the real pipeline — but it's how I first sanity-checked that these hub peaks were landing near genes I recognized before trusting the rest of the analysis.
+Quick gut-check before going further: I hardcoded the coordinates of the single biggest hub peak I'd already spotted (`chr12:113040427-113041384`) and just asked, in the console, "what genes are actually near this thing?" using `findOverlaps()` and `distanceToNearest()`. Nothing here gets saved - it's scratch code, not part of the real pipeline - but it's how I first sanity-checked that these hub peaks were landing near genes I recognized before trusting the rest of the analysis.
 
 ```r
 peak_gr_peak_top <- GRanges(
@@ -559,7 +580,7 @@ dists <- distanceToNearest(
 )
 ```
 
-Now for real, across all 10 hub peaks at once: turn them into a proper `GRanges` object, then ask two questions — what's the single nearest gene to each hub in general, and specifically, how close is each hub to the known OAS genes (`OAS1`, `OAS2`, `OAS3`)? That second question is the whole point of this worked example — we already suspect this CCAN regulates the OAS locus, so we want to see the hubs "reaching toward" it.
+Now for real, across all 10 hub peaks at once: turn them into a proper `GRanges` object, then ask two questions - what's the single nearest gene to each hub in general, and specifically, how close is each hub to the known OAS genes (`OAS1`, `OAS2`, `OAS3`)? That second question is the whole point of this worked example - we already suspect this CCAN regulates the OAS locus, so we want to see the hubs "reaching toward" it.
 
 ```r
 peaks_split <- do.call(rbind, strsplit(top10$Peak, "-"))
@@ -589,7 +610,7 @@ oas_conns |>
   head(20)
 ```
 
-(That last one's just me eyeballing the 20 strongest connections in the console — no assignment, no save, just looking.)
+(That last one's just me eyeballing the 20 strongest connections in the console - no assignment, no save, just looking.)
 
 Time to put all of this together into one clean table. We pull the gene name and distance out of the `distanceToNearest()` result from before, and build `summary_table`: one row per hub peak, with its connection degree, mean/total coaccess strength, and its nearest gene + how far away that gene is.
 
@@ -612,7 +633,7 @@ summary_table <- data.frame(
 summary_table
 ```
 
-Not done yet — let's enrich `summary_table` with a few OAS-specific columns: does each hub peak physically overlap an OAS gene body, how far is it from the OAS locus as a whole (treating `OAS1`/`OAS2`/`OAS3` as one combined region), and a simple `HubScore` (degree × mean coaccess) to rank hubs by "how connected and how strong" in one number.
+Not done yet - let's enrich `summary_table` with a few OAS-specific columns: does each hub peak physically overlap an OAS gene body, how far is it from the OAS locus as a whole (treating `OAS1`/`OAS2`/`OAS3` as one combined region), and a simple `HubScore` (degree × mean coaccess) to rank hubs by "how connected and how strong" in one number.
 
 ```r
 coords <- do.call(
@@ -656,7 +677,7 @@ summary_table$HubScore <-
   summary_table$Mean_Coaccess
 ```
 
-With the exploration done, it's time to actually build the plot. First step: don't try to draw *every* connection in the CCAN, that's way too noisy — only keep the strongest ones. We take everything at or above the 95th percentile of coaccess (`threshold`), drop duplicate pairs (a connection A-B is the same as B-A, so we only keep rows where `Peak1 < Peak2` alphabetically), and compute each connection's midpoint-to-midpoint x-coordinates (`x1`, `x2`) — that's what lets us draw an arc from one peak to the other. `curvature`, `alpha_val`, and `width_val` are just the connection's coaccess strength rescaled into plotting ranges, so stronger connections get taller, more opaque, thicker arcs.
+With the exploration done, it's time to actually build the plot. First step: don't try to draw *every* connection in the CCAN, that's way too noisy - only keep the strongest ones. We take everything at or above the 95th percentile of coaccess (`threshold`), drop duplicate pairs (a connection A-B is the same as B-A, so we only keep rows where `Peak1 < Peak2` alphabetically), and compute each connection's midpoint-to-midpoint x-coordinates (`x1`, `x2`) - that's what lets us draw an arc from one peak to the other. `curvature`, `alpha_val`, and `width_val` are just the connection's coaccess strength rescaled into plotting ranges, so stronger connections get taller, more opaque, thicker arcs.
 
 ```r
 threshold <- quantile(
@@ -702,7 +723,7 @@ arc_df$alpha_val <- rescale(arc_df$coaccess, to = c(0.45, 0.95))
 arc_df$width_val <- rescale(arc_df$coaccess, to = c(0.8, 2.8))
 ```
 
-Now the actual plot. The idea is a genome-browser-style track: three panels stacked on top of each other, all sharing the exact same x-axis (genomic position), so everything lines up vertically. From top to bottom: the co-accessibility arcs, the peaks themselves, and the genes underneath — so you can visually trace "this arc connects this peak to that peak, and oh look, that peak sits right on top of this gene." We build each panel as its own ggplot object and glue them together with `patchwork` (the `/` operator) at the end.
+Now the actual plot. The idea is a genome-browser-style track: three panels stacked on top of each other, all sharing the exact same x-axis (genomic position), so everything lines up vertically. From top to bottom: the co-accessibility arcs, the peaks themselves, and the genes underneath - so you can visually trace "this arc connects this peak to that peak, and oh look, that peak sits right on top of this gene." We build each panel as its own ggplot object and glue them together with `patchwork` (the `/` operator) at the end.
 
 ```r
 # --------------------------------------------------------------------------
@@ -837,12 +858,12 @@ ggsave(
 
 ### 5. Generalizing the Plot into a Reusable Function
 
-Everything above was hardcoded for one CCAN (`ccan_id <- 1025`, the OAS one). Obviously I don't want to copy-paste that whole block by hand for every single CCAN in the dataset — so this section just wraps the exact same recipe (find hubs, filter by significance, build the 3-panel plot, save it) into one function, `plot_ccan_track()`, that takes a `ccan_id` and does the rest automatically. It's basically Section 4 again, but parameterized and with some extra guard rails added for the cases that didn't come up with our one hand-picked OAS example:
+Everything above was hardcoded for one CCAN (`ccan_id <- 1025`, the OAS one). Obviously I don't want to copy-paste that whole block by hand for every single CCAN in the dataset - so this section just wraps the exact same recipe (find hubs, filter by significance, build the 3-panel plot, save it) into one function, `plot_ccan_track()`, that takes a `ccan_id` and does the rest automatically. It's basically Section 4 again, but parameterized and with some extra guard rails added for the cases that didn't come up with our one hand-picked OAS example:
 
-- If a CCAN has zero connections at all, don't try to plot it — just skip it and say so.
+- If a CCAN has zero connections at all, don't try to plot it - just skip it and say so.
 - If the 95th-percentile threshold happens to filter out *everything* (can happen with very few connections), fall back to just showing the top 10 strongest ones instead of crashing.
 - If there's only one significant connection, `rescale()` has nothing to rescale against, so we hardcode sensible default curvature/alpha/width values instead.
-- Output files are saved into a per-chromosome, per-`dir_prefix` folder (e.g. `4_figures/full_cicero/chr12/CCAN_1025_track_plot.pdf`) instead of one flat folder — see the comment in the code below for why: CCAN IDs are just local cluster labels, not stable identifiers, so "CCAN 42" from one run and "CCAN 42" from another run (say, a different cell type) are unrelated regions that would otherwise silently overwrite each other's plot.
+- Output files are saved into a per-chromosome, per-`dir_prefix` folder (e.g. `4_figures/full_cicero/chr12/CCAN_1025_track_plot.pdf`) instead of one flat folder - see the comment in the code below for why: CCAN IDs are just local cluster labels, not stable identifiers, so "CCAN 42" from one run and "CCAN 42" from another run (say, a different cell type) are unrelated regions that would otherwise silently overwrite each other's plot.
 - The gene panel's height is now dynamic (`gene_panel_weight`) instead of fixed, so a CCAN overlapping 30 genes doesn't squash them all unreadably into the same space as a CCAN overlapping 2.
 
 ```r
@@ -1032,7 +1053,7 @@ plot_ccan_track <- function(ccan_id, ccans_df, conns_df, region_df, gene_gr, fig
 
 ### 6. Execute Loop Across All CCANs
 
-The payoff for generalizing Section 5: now plotting *every* CCAN in the dataset is just a `for` loop that calls `plot_ccan_track()` once per CCAN ID. The only thing worth calling out is the `tryCatch()` wrapper — with hundreds/thousands of CCANs, some are going to hit an edge case (weird coordinates, no genes nearby, whatever), and I don't want one bad CCAN to kill a run that's already halfway through everything else. So instead of crashing, a failed CCAN just prints an error message and the loop moves on to the next one.
+The payoff for generalizing Section 5: now plotting *every* CCAN in the dataset is just a `for` loop that calls `plot_ccan_track()` once per CCAN ID. The only thing worth calling out is the `tryCatch()` wrapper - with hundreds/thousands of CCANs, some are going to hit an edge case (weird coordinates, no genes nearby, whatever), and I don't want one bad CCAN to kill a run that's already halfway through everything else. So instead of crashing, a failed CCAN just prints an error message and the loop moves on to the next one.
 
 ```r
 # Create figure directory if it doesn't exist
@@ -1062,6 +1083,153 @@ for (i in 1:total_ccans) {
 }
 
 cat("Finished processing all CCANs.\n")
+```
+### Assign Genes to peaks from CCANs
+
+But why? We already assign genes in the previous step to plot them! Well, the thing is, I don't know, but they said that `GREATr` is a good tool for annotate peaks, so as a true scientist, I believe that. Jokes aside, in the previous step we find genes per CCAN not per peak so we're not really finding actual enhancer -> peak. But with `GREATr` it is per-peak assignment with an extended domain to search *"near"* to the TSS (With a basal window of 5kb/1kb).
+
+So `assign_ccan_genes.r` per-peak + extended-domain overlap is the more defensible one for actual enhancer→gene assignment; the TestingCCANSandCONNS.R version was always the quick exploratory gut-check (consistent with how that script is described elsewhere in the repo - "exploratory/scratch script").
+
+This script generates two outputs:
+
+- `<prefix>_CCAN_gene_assignments.csv` format: one row per (CCAN, gene) pair. This is the raw "CCAN -> gene list" object that
+
+- `<prefix>_CCAN_gene_summary.csv` - one row per CCAN, with n_peaks, n_genes n_go_terms_nonzero (GO:BP terms, after restricting to terms annotating 20-500 genes, that at least one of the CCAN's genes carries - the informative-vocabulary diagnostic, not gene count), and le2_genes (TRUE if the CCAN has <=2 genes, flagging CCANs whose row in a downstream TF-IDF (Some kind of technique to see if the present gene is important) matrix is dominated by a single gene's profile).
+
+Same dir_prefix/file_prefix/project_root convention as `TestingCCANSandCONNS.R` and `annotate_ccans_go.r`
+
+```bash
+#Usage: 
+Rscript assign_ccan_genes.r [dir_prefix] [file_prefix] [project_root] [go_category] [min_term_size] [max_term_size]
+```
+
+```r
+args <- commandArgs(trailingOnly = TRUE)
+
+dir_prefix    <- if (length(args) >= 1) args[1] else "full_cicero"
+file_prefix   <- if (length(args) >= 2) args[2] else "full_cicero"
+project_root  <- if (length(args) >= 3) args[3] else file.path(Sys.getenv("HOME"), "JAGUAR/GRN")
+go_category   <- if (length(args) >= 4) args[4] else "GO:BP"
+min_term_size <- if (length(args) >= 5) as.integer(args[5]) else 20
+max_term_size <- if (length(args) >= 6) as.integer(args[6]) else 500
+
+output_dir <- file.path(project_root, paste0("3_output/cicero_", dir_prefix))
+ccans_csv_path <- file.path(output_dir, paste0(file_prefix, "_CCANs.csv"))
+
+assignments_csv_path <- file.path(output_dir, paste0(file_prefix, "_CCAN_gene_assignments.csv"))
+summary_csv_path      <- file.path(output_dir, paste0(file_prefix, "_CCAN_gene_summary.csv"))
+```
+
+### 1. Data Preparation
+First Load the packages, then load the CCANs using the csv generated from the first step.
+
+Load the ranges from the peaks per CCAN using `GRanges` and then match the columns from the `all_peaks_gr` object with the loaded CCANs csv from the first step.
+```r
+suppressPackageStartupMessages({
+  library(rGREAT)
+  library(GenomicRanges)
+  library(org.Hs.eg.db)
+  library(TxDb.Hsapiens.UCSC.hg38.knownGene)
+})
+great_opt$verbose <- FALSE
+
+message(paste("[DEBUG] -> [Section 2] Reading CCANs from:", ccans_csv_path))
+ccans <- read.csv(ccans_csv_path)
+
+peaks_to_gr <- function(peak_strs) {
+  coords <- do.call(rbind, strsplit(peak_strs, "-"))
+  GRanges(
+    seqnames = coords[, 1],
+    ranges = IRanges(start = as.numeric(coords[, 2]), end = as.numeric(coords[, 3]))
+  )
+}
+
+all_peaks_gr <- peaks_to_gr(ccans$Peak)
+mcols(all_peaks_gr)$CCAN <- ccans$CCAN
+message(paste("[DEBUG]   -> Total CCANs:", length(unique(ccans$CCAN)), "| total peaks:", length(all_peaks_gr)))
+
+#==============================================================================
+# SECTION 3: BUILD REGULATORY DOMAINS + GENE SETS
+#==============================================================================
+message("[DEBUG] -> [Section 3] Building regulatory domains (GREAT basalPlusExt rule)...")
+tss <- getTSS("TxDb.Hsapiens.UCSC.hg38.knownGene")
+extended_tss <- extendTSS(
+  tss, mode = "basalPlusExt", extend_from = "TSS",
+  basal_upstream = 5000, basal_downstream = 1000, extension = 1e6
+)
+
+message(paste("[DEBUG]   -> Building", go_category, "gene sets and filtering to size", min_term_size, "-", max_term_size, "..."))
+gene_sets_list <- suppressMessages(getGeneSetsFromOrgDb(org.Hs.eg.db, ontology = sub("^GO:", "", go_category)))
+sizes <- lengths(gene_sets_list)
+gene_sets_filt <- gene_sets_list[sizes >= min_term_size & sizes <= max_term_size]
+message(paste("[DEBUG]   -> Gene sets:", length(gene_sets_list), "total ->", length(gene_sets_filt), "after size filter"))
+
+# Invert gene_sets_filt (term -> genes) into (gene -> terms) for fast per-CCAN lookup.
+terms_per_gene <- split(rep(names(gene_sets_filt), lengths(gene_sets_filt)), unlist(gene_sets_filt, use.names = FALSE))
+
+#==============================================================================
+# SECTION 4: ASSIGN GENES TO PEAKS (REGULATORY-DOMAIN OVERLAP, NOT A TEST)
+#==============================================================================
+message("[DEBUG] -> [Section 4] Overlapping peaks against regulatory domains...")
+hits <- findOverlaps(all_peaks_gr, extended_tss)
+
+assoc <- data.frame(
+  CCAN = mcols(all_peaks_gr)$CCAN[queryHits(hits)],
+  gene_id = mcols(extended_tss)$gene_id[subjectHits(hits)],
+  stringsAsFactors = FALSE
+)
+assoc <- unique(assoc)
+
+message(paste("[DEBUG]   -> Total (CCAN, gene) associations:", nrow(assoc)))
+
+message("[DEBUG]   -> Mapping Entrez gene_id -> gene symbol...")
+sym_map <- suppressMessages(AnnotationDbi::select(
+  org.Hs.eg.db, keys = unique(assoc$gene_id), keytype = "ENTREZID", columns = "SYMBOL"
+))
+assoc$gene_symbol <- sym_map$SYMBOL[match(assoc$gene_id, sym_map$ENTREZID)]
+
+write.csv(assoc, assignments_csv_path, row.names = FALSE)
+message(paste("[DEBUG]   -> Wrote gene assignments to:", assignments_csv_path))
+
+#==============================================================================
+# SECTION 5: PER-CCAN SUMMARY (n_genes, n_go_terms_nonzero, le2_genes flag)
+#==============================================================================
+message("[DEBUG] -> [Section 5] Building per-CCAN summary...")
+
+peaks_per_ccan <- table(ccans$CCAN)
+genes_by_ccan <- split(assoc$gene_id, assoc$CCAN)
+
+all_ccan_ids <- sort(unique(ccans$CCAN))
+
+n_genes <- sapply(all_ccan_ids, function(id) {
+  g <- genes_by_ccan[[as.character(id)]]
+  if (is.null(g)) 0L else length(unique(g))
+})
+
+n_go_terms_nonzero <- sapply(all_ccan_ids, function(id) {
+  g <- genes_by_ccan[[as.character(id)]]
+  if (is.null(g)) return(0L)
+  terms <- unlist(terms_per_gene[unique(g)], use.names = FALSE)
+  length(unique(terms))
+})
+
+summary_df <- data.frame(
+  CCAN = all_ccan_ids,
+  n_peaks = as.integer(peaks_per_ccan[as.character(all_ccan_ids)]),
+  n_genes = n_genes,
+  n_go_terms_nonzero = n_go_terms_nonzero,
+  le2_genes = n_genes <= 2
+)
+
+write.csv(summary_df, summary_csv_path, row.names = FALSE)
+message(paste("[DEBUG]   -> Wrote per-CCAN summary to:", summary_csv_path))
+
+message("[DEBUG] ==============================================================")
+message(paste("[DEBUG] DONE.", length(all_ccan_ids), "CCANs |",
+              sum(n_genes == 0), "with 0 genes |",
+              sum(n_go_terms_nonzero == 0), "with 0 nonzero GO terms |",
+              sum(summary_df$le2_genes), "with <=2 genes"))
+message("[DEBUG] ==============================================================")
 
 ```
 
@@ -1267,7 +1435,7 @@ cat("OK: Mapping saved to sample_fragment_mapping.tsv\n\n")
 
 ### Step 6: Stick the Fragment Path onto Every Cell (and Export)
 
-Ok, last one, I promise. We already built `mapping_df`, our little "who owns which fragments file" dictionary. Now we just glue that onto the metadata: for every single cell, look up its `dataset`, find that dataset's row in `mapping_df`, and copy the `fragment_path` over. That's it, that's the whole idea — `match()` does the lookup, so a one-liner does what would otherwise be another one of those `for` loops.
+Ok, last one, I promise. We already built `mapping_df`, our little "who owns which fragments file" dictionary. Now we just glue that onto the metadata: for every single cell, look up its `dataset`, find that dataset's row in `mapping_df`, and copy the `fragment_path` over. That's it, that's the whole idea - `match()` does the lookup, so a one-liner does what would otherwise be another one of those `for` loops.
 
 ```R
 cat("=== ADDING SAMPLE INFO TO METADATA ===\n")
@@ -1284,7 +1452,7 @@ print(table(!is.na(seurat_obj$fragment_path)))
 cat("\n")
 ```
 
-That last `table(!is.na(...))` is just a cheap sanity check: if any cell came back `FALSE` (i.e. `NA`), it means that cell's dataset had no match in `mapping_df` — which shouldn't happen, but I'd rather see it printed loud and clear than find out three steps later when pycisTopic silently drops cells.
+That last `table(!is.na(...))` is just a cheap sanity check: if any cell came back `FALSE` (i.e. `NA`), it means that cell's dataset had no match in `mapping_df` - which shouldn't happen, but I'd rather see it printed loud and clear than find out three steps later when pycisTopic silently drops cells.
 
 (Optional) Since I only care about Monocytes and Dendritic cells for this GRN, this is also a convenient spot to subset the object down to just those, before writing anything out. Skip this chunk if you want the full `predicted.l1` population instead.
 

@@ -7,6 +7,8 @@ summary: "One-sentence description shown on cards and in search results."
 tags: []                     # e.g. ["Python", "HPC", "scRNA-seq"]
 github: ""                   # link to the source repo, powers the floating button
 stack: []                    # optional: languages/frameworks, if you want to separate from tags
+math: false                  # set true to load KaTeX for this page (use \( \) inline, $$ $$ or \[ \] block)
+mermaid: false                # set true to load Mermaid for this page (```mermaid``` fenced code blocks)
 ---
 
 <!--

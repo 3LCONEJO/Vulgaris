@@ -20,8 +20,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
 
 
-<link rel="stylesheet" href="/Vulgaris/css/style.css?v=1786715438">
-<link rel="stylesheet" href="/Vulgaris/css/syntax.css?v=1786715438">
+<link rel="stylesheet" href="/Vulgaris/css/style.css?v=1786721166">
+<link rel="stylesheet" href="/Vulgaris/css/syntax.css?v=1786721166">
+
+
 
 
 
@@ -143,6 +145,8 @@
         <li><a href="#4--an-example-using-oas">4.- An example using OAS</a></li>
         <li><a href="#5-generalizing-the-plot-into-a-reusable-function">5. Generalizing the Plot into a Reusable Function</a></li>
         <li><a href="#6-execute-loop-across-all-ccans">6. Execute Loop Across All CCANs</a></li>
+        <li><a href="#assign-genes-to-peaks-from-ccans">Assign Genes to peaks from CCANs</a></li>
+        <li><a href="#1-data-preparation">1. Data Preparation</a></li>
       </ul>
     </li>
     <li><a href="#next-steps-pycistopic">NEXT-STEPS: pycisTopic</a>
@@ -193,25 +197,47 @@
 <hr>
 <h2 id="approach-cicero--co-accessibility">Approach: Cicero &amp; Co-accessibility</h2>
 <p>To build the main highway of our network, I use <strong>Cicero</strong>. Cicero reads scATAC-seq data to identify when peaks are co-accessible (accessible simultaneously). Because our data lacks a time-series dimension, we calculate a consensus across all cells.</p>
-<p>This allows us to construct <strong>CCANs</strong> (Cis-Co-Accessibility Networks) — clusters of near-proximity peaks that form interacting blocks, rather than just simple pairwise interactions.</p>
+<p>This allows us to construct <strong>CCANs</strong> (Cis-Co-Accessibility Networks) − clusters of near-proximity peaks that form interacting blocks, rather than just simple pairwise interactions.</p>
 <h3 id="pipeline-flow">Pipeline Flow</h3>
-<p><code>[Input: Seurat .rds]</code> -&gt;</p>
-<p><code>[Monocle3 CDS]</code> -&gt;</p>
-<p><code>[Cicero Co-accessibility]</code> -&gt;</p>
-<p><code>[CCAN Modules]</code> -&gt;</p>
-<p><code>[Gene Activity Scores]</code> -&gt;</p>
-<p><code>[Output: Integrated Seurat]</code></p>
-<p>That little diagram above is really just step 1. In practice all of the Cicero-branch scripts get chained together by one driver, <code>1_scripts/cicero/run_pipeline.sh</code>, which submits each step to LSF and wires a <code>-w &quot;done(...)&quot;</code> dependency onto whatever it needs finished first — so the whole 6-step branch can be launched with a single <code>./run_pipeline.sh</code> and left to run unattended (steps 3-6 for one prefix take minutes-to-hours; step 1 is the multi-day one). Here&rsquo;s the full chain, with a checkbox for whether I&rsquo;ve actually written up that step in this post yet:</p>
+<pre tabindex="0"><code class="language-mermaid" data-lang="mermaid">flowchart TD
+    subgraph STEP1[&#34;Step 1 — create_cicero_cds.r (long, LSF, ~48h budget)&#34;]
+        direction LR
+        A[&#34;Input:\nSeurat .rds&#34;] --&gt; B[&#34;Monocle3\nCDS&#34;]
+        B --&gt; C[&#34;Cicero\nCo-accessibility&#34;]
+        C --&gt; D[&#34;CCAN\nModules&#34;]
+        D --&gt; E[&#34;Gene Activity\nScores&#34;]
+        E --&gt; F[&#34;Output:\nIntegrated Seurat&#34;]
+    end
+
+    F --&gt; STEP2[&#34;Step 2 — TestingCCANSandCONNS.R\nper-CCAN track-plot PDFs&#34;]
+    F --&gt; STEP3[&#34;Step 3 — assign_ccan_genes.r\nGREAT regulatory-domain gene assignment&#34;]
+    F --&gt; STEP4A[&#34;Step 4 — annotate_ccans_go.r\n(LSF array, N chunks)\nGO:BP enrichment per CCAN&#34;]
+    F -. optional, off by default .-&gt; RDB1[&#34;annotate_ccans_regulomedb.r\n(LSF array, N shards)&#34;]
+
+    STEP4A --&gt; STEP4B[&#34;merge GO part-files\n-&gt; one CSV&#34;]
+
+    STEP3 --&gt; STEP5[&#34;Step 5 — cluster_ccans_by_go.r\nCCAN x GO TF-IDF\n-&gt; PCA -&gt; UMAP -&gt; Leiden&#34;]
+    STEP4B --&gt; STEP5
+
+    STEP3 --&gt; STEP6[&#34;Step 6 — build_ccan_index_go.r\nfinal per-CCAN JSON manifest&#34;]
+    STEP5 --&gt; STEP6
+    STEP2 -. PDF check only,\nnot a hard blocker .-&gt; STEP6
+
+    RDB1 --&gt; RDB2[&#34;merge_regulomedb_shards.r&#34;]
+    RDB2 -. not yet wired\ninto step 6&#39;s JSON .-&gt; STEP6
+
+    STEP6 --&gt; OUT[&#34;Output:\nccan_index_&amp;lt;prefix&amp;gt;.json\n(external visualizer)&#34;]
+</code></pre><p>That little diagram above is really just step 1. In practice all of the Cicero-branch scripts get chained together by one driver, <code>1_scripts/cicero/run_pipeline.sh</code>, which submits each step to LSF and wires a <code>-w &quot;done(...)&quot;</code> dependency onto whatever it needs finished first − so the whole 6-step branch can be launched with a single <code>./run_pipeline.sh</code> and left to run unattended (steps 3-6 for one prefix take minutes-to-hours; step 1 is the multi-day one). Here&rsquo;s the full chain, with a checkbox for whether I&rsquo;ve actually written up that step in this post yet:</p>
 <ul>
 <li><input checked="" disabled="" type="checkbox"> <strong>Step 1 - <code>create_cicero_cds.r</code></strong>: Seurat → Cicero CDS → co-accessibility → CCANs → gene-activity matrix. The long one (~48h budget, only resumable up to the cached CDS). Walked through below in <a href="#create-a-cds-object-and-run-cicero">&ldquo;Create a cds object and Run Cicero&rdquo;</a>.</li>
 <li><input checked="" disabled="" type="checkbox"> <strong>Step 2 - <code>TestingCCANSandCONNS.R</code></strong>: generates the per-CCAN track-plot PDFs (peaks + arcs + genes). Runs in parallel with steps 3-6, gated only on step 1. Walked through below in <a href="#analyze-and-plot-each-ccans">&ldquo;Analyze and Plot each CCANs&rdquo;</a>.</li>
 <li><input disabled="" type="checkbox"> <strong>Step 3 - <code>assign_ccan_genes.r</code></strong>: assigns genes to each CCAN via GREAT&rsquo;s regulatory-domain lookup (cheap, no statistical test). <em>Working on it&hellip;</em></li>
-<li><input disabled="" type="checkbox"> <strong>Step 4 - <code>annotate_ccans_go.r</code></strong> (LSF array, one task per CCAN stripe) + merge: runs GREAT GO-term enrichment per CCAN (GO:BP by default, ~80-100s/CCAN — the expensive one) and merges the array&rsquo;s part-files back into one CSV. <em>Not written up yet.</em></li>
+<li><input disabled="" type="checkbox"> <strong>Step 4 - <code>annotate_ccans_go.r</code></strong> (LSF array, one task per CCAN stripe) + merge: runs GREAT GO-term enrichment per CCAN (GO:BP by default, ~80-100s/CCAN − the expensive one) and merges the array&rsquo;s part-files back into one CSV. <em>Not written up yet.</em></li>
 <li><input disabled="" type="checkbox"> <strong>Step 5 - <code>cluster_ccans_by_go.r</code></strong>: builds a CCAN × GO-term TF-IDF matrix from step 3&rsquo;s output and runs PCA → UMAP → Leiden clustering, validated against genomic locality and GO/immune-keyword ground truth. Needs steps 3 and 4. <em>Not written up yet.</em></li>
 <li><input disabled="" type="checkbox"> <strong>Step 6 - <code>build_ccan_index_go.r</code></strong>: assembles the final per-CCAN JSON manifest (region/size/PDF/GO/cluster fields combined) for an external visualizer. Needs steps 3 and 5. <em>Not written up yet.</em></li>
-<li><input disabled="" type="checkbox"> <strong>Optional - RegulomeDB branch</strong> (<code>annotate_ccans_regulomedb.r</code> LSF array + <code>merge_regulomedb_shards.r</code>): off by default (<code>--run-regulomedb</code>); queries the RegulomeDB REST API per peak for independent chromatin/TF-binding evidence. Runs in parallel with steps 3-6, gated only on step 1. Not yet wired into step 6&rsquo;s JSON either way — still future work. <em>Not written up yet.</em></li>
+<li><input disabled="" type="checkbox"> <strong>Optional - RegulomeDB branch</strong> (<code>annotate_ccans_regulomedb.r</code> LSF array + <code>merge_regulomedb_shards.r</code>): off by default (<code>--run-regulomedb</code>); queries the RegulomeDB REST API per peak for independent chromatin/TF-binding evidence. Runs in parallel with steps 3-6, gated only on step 1. Not yet wired into step 6&rsquo;s JSON either way − still future work. <em>Not written up yet.</em></li>
 </ul>
-<p>So this post currently covers steps 1 and 2 of the six — steps 3-6 (plus the optional RegulomeDB branch) are next on the list to document.</p>
+<p>So this post currently covers steps 1 and 2 of the six − steps 3-6 (plus the optional RegulomeDB branch) are next on the list to document.</p>
 <hr>
 <h2 id="create-a-cds-object-and-run-cicero">Create a cds object and Run Cicero</h2>
 <p>Below is the step-by-step R script to execute this pipeline. It handles argument parsing for cluster environments (like SLURM|LSF), calculates co-accessibility, and integrates the results back into a Seurat object.</p>
@@ -559,8 +585,8 @@ then create a data frame where you include the name of that CCAN, which chromoso
 </span></span><span class="line"><span class="cl"><span class="n">deg</span> <span class="o">&lt;-</span> <span class="nf">degree</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">hubs</span> <span class="o">&lt;-</span> <span class="nf">names</span><span class="p">(</span><span class="nf">sort</span><span class="p">(</span><span class="n">deg</span><span class="p">,</span> <span class="n">decreasing</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span><span class="n">[1</span><span class="o">:</span><span class="m">20</span><span class="n">]</span><span class="p">)</span>
-</span></span></code></pre></div><p>Now that we have our top 20 &ldquo;hub&rdquo; peaks (the ones with the most connections in the graph), we turn them into an actual data frame so we can eventually plot them: split each peak ID (<code>chr-start-end</code>) apart and compute its midpoint (<code>center</code>) — that midpoint is the x-coordinate we&rsquo;ll later hand to ggplot to draw something at that spot.</p>
-<p>Then, separately, we score peaks a different way: instead of just counting connections (degree), we add up how <em>strong</em> those connections are. For every peak, sum the <code>coaccess</code> value of every connection it&rsquo;s part of — that gives <code>total_strength</code>. Taking the top 10 peaks by that score gives us a coaccess-weighted hub list, which is a bit more informative than raw degree alone.</p>
+</span></span></code></pre></div><p>Now that we have our top 20 &ldquo;hub&rdquo; peaks (the ones with the most connections in the graph), we turn them into an actual data frame so we can eventually plot them: split each peak ID (<code>chr-start-end</code>) apart and compute its midpoint (<code>center</code>) − that midpoint is the x-coordinate we&rsquo;ll later hand to ggplot to draw something at that spot.</p>
+<p>Then, separately, we score peaks a different way: instead of just counting connections (degree), we add up how <em>strong</em> those connections are. For every peak, sum the <code>coaccess</code> value of every connection it&rsquo;s part of − that gives <code>total_strength</code>. Taking the top 10 peaks by that score gives us a coaccess-weighted hub list, which is a bit more informative than raw degree alone.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Make a data frame that contain the center of each peak</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">hub_df</span> <span class="o">&lt;-</span> <span class="nf">do.call</span><span class="p">(</span>
@@ -599,7 +625,7 @@ then create a data frame where you include the name of that CCAN, which chromoso
 </span></span><span class="line"><span class="cl"><span class="n">top10</span> <span class="o">&lt;-</span> <span class="n">node_strength</span> <span class="o">|&gt;</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">arrange</span><span class="p">(</span><span class="nf">desc</span><span class="p">(</span><span class="n">total_strength</span><span class="p">))</span> <span class="o">|&gt;</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">head</span><span class="p">(</span><span class="m">10</span><span class="p">)</span>
-</span></span></code></pre></div><p>Quick gut-check before going further: I hardcoded the coordinates of the single biggest hub peak I&rsquo;d already spotted (<code>chr12:113040427-113041384</code>) and just asked, in the console, &ldquo;what genes are actually near this thing?&rdquo; using <code>findOverlaps()</code> and <code>distanceToNearest()</code>. Nothing here gets saved — it&rsquo;s scratch code, not part of the real pipeline — but it&rsquo;s how I first sanity-checked that these hub peaks were landing near genes I recognized before trusting the rest of the analysis.</p>
+</span></span></code></pre></div><p>Quick gut-check before going further: I hardcoded the coordinates of the single biggest hub peak I&rsquo;d already spotted (<code>chr12:113040427-113041384</code>) and just asked, in the console, &ldquo;what genes are actually near this thing?&rdquo; using <code>findOverlaps()</code> and <code>distanceToNearest()</code>. Nothing here gets saved − it&rsquo;s scratch code, not part of the real pipeline − but it&rsquo;s how I first sanity-checked that these hub peaks were landing near genes I recognized before trusting the rest of the analysis.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">peak_gr_peak_top</span> <span class="o">&lt;-</span> <span class="nf">GRanges</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">  <span class="s">&#34;chr12&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">IRanges</span><span class="p">(</span>
@@ -618,7 +644,7 @@ then create a data frame where you include the name of that CCAN, which chromoso
 </span></span><span class="line"><span class="cl">  <span class="n">gene_gr</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="n">select</span> <span class="o">=</span> <span class="s">&#34;all&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><p>Now for real, across all 10 hub peaks at once: turn them into a proper <code>GRanges</code> object, then ask two questions — what&rsquo;s the single nearest gene to each hub in general, and specifically, how close is each hub to the known OAS genes (<code>OAS1</code>, <code>OAS2</code>, <code>OAS3</code>)? That second question is the whole point of this worked example — we already suspect this CCAN regulates the OAS locus, so we want to see the hubs &ldquo;reaching toward&rdquo; it.</p>
+</span></span></code></pre></div><p>Now for real, across all 10 hub peaks at once: turn them into a proper <code>GRanges</code> object, then ask two questions − what&rsquo;s the single nearest gene to each hub in general, and specifically, how close is each hub to the known OAS genes (<code>OAS1</code>, <code>OAS2</code>, <code>OAS3</code>)? That second question is the whole point of this worked example − we already suspect this CCAN regulates the OAS locus, so we want to see the hubs &ldquo;reaching toward&rdquo; it.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">peaks_split</span> <span class="o">&lt;-</span> <span class="nf">do.call</span><span class="p">(</span><span class="n">rbind</span><span class="p">,</span> <span class="nf">strsplit</span><span class="p">(</span><span class="n">top10</span><span class="o">$</span><span class="n">Peak</span><span class="p">,</span> <span class="s">&#34;-&#34;</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">hubs_gr</span> <span class="o">&lt;-</span> <span class="nf">GRanges</span><span class="p">(</span>
@@ -644,7 +670,7 @@ then create a data frame where you include the name of that CCAN, which chromoso
 </span></span><span class="line"><span class="cl"><span class="n">oas_conns</span> <span class="o">|&gt;</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">arrange</span><span class="p">(</span><span class="nf">desc</span><span class="p">(</span><span class="n">coaccess</span><span class="p">))</span> <span class="o">|&gt;</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">head</span><span class="p">(</span><span class="m">20</span><span class="p">)</span>
-</span></span></code></pre></div><p>(That last one&rsquo;s just me eyeballing the 20 strongest connections in the console — no assignment, no save, just looking.)</p>
+</span></span></code></pre></div><p>(That last one&rsquo;s just me eyeballing the 20 strongest connections in the console − no assignment, no save, just looking.)</p>
 <p>Time to put all of this together into one clean table. We pull the gene name and distance out of the <code>distanceToNearest()</code> result from before, and build <code>summary_table</code>: one row per hub peak, with its connection degree, mean/total coaccess strength, and its nearest gene + how far away that gene is.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">nearest_gene</span> <span class="o">&lt;-</span> <span class="n">gene_gr</span><span class="o">$</span><span class="n">gene_name[</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">subjectHits</span><span class="p">(</span><span class="n">top10_nearest_hits</span><span class="p">)</span>
@@ -662,7 +688,7 @@ then create a data frame where you include the name of that CCAN, which chromoso
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">summary_table</span>
-</span></span></code></pre></div><p>Not done yet — let&rsquo;s enrich <code>summary_table</code> with a few OAS-specific columns: does each hub peak physically overlap an OAS gene body, how far is it from the OAS locus as a whole (treating <code>OAS1</code>/<code>OAS2</code>/<code>OAS3</code> as one combined region), and a simple <code>HubScore</code> (degree × mean coaccess) to rank hubs by &ldquo;how connected and how strong&rdquo; in one number.</p>
+</span></span></code></pre></div><p>Not done yet − let&rsquo;s enrich <code>summary_table</code> with a few OAS-specific columns: does each hub peak physically overlap an OAS gene body, how far is it from the OAS locus as a whole (treating <code>OAS1</code>/<code>OAS2</code>/<code>OAS3</code> as one combined region), and a simple <code>HubScore</code> (degree × mean coaccess) to rank hubs by &ldquo;how connected and how strong&rdquo; in one number.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">coords</span> <span class="o">&lt;-</span> <span class="nf">do.call</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">  <span class="n">rbind</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">strsplit</span><span class="p">(</span><span class="n">summary_table</span><span class="o">$</span><span class="n">Peak</span><span class="p">,</span> <span class="s">&#34;-&#34;</span><span class="p">)</span>
@@ -702,7 +728,7 @@ then create a data frame where you include the name of that CCAN, which chromoso
 </span></span><span class="line"><span class="cl"><span class="n">summary_table</span><span class="o">$</span><span class="n">HubScore</span> <span class="o">&lt;-</span>
 </span></span><span class="line"><span class="cl">  <span class="n">summary_table</span><span class="o">$</span><span class="n">Degree</span> <span class="o">*</span>
 </span></span><span class="line"><span class="cl">  <span class="n">summary_table</span><span class="o">$</span><span class="n">Mean_Coaccess</span>
-</span></span></code></pre></div><p>With the exploration done, it&rsquo;s time to actually build the plot. First step: don&rsquo;t try to draw <em>every</em> connection in the CCAN, that&rsquo;s way too noisy — only keep the strongest ones. We take everything at or above the 95th percentile of coaccess (<code>threshold</code>), drop duplicate pairs (a connection A-B is the same as B-A, so we only keep rows where <code>Peak1 &lt; Peak2</code> alphabetically), and compute each connection&rsquo;s midpoint-to-midpoint x-coordinates (<code>x1</code>, <code>x2</code>) — that&rsquo;s what lets us draw an arc from one peak to the other. <code>curvature</code>, <code>alpha_val</code>, and <code>width_val</code> are just the connection&rsquo;s coaccess strength rescaled into plotting ranges, so stronger connections get taller, more opaque, thicker arcs.</p>
+</span></span></code></pre></div><p>With the exploration done, it&rsquo;s time to actually build the plot. First step: don&rsquo;t try to draw <em>every</em> connection in the CCAN, that&rsquo;s way too noisy − only keep the strongest ones. We take everything at or above the 95th percentile of coaccess (<code>threshold</code>), drop duplicate pairs (a connection A-B is the same as B-A, so we only keep rows where <code>Peak1 &lt; Peak2</code> alphabetically), and compute each connection&rsquo;s midpoint-to-midpoint x-coordinates (<code>x1</code>, <code>x2</code>) − that&rsquo;s what lets us draw an arc from one peak to the other. <code>curvature</code>, <code>alpha_val</code>, and <code>width_val</code> are just the connection&rsquo;s coaccess strength rescaled into plotting ranges, so stronger connections get taller, more opaque, thicker arcs.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">threshold</span> <span class="o">&lt;-</span> <span class="nf">quantile</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">  <span class="n">oas_conns</span><span class="o">$</span><span class="n">coaccess</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="m">0.95</span>
@@ -744,7 +770,7 @@ then create a data frame where you include the name of that CCAN, which chromoso
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">arc_df</span><span class="o">$</span><span class="n">alpha_val</span> <span class="o">&lt;-</span> <span class="nf">rescale</span><span class="p">(</span><span class="n">arc_df</span><span class="o">$</span><span class="n">coaccess</span><span class="p">,</span> <span class="n">to</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.45</span><span class="p">,</span> <span class="m">0.95</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl"><span class="n">arc_df</span><span class="o">$</span><span class="n">width_val</span> <span class="o">&lt;-</span> <span class="nf">rescale</span><span class="p">(</span><span class="n">arc_df</span><span class="o">$</span><span class="n">coaccess</span><span class="p">,</span> <span class="n">to</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.8</span><span class="p">,</span> <span class="m">2.8</span><span class="p">))</span>
-</span></span></code></pre></div><p>Now the actual plot. The idea is a genome-browser-style track: three panels stacked on top of each other, all sharing the exact same x-axis (genomic position), so everything lines up vertically. From top to bottom: the co-accessibility arcs, the peaks themselves, and the genes underneath — so you can visually trace &ldquo;this arc connects this peak to that peak, and oh look, that peak sits right on top of this gene.&rdquo; We build each panel as its own ggplot object and glue them together with <code>patchwork</code> (the <code>/</code> operator) at the end.</p>
+</span></span></code></pre></div><p>Now the actual plot. The idea is a genome-browser-style track: three panels stacked on top of each other, all sharing the exact same x-axis (genomic position), so everything lines up vertically. From top to bottom: the co-accessibility arcs, the peaks themselves, and the genes underneath − so you can visually trace &ldquo;this arc connects this peak to that peak, and oh look, that peak sits right on top of this gene.&rdquo; We build each panel as its own ggplot object and glue them together with <code>patchwork</code> (the <code>/</code> operator) at the end.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># --------------------------------------------------------------------------</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># Plot coaccessibility + peaks + genes</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># --------------------------------------------------------------------------</span>
@@ -874,12 +900,12 @@ then create a data frame where you include the name of that CCAN, which chromoso
 </span></span><span class="line"><span class="cl">  <span class="n">width</span> <span class="o">=</span> <span class="m">9</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="m">6.5</span><span class="p">,</span> <span class="n">dpi</span> <span class="o">=</span> <span class="m">300</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
 </span></span></code></pre></div><h3 id="5-generalizing-the-plot-into-a-reusable-function">5. Generalizing the Plot into a Reusable Function</h3>
-<p>Everything above was hardcoded for one CCAN (<code>ccan_id &lt;- 1025</code>, the OAS one). Obviously I don&rsquo;t want to copy-paste that whole block by hand for every single CCAN in the dataset — so this section just wraps the exact same recipe (find hubs, filter by significance, build the 3-panel plot, save it) into one function, <code>plot_ccan_track()</code>, that takes a <code>ccan_id</code> and does the rest automatically. It&rsquo;s basically Section 4 again, but parameterized and with some extra guard rails added for the cases that didn&rsquo;t come up with our one hand-picked OAS example:</p>
+<p>Everything above was hardcoded for one CCAN (<code>ccan_id &lt;- 1025</code>, the OAS one). Obviously I don&rsquo;t want to copy-paste that whole block by hand for every single CCAN in the dataset − so this section just wraps the exact same recipe (find hubs, filter by significance, build the 3-panel plot, save it) into one function, <code>plot_ccan_track()</code>, that takes a <code>ccan_id</code> and does the rest automatically. It&rsquo;s basically Section 4 again, but parameterized and with some extra guard rails added for the cases that didn&rsquo;t come up with our one hand-picked OAS example:</p>
 <ul>
-<li>If a CCAN has zero connections at all, don&rsquo;t try to plot it — just skip it and say so.</li>
+<li>If a CCAN has zero connections at all, don&rsquo;t try to plot it − just skip it and say so.</li>
 <li>If the 95th-percentile threshold happens to filter out <em>everything</em> (can happen with very few connections), fall back to just showing the top 10 strongest ones instead of crashing.</li>
 <li>If there&rsquo;s only one significant connection, <code>rescale()</code> has nothing to rescale against, so we hardcode sensible default curvature/alpha/width values instead.</li>
-<li>Output files are saved into a per-chromosome, per-<code>dir_prefix</code> folder (e.g. <code>4_figures/full_cicero/chr12/CCAN_1025_track_plot.pdf</code>) instead of one flat folder — see the comment in the code below for why: CCAN IDs are just local cluster labels, not stable identifiers, so &ldquo;CCAN 42&rdquo; from one run and &ldquo;CCAN 42&rdquo; from another run (say, a different cell type) are unrelated regions that would otherwise silently overwrite each other&rsquo;s plot.</li>
+<li>Output files are saved into a per-chromosome, per-<code>dir_prefix</code> folder (e.g. <code>4_figures/full_cicero/chr12/CCAN_1025_track_plot.pdf</code>) instead of one flat folder − see the comment in the code below for why: CCAN IDs are just local cluster labels, not stable identifiers, so &ldquo;CCAN 42&rdquo; from one run and &ldquo;CCAN 42&rdquo; from another run (say, a different cell type) are unrelated regions that would otherwise silently overwrite each other&rsquo;s plot.</li>
 <li>The gene panel&rsquo;s height is now dynamic (<code>gene_panel_weight</code>) instead of fixed, so a CCAN overlapping 30 genes doesn&rsquo;t squash them all unreadably into the same space as a CCAN overlapping 2.</li>
 </ul>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Define the Generalized Plotting Function</span>
@@ -1065,7 +1091,7 @@ then create a data frame where you include the name of that CCAN, which chromoso
 </span></span><span class="line"><span class="cl">  <span class="nf">message</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&#34;Saved PDF plot for CCAN:&#34;</span><span class="p">,</span> <span class="n">ccan_id</span><span class="p">,</span> <span class="s">&#34;| Genes:&#34;</span><span class="p">,</span> <span class="n">num_genes</span><span class="p">,</span> <span class="s">&#34;| Height:&#34;</span><span class="p">,</span> <span class="nf">round</span><span class="p">(</span><span class="n">dynamic_height</span><span class="p">,</span> <span class="m">1</span><span class="p">)))</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h3 id="6-execute-loop-across-all-ccans">6. Execute Loop Across All CCANs</h3>
-<p>The payoff for generalizing Section 5: now plotting <em>every</em> CCAN in the dataset is just a <code>for</code> loop that calls <code>plot_ccan_track()</code> once per CCAN ID. The only thing worth calling out is the <code>tryCatch()</code> wrapper — with hundreds/thousands of CCANs, some are going to hit an edge case (weird coordinates, no genes nearby, whatever), and I don&rsquo;t want one bad CCAN to kill a run that&rsquo;s already halfway through everything else. So instead of crashing, a failed CCAN just prints an error message and the loop moves on to the next one.</p>
+<p>The payoff for generalizing Section 5: now plotting <em>every</em> CCAN in the dataset is just a <code>for</code> loop that calls <code>plot_ccan_track()</code> once per CCAN ID. The only thing worth calling out is the <code>tryCatch()</code> wrapper − with hundreds/thousands of CCANs, some are going to hit an edge case (weird coordinates, no genes nearby, whatever), and I don&rsquo;t want one bad CCAN to kill a run that&rsquo;s already halfway through everything else. So instead of crashing, a failed CCAN just prints an error message and the loop moves on to the next one.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># Create figure directory if it doesn&#39;t exist</span>
 </span></span><span class="line"><span class="cl"><span class="kr">if</span><span class="p">(</span><span class="o">!</span><span class="nf">dir.exists</span><span class="p">(</span><span class="n">figure_dir</span><span class="p">))</span> <span class="nf">dir.create</span><span class="p">(</span><span class="n">figure_dir</span><span class="p">,</span> <span class="n">recursive</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
@@ -1093,6 +1119,143 @@ then create a data frame where you include the name of that CCAN, which chromoso
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nf">cat</span><span class="p">(</span><span class="s">&#34;Finished processing all CCANs.\n&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><h3 id="assign-genes-to-peaks-from-ccans">Assign Genes to peaks from CCANs</h3>
+<p>But why? We already assign genes in the previous step to plot them! Well, the thing is, I don&rsquo;t know, but they said that <code>GREATr</code> is a good tool for annotate peaks, so as a true scientist, I believe that. Jokes aside, in the previous step we find genes per CCAN not per peak so we&rsquo;re not really finding actual enhancer -&gt; peak. But with <code>GREATr</code> it is per-peak assignment with an extended domain to search <em>&ldquo;near&rdquo;</em> to the TSS (With a basal window of 5kb/1kb).</p>
+<p>So <code>assign_ccan_genes.r</code> per-peak + extended-domain overlap is the more defensible one for actual enhancer→gene assignment; the TestingCCANSandCONNS.R version was always the quick exploratory gut-check (consistent with how that script is described elsewhere in the repo — &ldquo;exploratory/scratch script&rdquo;).</p>
+<p>This script generates two outputs:</p>
+<ul>
+<li>
+<p><code>&lt;prefix&gt;_CCAN_gene_assignments.csv</code> format: one row per (CCAN, gene) pair. This is the raw &ldquo;CCAN -&gt; gene list&rdquo; object that</p>
+</li>
+<li>
+<p><code>&lt;prefix&gt;_CCAN_gene_summary.csv</code> − one row per CCAN, with n_peaks, n_genes n_go_terms_nonzero (GO:BP terms, after restricting to terms annotating 20-500 genes, that at least one of the CCAN&rsquo;s genes carries − the informative-vocabulary diagnostic, not gene count), and le2_genes (TRUE if the CCAN has &lt;=2 genes, flagging CCANs whose row in a downstream TF-IDF (Some kind of technique to see if the present gene is important) matrix is dominated by a single gene&rsquo;s profile).</p>
+</li>
+</ul>
+<p>Same dir_prefix/file_prefix/project_root convention as <code>TestingCCANSandCONNS.R</code> and <code>annotate_ccans_go.r</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#Usage: </span>
+</span></span><span class="line"><span class="cl">Rscript assign_ccan_genes.r <span class="o">[</span>dir_prefix<span class="o">]</span> <span class="o">[</span>file_prefix<span class="o">]</span> <span class="o">[</span>project_root<span class="o">]</span> <span class="o">[</span>go_category<span class="o">]</span> <span class="o">[</span>min_term_size<span class="o">]</span> <span class="o">[</span>max_term_size<span class="o">]</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">args</span> <span class="o">&lt;-</span> <span class="nf">commandArgs</span><span class="p">(</span><span class="n">trailingOnly</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">dir_prefix</span>    <span class="o">&lt;-</span> <span class="kr">if</span> <span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="m">1</span><span class="p">)</span> <span class="n">args[1]</span> <span class="kr">else</span> <span class="s">&#34;full_cicero&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">file_prefix</span>   <span class="o">&lt;-</span> <span class="kr">if</span> <span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="m">2</span><span class="p">)</span> <span class="n">args[2]</span> <span class="kr">else</span> <span class="s">&#34;full_cicero&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">project_root</span>  <span class="o">&lt;-</span> <span class="kr">if</span> <span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="m">3</span><span class="p">)</span> <span class="n">args[3]</span> <span class="kr">else</span> <span class="nf">file.path</span><span class="p">(</span><span class="nf">Sys.getenv</span><span class="p">(</span><span class="s">&#34;HOME&#34;</span><span class="p">),</span> <span class="s">&#34;JAGUAR/GRN&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">go_category</span>   <span class="o">&lt;-</span> <span class="kr">if</span> <span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="m">4</span><span class="p">)</span> <span class="n">args[4]</span> <span class="kr">else</span> <span class="s">&#34;GO:BP&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">min_term_size</span> <span class="o">&lt;-</span> <span class="kr">if</span> <span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="m">5</span><span class="p">)</span> <span class="nf">as.integer</span><span class="p">(</span><span class="n">args[5]</span><span class="p">)</span> <span class="kr">else</span> <span class="m">20</span>
+</span></span><span class="line"><span class="cl"><span class="n">max_term_size</span> <span class="o">&lt;-</span> <span class="kr">if</span> <span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="m">6</span><span class="p">)</span> <span class="nf">as.integer</span><span class="p">(</span><span class="n">args[6]</span><span class="p">)</span> <span class="kr">else</span> <span class="m">500</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">output_dir</span> <span class="o">&lt;-</span> <span class="nf">file.path</span><span class="p">(</span><span class="n">project_root</span><span class="p">,</span> <span class="nf">paste0</span><span class="p">(</span><span class="s">&#34;3_output/cicero_&#34;</span><span class="p">,</span> <span class="n">dir_prefix</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">ccans_csv_path</span> <span class="o">&lt;-</span> <span class="nf">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="nf">paste0</span><span class="p">(</span><span class="n">file_prefix</span><span class="p">,</span> <span class="s">&#34;_CCANs.csv&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">assignments_csv_path</span> <span class="o">&lt;-</span> <span class="nf">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="nf">paste0</span><span class="p">(</span><span class="n">file_prefix</span><span class="p">,</span> <span class="s">&#34;_CCAN_gene_assignments.csv&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">summary_csv_path</span>      <span class="o">&lt;-</span> <span class="nf">file.path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="nf">paste0</span><span class="p">(</span><span class="n">file_prefix</span><span class="p">,</span> <span class="s">&#34;_CCAN_gene_summary.csv&#34;</span><span class="p">))</span>
+</span></span></code></pre></div><h3 id="1-data-preparation">1. Data Preparation</h3>
+<p>First Load the packages, then load the CCANs using the csv generated from the first step.</p>
+<p>Load the ranges from the peaks per CCAN using <code>GRanges</code> and then match the columns from the <code>all_peaks_gr</code> object with the loaded CCANs csv from the first step.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">suppressPackageStartupMessages</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">library</span><span class="p">(</span><span class="n">rGREAT</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">library</span><span class="p">(</span><span class="n">GenomicRanges</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">library</span><span class="p">(</span><span class="n">org.Hs.eg.db</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">library</span><span class="p">(</span><span class="n">TxDb.Hsapiens.UCSC.hg38.knownGene</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="n">great_opt</span><span class="o">$</span><span class="n">verbose</span> <span class="o">&lt;-</span> <span class="kc">FALSE</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">message</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&#34;[DEBUG] -&gt; [Section 2] Reading CCANs from:&#34;</span><span class="p">,</span> <span class="n">ccans_csv_path</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">ccans</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="n">ccans_csv_path</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">peaks_to_gr</span> <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span><span class="n">peak_strs</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">coords</span> <span class="o">&lt;-</span> <span class="nf">do.call</span><span class="p">(</span><span class="n">rbind</span><span class="p">,</span> <span class="nf">strsplit</span><span class="p">(</span><span class="n">peak_strs</span><span class="p">,</span> <span class="s">&#34;-&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">GRanges</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">seqnames</span> <span class="o">=</span> <span class="n">coords[</span><span class="p">,</span> <span class="m">1</span><span class="n">]</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ranges</span> <span class="o">=</span> <span class="nf">IRanges</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="nf">as.numeric</span><span class="p">(</span><span class="n">coords[</span><span class="p">,</span> <span class="m">2</span><span class="n">]</span><span class="p">),</span> <span class="n">end</span> <span class="o">=</span> <span class="nf">as.numeric</span><span class="p">(</span><span class="n">coords[</span><span class="p">,</span> <span class="m">3</span><span class="n">]</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">all_peaks_gr</span> <span class="o">&lt;-</span> <span class="nf">peaks_to_gr</span><span class="p">(</span><span class="n">ccans</span><span class="o">$</span><span class="n">Peak</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">mcols</span><span class="p">(</span><span class="n">all_peaks_gr</span><span class="p">)</span><span class="o">$</span><span class="n">CCAN</span> <span class="o">&lt;-</span> <span class="n">ccans</span><span class="o">$</span><span class="n">CCAN</span>
+</span></span><span class="line"><span class="cl"><span class="nf">message</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&#34;[DEBUG]   -&gt; Total CCANs:&#34;</span><span class="p">,</span> <span class="nf">length</span><span class="p">(</span><span class="nf">unique</span><span class="p">(</span><span class="n">ccans</span><span class="o">$</span><span class="n">CCAN</span><span class="p">)),</span> <span class="s">&#34;| total peaks:&#34;</span><span class="p">,</span> <span class="nf">length</span><span class="p">(</span><span class="n">all_peaks_gr</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#==============================================================================</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># SECTION 3: BUILD REGULATORY DOMAINS + GENE SETS</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#==============================================================================</span>
+</span></span><span class="line"><span class="cl"><span class="nf">message</span><span class="p">(</span><span class="s">&#34;[DEBUG] -&gt; [Section 3] Building regulatory domains (GREAT basalPlusExt rule)...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">tss</span> <span class="o">&lt;-</span> <span class="nf">getTSS</span><span class="p">(</span><span class="s">&#34;TxDb.Hsapiens.UCSC.hg38.knownGene&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">extended_tss</span> <span class="o">&lt;-</span> <span class="nf">extendTSS</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="n">tss</span><span class="p">,</span> <span class="n">mode</span> <span class="o">=</span> <span class="s">&#34;basalPlusExt&#34;</span><span class="p">,</span> <span class="n">extend_from</span> <span class="o">=</span> <span class="s">&#34;TSS&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">basal_upstream</span> <span class="o">=</span> <span class="m">5000</span><span class="p">,</span> <span class="n">basal_downstream</span> <span class="o">=</span> <span class="m">1000</span><span class="p">,</span> <span class="n">extension</span> <span class="o">=</span> <span class="m">1e6</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">message</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&#34;[DEBUG]   -&gt; Building&#34;</span><span class="p">,</span> <span class="n">go_category</span><span class="p">,</span> <span class="s">&#34;gene sets and filtering to size&#34;</span><span class="p">,</span> <span class="n">min_term_size</span><span class="p">,</span> <span class="s">&#34;-&#34;</span><span class="p">,</span> <span class="n">max_term_size</span><span class="p">,</span> <span class="s">&#34;...&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">gene_sets_list</span> <span class="o">&lt;-</span> <span class="nf">suppressMessages</span><span class="p">(</span><span class="nf">getGeneSetsFromOrgDb</span><span class="p">(</span><span class="n">org.Hs.eg.db</span><span class="p">,</span> <span class="n">ontology</span> <span class="o">=</span> <span class="nf">sub</span><span class="p">(</span><span class="s">&#34;^GO:&#34;</span><span class="p">,</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="n">go_category</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl"><span class="n">sizes</span> <span class="o">&lt;-</span> <span class="nf">lengths</span><span class="p">(</span><span class="n">gene_sets_list</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">gene_sets_filt</span> <span class="o">&lt;-</span> <span class="n">gene_sets_list[sizes</span> <span class="o">&gt;=</span> <span class="n">min_term_size</span> <span class="o">&amp;</span> <span class="n">sizes</span> <span class="o">&lt;=</span> <span class="n">max_term_size]</span>
+</span></span><span class="line"><span class="cl"><span class="nf">message</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&#34;[DEBUG]   -&gt; Gene sets:&#34;</span><span class="p">,</span> <span class="nf">length</span><span class="p">(</span><span class="n">gene_sets_list</span><span class="p">),</span> <span class="s">&#34;total -&gt;&#34;</span><span class="p">,</span> <span class="nf">length</span><span class="p">(</span><span class="n">gene_sets_filt</span><span class="p">),</span> <span class="s">&#34;after size filter&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Invert gene_sets_filt (term -&gt; genes) into (gene -&gt; terms) for fast per-CCAN lookup.</span>
+</span></span><span class="line"><span class="cl"><span class="n">terms_per_gene</span> <span class="o">&lt;-</span> <span class="nf">split</span><span class="p">(</span><span class="nf">rep</span><span class="p">(</span><span class="nf">names</span><span class="p">(</span><span class="n">gene_sets_filt</span><span class="p">),</span> <span class="nf">lengths</span><span class="p">(</span><span class="n">gene_sets_filt</span><span class="p">)),</span> <span class="nf">unlist</span><span class="p">(</span><span class="n">gene_sets_filt</span><span class="p">,</span> <span class="n">use.names</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#==============================================================================</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># SECTION 4: ASSIGN GENES TO PEAKS (REGULATORY-DOMAIN OVERLAP, NOT A TEST)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#==============================================================================</span>
+</span></span><span class="line"><span class="cl"><span class="nf">message</span><span class="p">(</span><span class="s">&#34;[DEBUG] -&gt; [Section 4] Overlapping peaks against regulatory domains...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">hits</span> <span class="o">&lt;-</span> <span class="nf">findOverlaps</span><span class="p">(</span><span class="n">all_peaks_gr</span><span class="p">,</span> <span class="n">extended_tss</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">assoc</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="n">CCAN</span> <span class="o">=</span> <span class="nf">mcols</span><span class="p">(</span><span class="n">all_peaks_gr</span><span class="p">)</span><span class="o">$</span><span class="n">CCAN</span><span class="nf">[queryHits</span><span class="p">(</span><span class="n">hits</span><span class="p">)</span><span class="n">]</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gene_id</span> <span class="o">=</span> <span class="nf">mcols</span><span class="p">(</span><span class="n">extended_tss</span><span class="p">)</span><span class="o">$</span><span class="n">gene_id</span><span class="nf">[subjectHits</span><span class="p">(</span><span class="n">hits</span><span class="p">)</span><span class="n">]</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">stringsAsFactors</span> <span class="o">=</span> <span class="kc">FALSE</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">assoc</span> <span class="o">&lt;-</span> <span class="nf">unique</span><span class="p">(</span><span class="n">assoc</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">message</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&#34;[DEBUG]   -&gt; Total (CCAN, gene) associations:&#34;</span><span class="p">,</span> <span class="nf">nrow</span><span class="p">(</span><span class="n">assoc</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">message</span><span class="p">(</span><span class="s">&#34;[DEBUG]   -&gt; Mapping Entrez gene_id -&gt; gene symbol...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">sym_map</span> <span class="o">&lt;-</span> <span class="nf">suppressMessages</span><span class="p">(</span><span class="n">AnnotationDbi</span><span class="o">::</span><span class="nf">select</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="n">org.Hs.eg.db</span><span class="p">,</span> <span class="n">keys</span> <span class="o">=</span> <span class="nf">unique</span><span class="p">(</span><span class="n">assoc</span><span class="o">$</span><span class="n">gene_id</span><span class="p">),</span> <span class="n">keytype</span> <span class="o">=</span> <span class="s">&#34;ENTREZID&#34;</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="s">&#34;SYMBOL&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">assoc</span><span class="o">$</span><span class="n">gene_symbol</span> <span class="o">&lt;-</span> <span class="n">sym_map</span><span class="o">$</span><span class="n">SYMBOL</span><span class="nf">[match</span><span class="p">(</span><span class="n">assoc</span><span class="o">$</span><span class="n">gene_id</span><span class="p">,</span> <span class="n">sym_map</span><span class="o">$</span><span class="n">ENTREZID</span><span class="p">)</span><span class="n">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">write.csv</span><span class="p">(</span><span class="n">assoc</span><span class="p">,</span> <span class="n">assignments_csv_path</span><span class="p">,</span> <span class="n">row.names</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">message</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&#34;[DEBUG]   -&gt; Wrote gene assignments to:&#34;</span><span class="p">,</span> <span class="n">assignments_csv_path</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#==============================================================================</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># SECTION 5: PER-CCAN SUMMARY (n_genes, n_go_terms_nonzero, le2_genes flag)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#==============================================================================</span>
+</span></span><span class="line"><span class="cl"><span class="nf">message</span><span class="p">(</span><span class="s">&#34;[DEBUG] -&gt; [Section 5] Building per-CCAN summary...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">peaks_per_ccan</span> <span class="o">&lt;-</span> <span class="nf">table</span><span class="p">(</span><span class="n">ccans</span><span class="o">$</span><span class="n">CCAN</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">genes_by_ccan</span> <span class="o">&lt;-</span> <span class="nf">split</span><span class="p">(</span><span class="n">assoc</span><span class="o">$</span><span class="n">gene_id</span><span class="p">,</span> <span class="n">assoc</span><span class="o">$</span><span class="n">CCAN</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">all_ccan_ids</span> <span class="o">&lt;-</span> <span class="nf">sort</span><span class="p">(</span><span class="nf">unique</span><span class="p">(</span><span class="n">ccans</span><span class="o">$</span><span class="n">CCAN</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">n_genes</span> <span class="o">&lt;-</span> <span class="nf">sapply</span><span class="p">(</span><span class="n">all_ccan_ids</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">id</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">g</span> <span class="o">&lt;-</span> <span class="n">genes_by_ccan[</span><span class="nf">[as.character</span><span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="n">]]</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">if</span> <span class="p">(</span><span class="nf">is.null</span><span class="p">(</span><span class="n">g</span><span class="p">))</span> <span class="m">0L</span> <span class="kr">else</span> <span class="nf">length</span><span class="p">(</span><span class="nf">unique</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">n_go_terms_nonzero</span> <span class="o">&lt;-</span> <span class="nf">sapply</span><span class="p">(</span><span class="n">all_ccan_ids</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">id</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">g</span> <span class="o">&lt;-</span> <span class="n">genes_by_ccan[</span><span class="nf">[as.character</span><span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="n">]]</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">if</span> <span class="p">(</span><span class="nf">is.null</span><span class="p">(</span><span class="n">g</span><span class="p">))</span> <span class="kr">return</span><span class="p">(</span><span class="m">0L</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">terms</span> <span class="o">&lt;-</span> <span class="nf">unlist</span><span class="p">(</span><span class="n">terms_per_gene</span><span class="nf">[unique</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="n">]</span><span class="p">,</span> <span class="n">use.names</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">length</span><span class="p">(</span><span class="nf">unique</span><span class="p">(</span><span class="n">terms</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">summary_df</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="n">CCAN</span> <span class="o">=</span> <span class="n">all_ccan_ids</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">n_peaks</span> <span class="o">=</span> <span class="nf">as.integer</span><span class="p">(</span><span class="n">peaks_per_ccan</span><span class="nf">[as.character</span><span class="p">(</span><span class="n">all_ccan_ids</span><span class="p">)</span><span class="n">]</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="n">n_genes</span> <span class="o">=</span> <span class="n">n_genes</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">n_go_terms_nonzero</span> <span class="o">=</span> <span class="n">n_go_terms_nonzero</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">le2_genes</span> <span class="o">=</span> <span class="n">n_genes</span> <span class="o">&lt;=</span> <span class="m">2</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">write.csv</span><span class="p">(</span><span class="n">summary_df</span><span class="p">,</span> <span class="n">summary_csv_path</span><span class="p">,</span> <span class="n">row.names</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">message</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&#34;[DEBUG]   -&gt; Wrote per-CCAN summary to:&#34;</span><span class="p">,</span> <span class="n">summary_csv_path</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">message</span><span class="p">(</span><span class="s">&#34;[DEBUG] ==============================================================&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">message</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&#34;[DEBUG] DONE.&#34;</span><span class="p">,</span> <span class="nf">length</span><span class="p">(</span><span class="n">all_ccan_ids</span><span class="p">),</span> <span class="s">&#34;CCANs |&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">              <span class="nf">sum</span><span class="p">(</span><span class="n">n_genes</span> <span class="o">==</span> <span class="m">0</span><span class="p">),</span> <span class="s">&#34;with 0 genes |&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">              <span class="nf">sum</span><span class="p">(</span><span class="n">n_go_terms_nonzero</span> <span class="o">==</span> <span class="m">0</span><span class="p">),</span> <span class="s">&#34;with 0 nonzero GO terms |&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">              <span class="nf">sum</span><span class="p">(</span><span class="n">summary_df</span><span class="o">$</span><span class="n">le2_genes</span><span class="p">),</span> <span class="s">&#34;with &lt;=2 genes&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="nf">message</span><span class="p">(</span><span class="s">&#34;[DEBUG] ==============================================================&#34;</span><span class="p">)</span>
 </span></span></code></pre></div><h2 id="next-steps-pycistopic">NEXT-STEPS: pycisTopic</h2>
 <p>To improve the confidence in our results, we can validate our findings using <strong>pycisTopic</strong>. This tool uses Latent Dirichlet Allocation (LDA) to group co-accessible chromatin regions into distinct regulatory topics and classify cell states.</p>
 <h3 id="1-data-preparation-recoger-nuestras-chivas">1. Data Preparation: &ldquo;Recoger nuestras chivas&rdquo;</h3>
@@ -1267,7 +1430,7 @@ then create a data frame where you include the name of that CCAN, which chromoso
 </span></span><span class="line"><span class="cl">            <span class="n">sep</span> <span class="o">=</span> <span class="s">&#34;\t&#34;</span><span class="p">,</span> <span class="n">quote</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="n">row.names</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="nf">cat</span><span class="p">(</span><span class="s">&#34;OK: Mapping saved to sample_fragment_mapping.tsv\n\n&#34;</span><span class="p">)</span>
 </span></span></code></pre></div><h3 id="step-6-stick-the-fragment-path-onto-every-cell-and-export">Step 6: Stick the Fragment Path onto Every Cell (and Export)</h3>
-<p>Ok, last one, I promise. We already built <code>mapping_df</code>, our little &ldquo;who owns which fragments file&rdquo; dictionary. Now we just glue that onto the metadata: for every single cell, look up its <code>dataset</code>, find that dataset&rsquo;s row in <code>mapping_df</code>, and copy the <code>fragment_path</code> over. That&rsquo;s it, that&rsquo;s the whole idea — <code>match()</code> does the lookup, so a one-liner does what would otherwise be another one of those <code>for</code> loops.</p>
+<p>Ok, last one, I promise. We already built <code>mapping_df</code>, our little &ldquo;who owns which fragments file&rdquo; dictionary. Now we just glue that onto the metadata: for every single cell, look up its <code>dataset</code>, find that dataset&rsquo;s row in <code>mapping_df</code>, and copy the <code>fragment_path</code> over. That&rsquo;s it, that&rsquo;s the whole idea − <code>match()</code> does the lookup, so a one-liner does what would otherwise be another one of those <code>for</code> loops.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-R" data-lang="R"><span class="line"><span class="cl"><span class="nf">cat</span><span class="p">(</span><span class="s">&#34;=== ADDING SAMPLE INFO TO METADATA ===\n&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Map dataset to fragment_path using the mapping_df</span>
@@ -1280,7 +1443,7 @@ then create a data frame where you include the name of that CCAN, which chromoso
 </span></span><span class="line"><span class="cl"><span class="nf">cat</span><span class="p">(</span><span class="s">&#34;Fragment path assignment check:\n&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="nf">print</span><span class="p">(</span><span class="nf">table</span><span class="p">(</span><span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">seurat_obj</span><span class="o">$</span><span class="n">fragment_path</span><span class="p">)))</span>
 </span></span><span class="line"><span class="cl"><span class="nf">cat</span><span class="p">(</span><span class="s">&#34;\n&#34;</span><span class="p">)</span>
-</span></span></code></pre></div><p>That last <code>table(!is.na(...))</code> is just a cheap sanity check: if any cell came back <code>FALSE</code> (i.e. <code>NA</code>), it means that cell&rsquo;s dataset had no match in <code>mapping_df</code> — which shouldn&rsquo;t happen, but I&rsquo;d rather see it printed loud and clear than find out three steps later when pycisTopic silently drops cells.</p>
+</span></span></code></pre></div><p>That last <code>table(!is.na(...))</code> is just a cheap sanity check: if any cell came back <code>FALSE</code> (i.e. <code>NA</code>), it means that cell&rsquo;s dataset had no match in <code>mapping_df</code> − which shouldn&rsquo;t happen, but I&rsquo;d rather see it printed loud and clear than find out three steps later when pycisTopic silently drops cells.</p>
 <p>(Optional) Since I only care about Monocytes and Dendritic cells for this GRN, this is also a convenient spot to subset the object down to just those, before writing anything out. Skip this chunk if you want the full <code>predicted.l1</code> population instead.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-R" data-lang="R"><span class="line"><span class="cl"><span class="c1"># =========================================================</span>
 </span></span><span class="line"><span class="cl"><span class="c1">#  7.6 SUBSET FOR MONOCYTES and DENDRITIC CELLS (OPTIONAL) </span>
@@ -1328,5 +1491,34 @@ then create a data frame where you include the name of that CCAN, which chromoso
 </footer>
 
   <script src="/Vulgaris/js/main.js" defer></script>
+
+  
+
+  
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    const blocks = document.querySelectorAll("pre > code.language-mermaid");
+    blocks.forEach(function (code) {
+      const container = document.createElement("div");
+      container.className = "mermaid";
+      container.textContent = code.textContent;
+      code.parentElement.replaceWith(container);
+    });
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "dark",
+      themeVariables: {
+        background: "#1a1615",
+        primaryColor: "#211d1c",
+        primaryTextColor: "#e6e8e1",
+        primaryBorderColor: "#92c22c",
+        lineColor: "#8d9a8f",
+        secondaryColor: "#12120f",
+        tertiaryColor: "#12120f",
+        fontFamily: "Roboto Mono, ui-monospace, SFMono-Regular, Menlo, monospace"
+      }
+    });
+  </script>
+  
 </body>
 </html>
