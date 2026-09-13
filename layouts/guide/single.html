@@ -1,0 +1,39 @@
+{{ define "main" }}
+<div class="guide-layout wrap">
+  {{ partial "guide-nav.html" . }}
+
+  <article class="guide-main">
+    <header class="note-header">
+      <p class="eyebrow">
+        {{ with .Parent }}<a href="{{ .RelPermalink }}">{{ partial "note-title.html" . }}</a> /{{ end }}
+        {{ partial "note-title.html" . }}
+      </p>
+      <h1>{{ partial "note-title.html" . }}</h1>
+      {{ with .Params.tags }}
+        <div class="note-tags">
+          {{ range . }}<span class="tag tag--vault">{{ . }}</span>{{ end }}
+        </div>
+      {{ end }}
+    </header>
+
+    {{ if eq .Params.idioma "en" }}
+      <p class="lang-note">Esta nota todavía está en inglés — viene de la narrativa original del proyecto y está pendiente de reescribirse.</p>
+    {{ end }}
+
+    <div class="post-body note-body">
+      {{ partial "wikilinks.html" (dict "page" . "raw" .RawContent) }}
+    </div>
+
+    {{ partial "backlinks.html" . }}
+
+    <nav class="post-nav" aria-label="Note navigation">
+      {{ with .PrevInSection }}
+        <a class="post-nav-link prev" href="{{ .RelPermalink }}"><span class="dir">{{ i18n "previous" }}</span>{{ partial "note-title.html" . }}</a>
+      {{ else }}<span></span>{{ end }}
+      {{ with .NextInSection }}
+        <a class="post-nav-link next" href="{{ .RelPermalink }}"><span class="dir">{{ i18n "next" }}</span>{{ partial "note-title.html" . }}</a>
+      {{ else }}<span></span>{{ end }}
+    </nav>
+  </article>
+</div>
+{{ end }}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tipo/Workflow on Vulgaris</title><link>https://3lconejo.github.io/Vulgaris/es/tags/tipo/workflow/</link><description>Recent content in Tipo/Workflow on Vulgaris</description><generator>Hugo</generator><language>es</language><atom:link href="https://3lconejo.github.io/Vulgaris/es/tags/tipo/workflow/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/nextflow/workflow--main/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/nextflow/workflow--main/</guid><description>&lt;hr&gt;
+&lt;h2 id="mainnf"&gt;&lt;code&gt;main.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id="nfworkflowspycistopicnf"&gt;&lt;code&gt;nf/workflows/pycistopic.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Donde se conectan los procesos entre sí. Si ya se leyeron los módulos
+anteriores, esto es lo último que falta para tener el mapa completo.&lt;/p&gt;
+&lt;h2 id="mainnf--casi-vacío-a-propósito"&gt;&lt;code&gt;main.nf&lt;/code&gt; — casi vacío a propósito&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-groovy" data-lang="groovy"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#!/usr/bin/env nextflow&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;nextflow&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;dsl&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="n"&gt;PYCISTOPIC&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;./nf/workflows/pycistopic.nf&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;workflow&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;PYCISTOPIC&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;nextflow run main.nf&lt;/code&gt; siempre busca un &lt;code&gt;workflow&lt;/code&gt; SIN NOMBRE (el bloque
+&lt;code&gt;workflow { ... }&lt;/code&gt; de aquí, sin identificador) como punto de entrada — es el
+equivalente a &lt;code&gt;if __name__ == &amp;quot;__main__&amp;quot;:&lt;/code&gt; de Python. Todo lo real vive en
+&lt;code&gt;PYCISTOPIC&lt;/code&gt; (con nombre), importado de otro archivo. Esto es lo que
+después va a permitir, en fases siguientes (C_cicero, D_integrate, G_scglue),
+tener un &lt;code&gt;main.nf&lt;/code&gt; que llame a VARIOS workflows con nombre, uno por rama,
+sin que este archivo crezca mucho.&lt;/p&gt;</description></item></channel></rss>

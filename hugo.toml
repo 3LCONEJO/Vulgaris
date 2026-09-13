@@ -1,6 +1,8 @@
 baseURL = "https://3lconejo.github.io/Vulgaris/"
-languageCode = "en-us"
 title = "Vulgaris"
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = false
+
 enableRobotsTXT = true
 summaryLength = 40
 
@@ -9,6 +11,64 @@ summaryLength = 40
 # set baseURL = "https://USERNAME.github.io/" and remove the /vulgaris/ subpath below.
 # If it will be served at https://USERNAME.github.io/vulgaris/ (a "project site")
 # keep the subpath as-is. See README.md for the full explanation.
+
+# --- El vault de Obsidian se monta como contenido ---
+# Escribes en GRN/ con Obsidian; Hugo lo publica. No se copia nada.
+# La estructura del vault espeja la clave de letra del proyecto (A=pyCisTopic,
+# B=general, C=cicero, D=integrate, E=cisTarget, F=SCENIC+, G=scglue), igual que
+# 1_scripts/ en el repo real. Dentro de cada rama, `nextflow` (como se orquesta)
+# y `codigo` (que hace cada script) son hermanos, no uno dentro del otro.
+# Al declarar mounts para "content" hay que declarar TODOS, incluido el default.
+[module]
+  [[module.mounts]]
+    source = "content"
+    target = "content"
+
+  # -- transversal: la migracion a Nextflow en si --
+  [[module.mounts]]
+    source = "GRN/nextflow"
+    target = "content/projects/jaguar/nextflow"
+    lang = "es"
+
+  # -- ramas --
+  [[module.mounts]]
+    source = "GRN/A_pyCisTopic/nextflow"
+    target = "content/projects/jaguar/a-pycistopic/nextflow"
+    lang = "es"
+  [[module.mounts]]
+    source = "GRN/A_pyCisTopic/codigo"
+    target = "content/projects/jaguar/a-pycistopic/codigo"
+    lang = "es"
+  [[module.mounts]]
+    source = "GRN/B_general/nextflow"
+    target = "content/projects/jaguar/b-general/nextflow"
+    lang = "es"
+  [[module.mounts]]
+    source = "GRN/B_general/codigo"
+    target = "content/projects/jaguar/b-general/codigo"
+    lang = "es"
+  [[module.mounts]]
+    source = "GRN/C_cicero/codigo"
+    target = "content/projects/jaguar/c-cicero/codigo"
+    lang = "es"
+  [[module.mounts]]
+    source = "GRN/D_integrate/codigo"
+    target = "content/projects/jaguar/d-integrate/codigo"
+    lang = "es"
+  [[module.mounts]]
+    source = "GRN/G_scglue/codigo"
+    target = "content/projects/jaguar/g-scglue/codigo"
+    lang = "es"
+
+  # -- transversal: glosario --
+  [[module.mounts]]
+    source = "GRN/sintaxis/nextflow"
+    target = "content/projects/jaguar/sintaxis/nextflow"
+    lang = "es"
+  [[module.mounts]]
+    source = "GRN/sintaxis/bash"
+    target = "content/projects/jaguar/sintaxis/bash"
+    lang = "es"
 
 [pagination]
   pagerSize = 9
@@ -19,7 +79,10 @@ summaryLength = 40
 
 [permalinks]
   [permalinks.page]
-    projects = "/projects/:slug/"
+    # projects: sin override a proposito. La URL sale del path del archivo, que
+    # es lo unico que soporta secciones anidadas (la guia vive en
+    # /projects/jaguar/nextflow/...). El slug del frontmatter sigue mandando,
+    # por eso content/projects/tepolito.md publica en /projects/teporingo/.
     blog = "/blog/:slug/"
 
 [markup]
@@ -80,3 +143,42 @@ summaryLength = 40
 
   # Featured project slugs shown on the home page, in order
   featuredProjects = ["tepolito", "jaguar", "scatac-chromatin-pipeline"]
+
+# --- Idiomas -----------------------------------------------------------------
+[languages]
+  [languages.en]
+    languageName = "english"
+    languageCode = "en-us"
+    weight = 1
+  [languages.es]
+    languageName = "español"
+    languageCode = "es"
+    weight = 2
+    title = "Vulgaris"
+    [languages.es.params]
+      tagline = "Sistemas complejos y célula única // de la semilla al pipeline"
+      description = "Vulgaris — un portafolio hecho de documentación, entre el código y la biología. El nombre viene de Phaseolus vulgaris, el frijol común."
+
+    # Menu propio del espanol. cv y blog todavia no tienen version en espanol,
+    # asi que apuntan a las paginas en ingles a proposito (existen y funcionan).
+    [languages.es.menus]
+      [[languages.es.menus.main]]
+        name = "~/guia"
+        url = "/es/projects/jaguar/"
+        weight = 5
+      [[languages.es.menus.main]]
+        name = "~/proyectos"
+        url = "/es/projects/"
+        weight = 10
+      [[languages.es.menus.main]]
+        name = "~/cv"
+        url = "/cv/"
+        weight = 20
+      [[languages.es.menus.main]]
+        name = "~/blog"
+        url = "/blog/"
+        weight = 30
+      [[languages.es.menus.main]]
+        name = "~/etiquetas"
+        url = "/es/tags/"
+        weight = 40

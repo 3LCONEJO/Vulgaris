@@ -1,0 +1,27 @@
+{{- /* "Mencionada en": qué otras notas enlazan a esta. Lo que hace el panel
+       de backlinks de Obsidian, calculado en build time. */ -}}
+{{- $cur := . -}}
+{{- $name := "" -}}
+{{- with .File }}{{ $name = .BaseFileName }}{{ end -}}
+{{- if $name -}}
+  {{- $needle := printf "[[%s" (lower $name) -}}
+  {{- $found := slice -}}
+  {{- with site.GetPage "/projects/jaguar" -}}
+    {{- range .RegularPagesRecursive -}}
+      {{- if ne .RelPermalink $cur.RelPermalink -}}
+        {{- $raw := lower .RawContent -}}
+        {{- if or (in $raw (printf "%s]]" $needle)) (or (in $raw (printf "%s|" $needle)) (in $raw (printf "%s#" $needle))) -}}
+          {{- $found = $found | append . -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- with $found }}
+  <section class="backlinks">
+    <h2 class="backlinks-title">{{ i18n "mentionedIn" }}</h2>
+    <ul>
+      {{ range . }}<li><a href="{{ .RelPermalink }}">{{ partial "note-title.html" . }}</a></li>{{ end }}
+    </ul>
+  </section>
+  {{- end -}}
+{{- end -}}

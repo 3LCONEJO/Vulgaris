@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tipo/Validacion on Vulgaris</title><link>https://3lconejo.github.io/Vulgaris/es/tags/tipo/validacion/</link><description>Recent content in Tipo/Validacion on Vulgaris</description><generator>Hugo</generator><language>es</language><atom:link href="https://3lconejo.github.io/Vulgaris/es/tags/tipo/validacion/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/nextflow/stub-run/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/nextflow/stub-run/</guid><description>&lt;p&gt;&lt;strong&gt;[[-stub-run]] — cómo se validó este pipeline sin correr cómputo real.&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id="el-problema-que-resuelve"&gt;El problema que resuelve&lt;/h2&gt;
+&lt;p&gt;Correr el pipeline de producción completo (MACS3, modelado Mallet hasta
+&lt;code&gt;n_topics=50&lt;/code&gt;, etc.) es cómputo real de horas — no es algo para probar cada
+vez que se toca una coma en un &lt;code&gt;.nf&lt;/code&gt;. Pero igual hace falta alguna forma de
+confirmar que el DAG completo (10 procesos, dependencias entre ellos,
+conda envs, envío a LSF) está bien armado ANTES de comprometerse a una
+corrida real.&lt;/p&gt;</description></item></channel></rss>

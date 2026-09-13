@@ -1,0 +1,14 @@
+{{- /* Barra lateral de la guia: el arbol del vault, a cualquier profundidad. */ -}}
+{{- $cur := . -}}
+{{- with site.GetPage "/projects/jaguar" -}}
+{{- if .Sections -}}
+<nav class="guide-nav" aria-label="Guide navigation">
+  <a class="guide-nav-root {{ if eq $cur.RelPermalink .RelPermalink }}is-current{{ end }}" href="{{ .RelPermalink }}">
+    <span class="prompt">~/</span>{{ partial "note-title.html" . }}
+  </a>
+  {{ range .Sections.ByWeight }}
+    {{ partial "guide-nav-branch.html" (dict "page" . "current" $cur "depth" 1) }}
+  {{ end }}
+</nav>
+{{- end -}}
+{{- end -}}

@@ -1,13 +1,18 @@
 {{ define "main" }}
 <div class="wrap">
   <p class="eyebrow">./{{ .Data.Plural }}</p>
-  <h1>Browse by skill / technology</h1>
+  <h1>{{ i18n "browseByTag" }}</h1>
   <p style="color:var(--text-muted);max-width:60ch;">
-    Every project and log entry is tagged with the languages, tools, and methods it uses.
-    Pick a tag to filter — handy if you're scanning for a specific stack.
+    {{ i18n "browseByTagLead" }}
   </p>
 
-  {{ $terms := .Data.Terms.Alphabetical }}
+  {{/* Las notas del vault traen tags jerarquicos de Obsidian (tipo/sintaxis,
+       lang/nextflow, job/light). Sirven dentro de la guia, pero no en la nube
+       de tags del sitio — se filtran los que llevan "/". */}}
+  {{ $terms := slice }}
+  {{ range .Data.Terms.Alphabetical }}
+    {{ if not (strings.Contains .Page.Title "/") }}{{ $terms = $terms | append . }}{{ end }}
+  {{ end }}
   {{ if $terms }}
     <div class="taxonomy-cloud">
       {{ range $terms }}
@@ -17,7 +22,7 @@
       {{ end }}
     </div>
   {{ else }}
-    <p class="empty-state"># no tags yet</p>
+    <p class="empty-state">{{ i18n "noTags" }}</p>
   {{ end }}
 </div>
 {{ end }}

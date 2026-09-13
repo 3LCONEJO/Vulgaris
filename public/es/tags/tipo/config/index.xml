@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tipo/Config on Vulgaris</title><link>https://3lconejo.github.io/Vulgaris/es/tags/tipo/config/</link><description>Recent content in Tipo/Config on Vulgaris</description><generator>Hugo</generator><language>es</language><atom:link href="https://3lconejo.github.io/Vulgaris/es/tags/tipo/config/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/nextflow/nextflow-config/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/nextflow/nextflow-config/</guid><description>&lt;hr&gt;
+&lt;h2 id="nextflowconfig"&gt;&lt;code&gt;nextflow.config&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;La configuración global — separada del código de los procesos a propósito
+(ver [[OVERVIEW]]). Se carga automáticamente por su nombre: Nextflow la
+busca en el directorio desde donde se ejecuta &lt;code&gt;nextflow run&lt;/code&gt;, sin que nada
+la tenga que importar explícitamente.&lt;/p&gt;</description></item></channel></rss>

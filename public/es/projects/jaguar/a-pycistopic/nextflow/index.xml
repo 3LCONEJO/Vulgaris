@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Nextflow on Vulgaris</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/</link><description>Recent content in Nextflow on Vulgaris</description><generator>Hugo</generator><language>es</language><atom:link href="https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/annotated-destination-modules/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/annotated-destination-modules/</guid><description>&lt;hr&gt;
+&lt;h2 id="merge_topic_states_annotatednf"&gt;&lt;code&gt;merge_topic_states_annotated.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id="model_selection_umap_annotatednf"&gt;&lt;code&gt;model_selection_umap_annotated.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id="binarization_topic_qc_annotatednf"&gt;&lt;code&gt;binarization_topic_qc_annotated.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Los tres módulos que dejaron de ser alias (&lt;code&gt;include { X as Y }&lt;/code&gt;, ver
+[[Workflow &amp;amp; Main]]) el &lt;code&gt;[2026-09-11]&lt;/code&gt;, por el bug real explicado a fondo en
+[[Publishdir Replace Not Merge]]. Este artículo asume que ya se leyó ese —
+aquí el foco es &amp;ldquo;qué mirar en cada &lt;code&gt;.nf&lt;/code&gt; puntual&amp;rdquo;, no repetir el porqué
+completo.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/binarization-topic/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/binarization-topic/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicbinarization_topic_qcnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/binarization_topic_qc.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Envuelve &lt;code&gt;08_binarization_topic_qc.py&lt;/code&gt; (binarización Otsu/Yen de β, métricas
+de tópico, anotación por tipo celular). Mismo patrón [[state]]/[[cp]] y flag
+condicional (&lt;code&gt;--annot-var&lt;/code&gt;) que ya se vio en los módulos anteriores — no hay
+sintaxis nueva aquí, es un buen ejemplo de que, una vez entendido el patrón
+[[state]], la mayoría de estos módulos son casi mecánicos de escribir.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/build-cistopic-objects/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/build-cistopic-objects/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicbuild_cistopic_objectsnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/build_cistopic_objects.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Envuelve &lt;code&gt;05_build_cistopic_objects.py&lt;/code&gt; — el paso largo y caro del pipeline
+(cisTopic objects por muestra + Scrublet + modelos Mallet, grilla
+&lt;code&gt;n_topics=[2,5,...,50]&lt;/code&gt;). Mismo patrón [[state]]/[[cp]] de siempre; lo que
+cambia aquí es &lt;strong&gt;cómo se le piden recursos de LSF&lt;/strong&gt;, y desde &lt;code&gt;[2026-09-01]&lt;/code&gt;,
+&lt;strong&gt;cuántas veces se llama a este proceso&lt;/strong&gt; — no la sintaxis básica del
+&lt;code&gt;process&lt;/code&gt; en sí.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/consensus-peak-calling/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/consensus-peak-calling/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicconsensus_peak_callingnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/consensus_peak_calling.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Envuelve &lt;code&gt;02_consensus_peak_calling.py&lt;/code&gt;. Primer módulo que RECIBE un [[state]]
+de un paso anterior (&lt;code&gt;01_pseudobulk_export.py&lt;/code&gt;, vía [[PSEUDOBULK EXPORT]])
+— aquí es donde importa entender por qué se hace [[cp]] y no se escribe directo
+sobre lo que llega.&lt;/p&gt;
+&lt;h2 id="el-proceso"&gt;El proceso&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-groovy" data-lang="groovy"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;process&lt;/span&gt; &lt;span class="n"&gt;CONSENSUS_PEAK_CALLING&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;pycistopic_env&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;medium_job&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;publishDir&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;${params.project_root}/3_output/${params.run_date}/A_pyCisTopic&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;mode:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;copy&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;input:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="n"&gt;state_in&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;stageAs:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;state_in&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;output:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;state&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;emit:&lt;/span&gt; &lt;span class="n"&gt;state&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;script:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; cp -rL state_in state
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; python .../02_consensus_peak_calling.py \\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; --out-dir state --blacklist .../hg38-blacklist.v2.bed \\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; --n-cpu ${params.n_cpu} --temp-dir ${params.temp_dir}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="por-qué-cp--rl-state_in-state-y-no-escribir-directo-sobre-state_in"&gt;Por qué &lt;code&gt;cp -rL state_in state&lt;/code&gt; y no escribir directo sobre &lt;code&gt;state_in&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;Esto es lo más importante de todo el patrón [[state]] — vale la pena
+detenerse.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/dars-gene-activity/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/dars-gene-activity/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicdars_gene_activitynf"&gt;&lt;code&gt;nf/modules/a_pycistopic/dars_gene_activity.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Envuelve &lt;code&gt;09_dars_gene_activity.py&lt;/code&gt; — el último paso de la rama (region
+sets, DARs, gene activity + DAGs). Mismo patrón [[state]]/[[cp]] y flag
+condicional (&lt;code&gt;--variable&lt;/code&gt;, aquí vía &lt;code&gt;params.dars_variable&lt;/code&gt;) de siempre.&lt;/p&gt;
+&lt;h2 id="la-conexión-con-el-consenso-de-tres-vías-d_integrate"&gt;La conexión con el consenso de tres vías (&lt;code&gt;D_integrate&lt;/code&gt;)&lt;/h2&gt;
+&lt;p&gt;Este script tiene un parche reciente (&lt;code&gt;2026-08-24&lt;/code&gt;, ver
+&lt;a href="https://3lconejo.github.io/Vulgaris/es/projects/jaguar/d-integrate/"&gt;D_integrate&lt;/a&gt; para el consenso completo): ahora también guarda &lt;code&gt;*_gene_activity_weights.csv&lt;/code&gt;, que antes
+se calculaba y se descartaba. Ese archivo es exactamente el aporte de
+pycisTopic al consenso de tres vías que arma
+&lt;code&gt;D_integrate/2_python/build_region_gene_consensus.py&lt;/code&gt;. No cambia nada de la
+sintaxis de este módulo — se menciona aquí porque es la razón por la que
+este paso, aunque es &amp;ldquo;el último&amp;rdquo; de esta rama, sigue siendo un prerrequisito
+real para otra rama (&lt;code&gt;D_integrate&lt;/code&gt;) que todavía no está migrada a Nextflow.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/filter-annotated-cells/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/filter-annotated-cells/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicfilter_annotated_cellsnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/filter_annotated_cells.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Primer nodo de la rama &amp;ldquo;solo anotadas&amp;rdquo; — la primera vez que este workflow
+&lt;strong&gt;bifurca&lt;/strong&gt; de verdad, en vez de solo hacer fan-out-y-volver-a-juntar (ver
+[[Workflow &amp;amp; Main]], sección &amp;ldquo;Bifurcar el DAG&amp;rdquo;, para la mecánica de
+canales). Este artículo cubre el porqué y el diseño; ese otro cubre la
+sintaxis que lo conecta.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/fit-one-topic-annotated/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/fit-one-topic-annotated/</guid><description>&lt;hr&gt;
+&lt;h2 id="fit_one_topic_annotatednf"&gt;&lt;code&gt;fit_one_topic_annotated.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id="combine_models_annotatednf"&gt;&lt;code&gt;combine_models_annotated.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Continuación de [[FILTER ANNOTATED CELLS]] — estos dos son los equivalentes
+de &lt;code&gt;fit_one_topic.nf&lt;/code&gt;/&lt;code&gt;combine_models.nf&lt;/code&gt; (ver [[MERGE AND MODEL]]) para la
+rama &amp;ldquo;solo anotadas&amp;rdquo;, pero como archivos &lt;code&gt;.nf&lt;/code&gt; propios en vez de reusar los
+originales con un alias (&lt;code&gt;include { X as Y }&lt;/code&gt;, ver [[Workflow &amp;amp; Main]]).&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-and-model/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-and-model/</guid><description>&lt;hr&gt;
+&lt;h2 id="merge_onlynf"&gt;&lt;code&gt;merge_only.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id="fit_one_topicnf"&gt;&lt;code&gt;fit_one_topic.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id="merge_topic_statesnf"&gt;&lt;code&gt;merge_topic_states.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id="combine_modelsnf"&gt;&lt;code&gt;combine_models.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Estos 4 módulos son lo que hoy hace el trabajo del viejo &lt;code&gt;merge_and_model.nf&lt;/code&gt;
+(un solo proceso, &lt;code&gt;MERGE_AND_MODEL&lt;/code&gt; — sigue en el repo, ya NO se usa en
+&lt;code&gt;pycistopic.nf&lt;/code&gt;, dejado solo de referencia histórica). Se documentan juntos
+aquí porque ninguno tiene sentido leído aislado — son las 4 piezas de un
+mismo rediseño.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-cistopic-states/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-cistopic-states/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicmerge_cistopic_statesnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/merge_cistopic_states.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Nuevo &lt;code&gt;[2026-09-01]&lt;/code&gt;, agregado junto con la paralelización de
+[[BUILD CISTOPIC OBJECTS]]. Es el &amp;ldquo;punto de sincronización&amp;rdquo; entre las N
+corridas paralelas (una por muestra) y el resto del pipeline, que sigue
+esperando UN solo [[state]] para seguir.&lt;/p&gt;
+&lt;h2 id="el-problema-que-resuelve"&gt;El problema que resuelve&lt;/h2&gt;
+&lt;p&gt;Cada corrida paralela de &lt;code&gt;BUILD_CISTOPIC_OBJECTS&lt;/code&gt; parte del mismo
+[[state_in]] (QC + consensus peaks + todo lo de antes) y hace
+&lt;code&gt;cp -rL state_in state&lt;/code&gt;, y después le agrega SOLO los &lt;code&gt;.pkl&lt;/code&gt;/&lt;code&gt;.png&lt;/code&gt; de su
+propia muestra. Resultado: N carpetas &lt;code&gt;state&lt;/code&gt;, casi idénticas entre sí en la
+parte compartida, cada una con un puñado de archivos nuevos que NO están en
+las otras (los de su muestra). Hay que combinarlas en una sola antes de que
+&lt;code&gt;06_merge_and_model.py&lt;/code&gt; (invocado hoy por &lt;code&gt;MERGE_ONLY&lt;/code&gt;/&lt;code&gt;FIT_ONE_TOPIC&lt;/code&gt;, ver
+[[MERGE AND MODEL]]) pueda escanear el directorio y encontrar los modelos de
+las 24 muestras juntos — ese script descubre muestras escaneando
+&lt;code&gt;&amp;lt;out-dir&amp;gt;&lt;/code&gt; por el sufijo &lt;code&gt;*_cistopic_obj_models.pkl&lt;/code&gt;, así que necesita
+verlas todas en el mismo lugar.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-qc-states/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-qc-states/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicmerge_qc_statesnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/merge_qc_states.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Junta los N &lt;code&gt;state&lt;/code&gt; que salen de las corridas paralelas de &lt;code&gt;QC_RUN_ONE_SAMPLE&lt;/code&gt; (una por muestra) en UN solo &lt;code&gt;state&lt;/code&gt; antes de pasárselo a &lt;code&gt;QC_PLOTS_THRESHOLDS&lt;/code&gt;. Es exactamente el mismo patrón que &lt;code&gt;merge_cistopic_states.nf&lt;/code&gt; (ver [[MERGE CISTOPIC STATES]] para el
+detalle completo de [[stageAs]] con patrón y [[cp#-rn]]).&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/model-selection-umap/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/model-selection-umap/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicmodel_selection_umapnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/model_selection_umap.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Envuelve &lt;code&gt;07_model_selection_umap.py&lt;/code&gt; (selección de modelo, Leiden, UMAP).
+Mismo patrón [[state]]/[[cp]] de siempre, &lt;code&gt;label 'medium_job'&lt;/code&gt; genérico (sin
+&lt;code&gt;withName:&lt;/code&gt; propio, a diferencia de los dos módulos anteriores).&lt;/p&gt;
+&lt;h2 id="un-flag-condicional-más"&gt;Un flag condicional más&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-groovy" data-lang="groovy"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kt"&gt;def&lt;/span&gt; &lt;span class="n"&gt;select_model_flag&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;select_model&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;--select-model ${params.select_model}&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Mismo patrón que ya se vio en [[PSEUDOBULK EXPORT]] para &lt;code&gt;--variable&lt;/code&gt; —
+Groovy plano dentro del bloque [[script]], antes de las comillas triples,
+arma el flag condicionalmente según el parámetro.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/pseudobulk-export/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/pseudobulk-export/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicpseudobulk_exportnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/pseudobulk_export.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Envuelve &lt;code&gt;01_pseudobulk_export.py&lt;/code&gt; — el primer paso de la rama
+&lt;code&gt;A_pyCisTopic&lt;/code&gt; propiamente dicha. Es el módulo donde aparece por primera vez
+el patrón &lt;strong&gt;[[state]]&lt;/strong&gt;, que se repite en los otros 8 módulos de esta rama —
+vale la pena entenderlo bien aquí.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-generate-commands/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-generate-commands/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicqc_generate_commandsnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/qc_generate_commands.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Envuelve &lt;code&gt;03_qc_generate_commands.py&lt;/code&gt; — &lt;strong&gt;solo genera&lt;/strong&gt; el archivo de
+comandos QC (uno por muestra) y deja &lt;code&gt;tss.bed&lt;/code&gt; en su lugar. Ya NO los
+ejecuta — eso ahora lo hace &lt;code&gt;qc_run_one_sample.nf&lt;/code&gt;, uno por muestra en
+paralelo (ver [[QC RUN ONE SAMPLE]]). Mismo patrón &lt;code&gt;state&lt;/code&gt;/&lt;code&gt;cp&lt;/code&gt; ya
+explicado en [[CONSENSUS PEAK CALLING]].&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-plots-thresholds/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-plots-thresholds/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicqc_plots_thresholdsnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/qc_plots_thresholds.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Envuelve &lt;code&gt;04_qc_plots_thresholds.py&lt;/code&gt; (plots de QC + umbrales automáticos de
+barcode). Mismo patrón [[state]]/[[cp]] de los módulos anteriores — lo único
+nuevo aquí es un segundo [[publishDir]].&lt;/p&gt;
+&lt;h2 id="dos-publishdir-en-el-mismo-proceso"&gt;Dos &lt;code&gt;publishDir&lt;/code&gt; en el mismo proceso&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-groovy" data-lang="groovy"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;publishDir&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;${params.project_root}/3_output/${params.run_date}/A_pyCisTopic&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;mode:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;copy&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;publishDir&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;${params.project_root}/4_figures/${params.run_date}/A_pyCisTopic&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;mode:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;copy&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;pattern:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;state/**.png&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Un proceso puede tener varias líneas [[publishDir]] — cada una con su propio
+destino y, opcionalmente, un &lt;code&gt;pattern&lt;/code&gt; que filtra qué outputs van a esa
+copia en particular. Aquí: todo el [[state]] va a &lt;code&gt;3_output/&lt;/code&gt; como siempre,
+pero además cualquier &lt;code&gt;.png&lt;/code&gt; que haya adentro (los plots) se copia también a
+&lt;code&gt;4_figures/&lt;/code&gt; — replicando la misma separación datos/figuras que ya usa el
+resto del proyecto.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-run-one-sample/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-run-one-sample/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicqc_run_one_samplenf"&gt;&lt;code&gt;nf/modules/a_pycistopic/qc_run_one_sample.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-groovy" data-lang="groovy"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;process&lt;/span&gt; &lt;span class="n"&gt;QC_RUN_ONE_SAMPLE&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;pycistopic_env&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;tag&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;${sample_id}&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;publishDir&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;${params.project_root}/3_output/${params.run_date}/A_pyCisTopic&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;mode:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;copy&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;input:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;tuple&lt;/span&gt; &lt;span class="nf"&gt;val&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sample_id&lt;/span&gt;&lt;span class="o"&gt;),&lt;/span&gt; &lt;span class="n"&gt;val&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fragment_path&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="n"&gt;state_in&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;stageAs:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;state_in&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;output:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;state&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;emit:&lt;/span&gt; &lt;span class="n"&gt;state&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;script:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; cp -rL state_in state
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; python -m pycisTopic.cli.pycistopic qc \\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; --fragments ${fragment_path} \\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; --regions state/consensus_peak_calling/consensus_regions.bed \\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; --tss state/1_qc/tss.bed \\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; --output state/1_qc/${sample_id}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="tuple-valsample_id-valfragment_path--dos-valores-en-un-solo-input"&gt;&lt;code&gt;tuple val(sample_id), val(fragment_path)&lt;/code&gt; — dos valores en un solo input&lt;/h2&gt;
+&lt;p&gt;Ya viste &lt;code&gt;val sample_id&lt;/code&gt; solo (un string) en &lt;code&gt;build_cistopic_objects.nf&lt;/code&gt; ([[BUILD CISTOPIC OBJECTS]]).
+Hace falta ADEMÁS la ruta de fragmentos de esa muestra puntual, porque
+el comando de pycisTopic la necesita como argumento (&lt;code&gt;--fragments&lt;/code&gt;) — no
+alcanza con el nombre de la muestra. &lt;code&gt;tuple val(a), val(b)&lt;/code&gt; empaqueta los
+dos juntos en un solo item de canal, así que cada vez que llega uno nuevo,
+Nextflow dispara una ejecución con AMBOS valores correspondientes a la
+misma fila (nunca el &lt;code&gt;sample_id&lt;/code&gt; de una fila con el &lt;code&gt;fragment_path&lt;/code&gt; de
+otra).&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/topic-qc-correlation-annotated/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/topic-qc-correlation-annotated/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopictopic_qc_correlation_annotatednf"&gt;&lt;code&gt;nf/modules/a_pycistopic/topic_qc_correlation_annotated.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Envuelve &lt;code&gt;analyze_topic_qc_correlation.py&lt;/code&gt; — un script que el propio repo
+original describe como &amp;ldquo;one-off analysis, not part of run_pipeline.sh&amp;rdquo;: la
+referencia real en &lt;code&gt;4_figures/2026-08-21/A_pyCisTopic/topic_qc_correlation/&lt;/code&gt;
+se generó corriéndolo a mano vía &lt;code&gt;job_sub_topic_qc_correlation.sh&lt;/code&gt; (un
+&lt;code&gt;bsub&lt;/code&gt; directo), nunca pasó por el pipeline principal. Este módulo lo agrega
+a Nextflow por primera vez — pero solo para la rama &amp;ldquo;solo anotadas&amp;rdquo;, no
+para la original.&lt;/p&gt;</description></item></channel></rss>

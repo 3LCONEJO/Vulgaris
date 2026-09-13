@@ -1,0 +1,4 @@
+{{- /* En Obsidian el nombre del archivo ES el título. Las notas del vault no
+       traen `title:` en el frontmatter, así que se usa el nombre de archivo
+       como fallback — así no hay que tocar ni una nota. */ -}}
+{{- if .Title -}}{{ .Title }}{{- else -}}{{ with .File }}{{ .BaseFileName }}{{ end }}{{- end -}}

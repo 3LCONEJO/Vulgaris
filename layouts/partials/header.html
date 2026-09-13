@@ -17,5 +17,28 @@
         {{ end }}
       </ul>
     </nav>
+    {{ $cur := . }}
+    {{ $homes := site.Home.AllTranslations }}
+    {{ if gt (len $homes) 1 }}
+      <nav class="lang-switch" aria-label="Language">
+        {{ range $homes }}
+          {{ $lang := .Language.Lang }}
+          {{ $target := "" }}
+          {{ if eq $lang $cur.Language.Lang }}
+            {{ $target = $cur.RelPermalink }}
+          {{ else }}
+            {{ range $cur.AllTranslations }}
+              {{ if eq .Language.Lang $lang }}{{ $target = .RelPermalink }}{{ end }}
+            {{ end }}
+          {{ end }}
+          {{/* sin traduccion de esta pagina: se cae a la portada de ese idioma */}}
+          {{ $missing := not $target }}
+          {{ if $missing }}{{ $target = .RelPermalink }}{{ end }}
+          <a href="{{ $target }}"
+             {{ if eq $lang $cur.Language.Lang }}aria-current="true"{{ end }}
+             {{ if $missing }}class="is-missing" title="{{ i18n `noTranslation` }}"{{ end }}>{{ $lang }}</a>
+        {{ end }}
+      </nav>
+    {{ end }}
   </div>
 </header>

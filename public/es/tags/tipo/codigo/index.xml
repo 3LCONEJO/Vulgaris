@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tipo/Codigo on Vulgaris</title><link>https://3lconejo.github.io/Vulgaris/es/tags/tipo/codigo/</link><description>Recent content in Tipo/Codigo on Vulgaris</description><generator>Hugo</generator><language>es</language><atom:link href="https://3lconejo.github.io/Vulgaris/es/tags/tipo/codigo/index.xml" rel="self" type="application/rss+xml"/><item><title>Enfoque: Cicero y co-accesibilidad</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/c-cicero/codigo/00_enfoque_cicero/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/c-cicero/codigo/00_enfoque_cicero/</guid><description>&lt;h2 id="the-problem"&gt;The Problem&lt;/h2&gt;
+&lt;p&gt;Our existing pipeline establishes a strong foundation, but it leaves deeper biological insights hidden in the tables. By moving toward Gene Regulation Networks (GRNs), we can understand the &lt;em&gt;behavior&lt;/em&gt; of the data.&lt;/p&gt;
+&lt;table&gt;
+	&lt;thead&gt;
+			&lt;tr&gt;
+					&lt;th&gt;Existing Capabilities&lt;/th&gt;
+					&lt;th&gt;New GRN Capabilities&lt;/th&gt;
+			&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+			&lt;tr&gt;
+					&lt;td&gt;Filter scATAC-seq data by quality&lt;/td&gt;
+					&lt;td&gt;Discover synchronously activated regions&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;Group cells by accessible regions&lt;/td&gt;
+					&lt;td&gt;Map enhancer-to-target interactions&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;Perform differential accessibility&lt;/td&gt;
+					&lt;td&gt;Identify regulatory topics and cellular archetypes&lt;/td&gt;
+			&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;My work in this phase is to unveil how these patterns manifest and verify whether they align with known biological regulatory systems.&lt;/p&gt;</description></item><item><title>01_create_cicero_cds.r</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/c-cicero/codigo/01_create_cicero_cds.r/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/c-cicero/codigo/01_create_cicero_cds.r/</guid><description>&lt;h2 id="create-a-cds-object-and-run-cicero"&gt;Create a cds object and Run Cicero&lt;/h2&gt;
+&lt;p&gt;Below is the step-by-step R script to execute this pipeline. It handles argument parsing for cluster environments (like SLURM|LSF), calculates co-accessibility, and integrates the results back into a Seurat object.&lt;/p&gt;
+&lt;h3 id="1-environment-setup-and-argument-parsing"&gt;1. Environment Setup and Argument Parsing&lt;/h3&gt;
+&lt;p&gt;First, we load the required libraries and parse command-line arguments to avoid hardcoding file paths.&lt;/p&gt;</description></item><item><title>export_seurat_data.r</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/b-general/codigo/export_seurat_data.r/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/b-general/codigo/export_seurat_data.r/</guid><description>&lt;h2 id="next-steps-pycistopic"&gt;NEXT-STEPS: pycisTopic&lt;/h2&gt;
+&lt;p&gt;To improve the confidence in our results, we can validate our findings using &lt;strong&gt;pycisTopic&lt;/strong&gt;. This tool uses Latent Dirichlet Allocation (LDA) to group co-accessible chromatin regions into distinct regulatory topics and classify cell states.&lt;/p&gt;
+&lt;h3 id="1-data-preparation-recoger-nuestras-chivas"&gt;1. Data Preparation: &amp;ldquo;Recoger nuestras chivas&amp;rdquo;&lt;/h3&gt;
+&lt;p&gt;Before diving into the Python environment, we need to get our files in order. &lt;code&gt;pycisTopic&lt;/code&gt; relies on a core data structure: a dictionary that links sample IDs to their corresponding ATAC fragment files.&lt;/p&gt;</description></item><item><title>02_TestingCCANSandCONNS.R</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/c-cicero/codigo/02_testingccansandconns.r/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/c-cicero/codigo/02_testingccansandconns.r/</guid><description>&lt;h2 id="analyze-and-plot-each-ccans"&gt;Analyze and Plot each CCANs&lt;/h2&gt;
+&lt;h3 id="1-load-data"&gt;1. Load data&lt;/h3&gt;
+&lt;p&gt;Now that we have the results of running cicero it is time to see what is inside.
+First we load our packages.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-r" data-lang="r"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Script: TestingCCANSandCONNS.R&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nf"&gt;suppressPackageStartupMessages&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Seurat&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Signac&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;SeuratWrappers&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;monocle3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cicero&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;EnsDb.Hsapiens.v86&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;TxDb.Hsapiens.UCSC.hg38.knownGene&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;VariantAnnotation&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;igraph&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dplyr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ggforce&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ggplot2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;patchwork&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# For combining plots (plot_layout(), `/` operator)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;scales&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# For rescale()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;})&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The argumentss mirrors &lt;code&gt;create_cicero_cds.r's &amp;lt;output_prefix&amp;gt; [project_root] &lt;/code&gt;convention:
+that script names both the output directory and every file inside it after
+the same &lt;code&gt;prefix&lt;/code&gt; (3_output/cicero_&lt;prefix&gt;/&lt;prefix&gt;_CCANs.csv, etc).&lt;/p&gt;</description></item><item><title>03_assign_ccan_genes.r</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/c-cicero/codigo/03_assign_ccan_genes.r/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/c-cicero/codigo/03_assign_ccan_genes.r/</guid><description>&lt;h3 id="assign-genes-to-peaks-from-ccans"&gt;Assign Genes to peaks from CCANs&lt;/h3&gt;
+&lt;p&gt;But why? We already assign genes in the previous step to plot them! Well, the thing is, I don&amp;rsquo;t know, but they said that &lt;code&gt;GREATr&lt;/code&gt; is a good tool for annotate peaks, so as a true scientist, I believe that. Jokes aside, in the previous step we find genes per CCAN not per peak so we&amp;rsquo;re not really finding actual enhancer -&amp;gt; peak. But with &lt;code&gt;GREATr&lt;/code&gt; it is per-peak assignment with an extended domain to search &lt;em&gt;&amp;ldquo;near&amp;rdquo;&lt;/em&gt; to the TSS (With a basal window of 5kb/1kb).&lt;/p&gt;</description></item></channel></rss>

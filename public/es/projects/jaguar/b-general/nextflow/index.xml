@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Nextflow on Vulgaris</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/b-general/nextflow/</link><description>Recent content in Nextflow on Vulgaris</description><generator>Hugo</generator><language>es</language><atom:link href="https://3lconejo.github.io/Vulgaris/es/projects/jaguar/b-general/nextflow/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/b-general/nextflow/export-seurat-data/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/b-general/nextflow/export-seurat-data/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesb_generalexport_seurat_datanf"&gt;&lt;code&gt;nf/modules/b_general/export_seurat_data.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Envuelve &lt;code&gt;B_general/1_R/export_seurat_data.r&lt;/code&gt; — el primer paso real de todo
+el pipeline (exporta peaks/barcodes/metadata con rutas de fragmentos a
+partir del objeto Seurat integrado).&lt;/p&gt;
+&lt;h2 id="el-proceso-completo"&gt;El proceso completo&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-groovy" data-lang="groovy"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;process&lt;/span&gt; &lt;span class="n"&gt;EXPORT_SEURAT_DATA&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;scatac_full_env&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;light_job&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;publishDir&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;${params.project_root}/2_data/${params.data_date}/B_general&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;mode:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;copy&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;output:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;seurat_metadata_with_fragments.tsv&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;emit:&lt;/span&gt; &lt;span class="n"&gt;cell_data&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;sample_fragment_mapping.tsv&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;emit:&lt;/span&gt; &lt;span class="n"&gt;fragment_mapping&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;integrated_peaks.bed&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;script:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; Rscript ${params.project_root}/1_scripts/B_general/1_R/export_seurat_data.r \\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; ${params.seurat_object_path} .
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;stub:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; touch seurat_metadata_with_fragments.tsv sample_fragment_mapping.tsv integrated_peaks.bed
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="pieza-por-pieza"&gt;Pieza por pieza&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;label 'scatac_full_env'&lt;/code&gt; / &lt;code&gt;label 'light_job'&lt;/code&gt;&lt;/strong&gt; — un [[label]] es una
+etiqueta arbitraria (cualquier nombre) que después &lt;code&gt;nextflow.config&lt;/code&gt;
+usa para decidir qué conda env activar y qué recursos de LSF pedir
+(ver [[Nextflow Config]]). Un proceso puede tener varios labels a la vez —
+aquí uno dice &amp;ldquo;qué entorno&amp;rdquo; y otro &amp;ldquo;cuántos recursos&amp;rdquo;, cosas independientes.&lt;/li&gt;
+&lt;li&gt;[[publishDir]] — copia (o [[symlink]]) los outputs declarados hacia una
+ruta legible por humanos, además de donde Nextflow los cachea internamente
+(&lt;code&gt;work/&lt;/code&gt;). Es la única razón por la que &lt;code&gt;2_data/&amp;lt;fecha&amp;gt;/B_general/&lt;/code&gt; sigue
+teniendo la misma pinta de siempre — Nextflow por dentro guarda todo en
+&lt;code&gt;work/xx/yyyy.../&lt;/code&gt;, con nombres de hash, no en esa ruta.&lt;/li&gt;
+&lt;li&gt;[[output]]: con [[emit]]:** — declara qué archivos produce el proceso.
+&lt;code&gt;emit: cell_data&lt;/code&gt; le pone un nombre a ese output específico, para poder
+referenciarlo después como &lt;code&gt;EXPORT_SEURAT_DATA.out.cell_data&lt;/code&gt; desde el
+&lt;code&gt;workflow&lt;/code&gt; (ver [[Workflow &amp;amp; Main]]). El tercer output
+(&lt;code&gt;integrated_peaks.bed&lt;/code&gt;) no tiene &lt;code&gt;emit:&lt;/code&gt; porque nada de este piloto lo
+vuelve a leer — sigue publicado, pero nadie lo necesita como input.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Sin &lt;code&gt;input:&lt;/code&gt;&lt;/strong&gt; — es el ÚNICO módulo de este piloto sin dependencias de
+otro proceso. En vez de recibir un canal, lee &lt;code&gt;params.seurat_object_path&lt;/code&gt;
+directo (un parámetro global de &lt;code&gt;nextflow.config&lt;/code&gt;, no un archivo que pasó
+por otro proceso).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;script:&lt;/code&gt;&lt;/strong&gt; — el bloque real que se ejecuta. Es &lt;em&gt;exactamente&lt;/em&gt;
+la misma llamada a &lt;code&gt;Rscript&lt;/code&gt; que ya se hacia previamente — Nextflow no reescribe
+la lógica, solo la orquesta — fue un principio de diseño explícito, no
+casualidad: migrar sin tocar ni un script.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;stub:&lt;/code&gt;&lt;/strong&gt; — bloque alternativo, ver [[Stub Run]].&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="por-qué-el--al-final-del-rscript--call"&gt;Por qué el &lt;code&gt;.&lt;/code&gt; al final del &lt;code&gt;Rscript ...&lt;/code&gt; call&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;export_seurat_data.r&lt;/code&gt; acepta &lt;code&gt;[seurat_object_path] [out_dir]&lt;/code&gt; como
+argumentos posicionales (ver el propio script). El &lt;code&gt;.&lt;/code&gt; le dice &amp;ldquo;escribe aquí
+mismo, en el directorio de trabajo de este proceso&amp;rdquo; — eso es lo que
+&lt;code&gt;publishDir&lt;/code&gt;/&lt;code&gt;output:&lt;/code&gt; después recogen.&lt;/p&gt;</description></item></channel></rss>

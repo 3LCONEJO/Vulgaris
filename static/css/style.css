@@ -902,3 +902,19 @@ input:focus-visible {
   .tag { border-color: #999 !important; color: #111 !important; }
   a[href]::after { content: none !important; } /* no printed URLs cluttering the page */
 }
+
+/* --- selector de idioma --------------------------------------------------- */
+.lang-switch { display: flex; gap: 0.15rem; align-items: center; margin-left: 0.75rem; }
+.lang-switch a {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.4rem;
+  border-radius: var(--radius-sm);
+  color: var(--text-faint);
+  text-decoration: none;
+}
+.lang-switch a:hover { color: var(--accent-bright); background: var(--bg-raised); }
+.lang-switch a[aria-current="true"] { color: var(--accent); background: var(--bg-inset); }
+.lang-switch a.is-missing { opacity: 0.45; }

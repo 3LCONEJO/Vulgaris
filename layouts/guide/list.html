@@ -1,0 +1,68 @@
+{{ define "main" }}
+{{ $isRoot := isset .Params "levels" }}
+<div class="guide-layout wrap">
+  {{ partial "guide-nav.html" . }}
+
+  <article class="guide-main">
+    <header class="{{ if $isRoot }}post-header{{ else }}note-header{{ end }}">
+      <p class="eyebrow">{{ with .Params.eyebrow }}{{ . }}{{ else }}./{{ .Section }}{{ end }}</p>
+      <h1>{{ partial "note-title.html" . }}{{ with .Params.estado }} <span class="estado estado--{{ . | urlize }}">{{ . }}</span>{{ end }}</h1>
+      {{ if $isRoot }}
+        <div class="post-meta">
+          <span>{{ .Date.Format "2006-01-02" }}</span>
+          {{ with .Params.status }}<span class="sep">/</span><span>{{ . }}</span>{{ end }}
+        </div>
+        {{ with .Params.github }}
+          <div class="post-source-btn">
+            <a class="btn" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "viewSource" }}</a>
+          </div>
+        {{ end }}
+      {{ end }}
+    </header>
+
+    {{ with .Params.levels }}
+      <ol class="levels">
+        {{ range . }}
+          {{ $href := cond (eq .href "") "#main" (printf "%s" .href) }}
+          <li class="level">
+            <a href="{{ $href }}">
+              <span class="level-num">{{ .id }}</span>
+              <span class="level-name">{{ .name }}</span>
+              <span class="level-hint">{{ .hint }}</span>
+              <span class="level-blurb">{{ .blurb }}</span>
+            </a>
+          </li>
+        {{ end }}
+      </ol>
+    {{ end }}
+
+    {{ with .RawContent }}
+      <div class="post-body note-body">
+        {{ partial "wikilinks.html" (dict "page" $ "raw" .) }}
+      </div>
+    {{ end }}
+
+    {{ $subs := .Sections.ByWeight }}
+    {{ $notes := (sort .RegularPages "File.BaseFileName") }}
+    {{ if or $subs $notes }}
+      <section class="guide-index">
+        {{ range $subs }}
+          <h2 class="guide-index-head"><a href="{{ .RelPermalink }}">{{ partial "note-title.html" . }}</a></h2>
+          <ul class="note-list">
+            {{ range (sort .RegularPages "File.BaseFileName") }}
+              <li><a href="{{ .RelPermalink }}"><code>{{ partial "note-title.html" . }}</code></a></li>
+            {{ end }}
+          </ul>
+        {{ end }}
+        {{ if $notes }}
+          <ul class="note-list">
+            {{ range $notes }}
+              <li><a href="{{ .RelPermalink }}"><code>{{ partial "note-title.html" . }}</code></a></li>
+            {{ end }}
+          </ul>
+        {{ end }}
+      </section>
+    {{ end }}
+  </article>
+</div>
+{{ end }}

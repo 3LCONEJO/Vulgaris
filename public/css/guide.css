@@ -1,0 +1,264 @@
+/* ==========================================================================
+   Vulgaris — capa "guía": vault de Obsidian publicado
+   Usa los tokens de style.css, no define colores nuevos.
+   ========================================================================== */
+
+/* --- layout de dos columnas: árbol del vault + nota ---------------------- */
+.guide-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: start;
+}
+.guide-main { min-width: 0; }
+
+@media (max-width: 820px) {
+  .guide-layout { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+
+/* --- barra lateral ------------------------------------------------------- */
+.guide-nav {
+  position: sticky;
+  top: 5rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.7;
+  border-left: 1px solid var(--border-soft);
+  padding-left: 1rem;
+  max-height: calc(100vh - 7rem);
+  overflow-y: auto;
+}
+@media (max-width: 820px) {
+  .guide-nav {
+    position: static;
+    max-height: none;
+    border-left: none;
+    border-bottom: 1px solid var(--border-soft);
+    padding: 0 0 1rem 0;
+    margin-bottom: 0.5rem;
+  }
+}
+.guide-nav a { color: var(--text-muted); text-decoration: none; display: block; }
+.guide-nav a:hover { color: var(--accent-bright); }
+.guide-nav a.is-current { color: var(--accent); font-weight: 700; }
+.guide-nav-root { color: var(--text) !important; margin-bottom: 1rem; }
+.guide-nav-root .prompt { color: var(--accent); }
+.guide-nav-group { margin-bottom: 1rem; }
+.guide-nav-head {
+  color: var(--text) !important;
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.25rem;
+}
+.guide-nav-head--sub { font-size: 0.75rem; color: var(--text-faint) !important; }
+.guide-nav ul { list-style: none; margin: 0 0 0.5rem; padding: 0 0 0 0.75rem; }
+.guide-nav-sub { margin: 0.5rem 0; }
+.guide-nav li { margin: 0; }
+.guide-nav li a { overflow-wrap: anywhere; }
+
+/* --- los tres niveles (portada) ------------------------------------------ */
+.levels { list-style: none; margin: 2rem 0 3rem; padding: 0; display: grid; gap: 0.75rem; }
+.level a {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  grid-template-areas: "num name" "num blurb";
+  gap: 0.15rem 0.75rem;
+  padding: 1rem 1.1rem;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: border-color var(--speed), background var(--speed);
+}
+.level a:hover { border-color: var(--accent-dim); background: var(--bg-inset); }
+.level-num {
+  grid-area: num;
+  align-self: start;
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--accent-dim);
+}
+.level a:hover .level-num { color: var(--accent); }
+.level-name {
+  grid-area: name;
+  font-family: var(--font-mono);
+  color: var(--text);
+  font-weight: 700;
+}
+.level-hint {
+  grid-area: name;
+  justify-self: end;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-faint);
+}
+.level-blurb { grid-area: blurb; color: var(--text-muted); font-size: 0.9rem; }
+
+/* --- cabecera e índice de nota ------------------------------------------- */
+.note-header { border-bottom: 1px solid var(--border-soft); padding-bottom: 1rem; margin-bottom: 1.5rem; }
+.note-header h1 { font-family: var(--font-mono); overflow-wrap: anywhere; }
+.note-header .eyebrow a { color: inherit; }
+.note-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.6rem; }
+.tag--vault { font-size: 0.7rem; color: var(--text-faint); }
+
+.guide-index { margin-top: 2rem; }
+.guide-index-head { font-family: var(--font-mono); font-size: 0.95rem; margin: 1.75rem 0 0.5rem; }
+.guide-index-head a { text-decoration: none; }
+.note-list {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 0.35rem;
+}
+.note-list a {
+  display: block; padding: 0.45rem 0.6rem;
+  border: 1px solid var(--border-soft); border-radius: var(--radius-sm);
+  text-decoration: none; color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+.note-list a:hover { border-color: var(--accent-dim); color: var(--accent-bright); background: var(--bg-raised); }
+.note-list code { background: none; padding: 0; color: inherit; }
+
+/* --- wikilinks ----------------------------------------------------------- */
+.wikilink {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--accent-dim);
+  padding-bottom: 1px;
+}
+.wikilink:hover { border-bottom-style: solid; color: var(--accent-bright); }
+.wikilink--pending {
+  color: var(--text-faint);
+  border-bottom: 1px dotted var(--text-faint);
+  cursor: help;
+}
+
+/* --- el popover del hover preview ---------------------------------------- */
+.wikipop {
+  position: absolute;
+  z-index: 60;
+  width: min(420px, calc(100vw - 2rem));
+  max-height: 340px;
+  overflow: hidden auto;
+  background: var(--bg-raised);
+  border: 1px solid var(--accent-dim);
+  border-radius: var(--radius);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity var(--speed) ease, transform var(--speed) ease;
+}
+.wikipop.is-open { opacity: 1; transform: translateY(0); }
+.wikipop-head {
+  position: sticky; top: 0;
+  background: var(--bg-inset);
+  border-bottom: 1px solid var(--border);
+  padding: 0.5rem 0.9rem;
+  font-family: var(--font-mono); font-size: 0.78rem; color: var(--text);
+}
+.wikipop-head .prompt { color: var(--accent); }
+.wikipop-body { padding: 0.35rem 0.9rem 0.6rem; font-size: 0.84rem; }
+.wikipop-body > :first-child { margin-top: 0.5rem; }
+.wikipop-body h2 { font-size: 0.85rem; margin: 0.9rem 0 0.3rem; }
+.wikipop-body h3 { font-size: 0.8rem; }
+.wikipop-body pre { font-size: 0.74rem; }
+.wikipop-body table { font-size: 0.74rem; }
+.wikipop-body .backlinks { display: none; }
+.wikipop-body a { color: var(--text-muted); border: none; cursor: default; }
+.wikipop-foot {
+  padding: 0.4rem 0.9rem;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-faint);
+}
+
+/* --- backlinks ----------------------------------------------------------- */
+.backlinks {
+  margin-top: 2.5rem;
+  padding: 1rem 1.2rem;
+  background: var(--bg-inset);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+}
+.backlinks-title {
+  font-family: var(--font-mono); font-size: 0.8rem;
+  color: var(--text-faint); text-transform: lowercase;
+  letter-spacing: 0.05em; margin: 0 0 0.5rem;
+}
+.backlinks ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; }
+.backlinks a { font-family: var(--font-mono); font-size: 0.82rem; }
+
+/* --- estado por rama ------------------------------------------------------ */
+.estado {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  text-transform: lowercase;
+  letter-spacing: 0.05em;
+  vertical-align: middle;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  background: var(--bg-inset);
+  white-space: nowrap;
+}
+.estado--migrada-a-nextflow,
+.estado--implementada-y-probada { border-color: var(--accent-dim); color: var(--accent); }
+.estado--en-curso,
+.estado--parcialmente-migrada,
+.estado--consenso-probado-visualizador-abierto,
+.estado--corre-en-bash-sin-migrar { border-color: var(--brand); color: var(--brand); }
+.estado--abierto { border-color: var(--border); color: var(--text-faint); }
+
+/* punto de estado en la barra lateral */
+.guide-nav-estado {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  margin-left: 0.4rem;
+  vertical-align: middle;
+  background: var(--text-faint);
+}
+.guide-nav-estado--migrada-a-nextflow,
+.guide-nav-estado--implementada-y-probada { background: var(--accent); }
+.guide-nav-estado--en-curso,
+.guide-nav-estado--parcialmente-migrada,
+.guide-nav-estado--consenso-probado-visualizador-abierto,
+.guide-nav-estado--corre-en-bash-sin-migrar { background: var(--brand); }
+
+/* anidamiento de la barra lateral */
+.guide-nav-d2 { padding-left: 0.75rem; border-left: 1px solid var(--border-soft); margin-left: 0.1rem; }
+.guide-nav-d2 > .guide-nav-head { font-size: 0.75rem; color: var(--text-faint) !important; }
+.guide-nav-d3 { padding-left: 0.6rem; }
+
+/* aviso de nota sin traducir */
+.lang-note {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  background: var(--bg-inset);
+  border-left: 2px solid var(--brand);
+  padding: 0.6rem 0.9rem;
+  margin: 0 0 1.5rem;
+}
+
+/* bloques de codigo plegados */
+.note-body details {
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  margin: 1rem 0;
+  background: var(--bg-inset);
+}
+.note-body details > summary {
+  cursor: pointer;
+  padding: 0.5rem 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  list-style: none;
+}
+.note-body details > summary::before { content: "▸ "; color: var(--accent-dim); }
+.note-body details[open] > summary::before { content: "▾ "; }
+.note-body details > summary:hover { color: var(--accent-bright); }
+.note-body details > pre { margin: 0 0.5rem 0.5rem; }
+
+/* si la guia no existe en este idioma no hay barra lateral: una sola columna */
+.guide-layout:not(:has(.guide-nav)) { grid-template-columns: minmax(0, 1fr); }

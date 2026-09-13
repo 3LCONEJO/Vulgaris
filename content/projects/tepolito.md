@@ -1,5 +1,6 @@
 ---
 title: "Teporingo"
+slug: "teporingo"
 date: 2026-07-27
 draft: false
 status: "in progress"

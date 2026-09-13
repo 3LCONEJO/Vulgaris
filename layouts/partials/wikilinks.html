@@ -1,0 +1,62 @@
+{{- /*
+  Convierte los [[wikilinks]] de Obsidian en enlaces de verdad.
+
+  Goldmark no entiende [[...]], así que la sustitución se hace sobre el
+  RawContent ANTES de renderizar el markdown, y el resultado se pasa por
+  RenderString. Funciona porque markup.goldmark.renderer.unsafe = true.
+
+  Soporta:  [[nota]]  ·  [[nota|texto visible]]  ·  [[nota#sección]]
+  Si la nota no existe todavía, queda marcada como pendiente en vez de
+  romperse (que es justo lo que hace Obsidian).
+
+  Uso:  {{ partial "wikilinks.html" (dict "page" . "raw" .RawContent) }}
+*/ -}}
+
+{{- $page := .page -}}
+{{- $raw  := .raw -}}
+
+{{- /* Índice: nombre-de-archivo en minúsculas -> RelPermalink */ -}}
+{{- $urls := dict -}}
+{{- with site.GetPage "/projects/jaguar" -}}
+  {{- range .RegularPagesRecursive -}}
+    {{- $p := . -}}
+    {{- with .File -}}
+      {{- $urls = merge $urls (dict (lower .BaseFileName) $p.RelPermalink) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- range $m := uniq (findRE `\[\[[^\[\]\n]+\]\]` $raw) -}}
+  {{- $inner  := trim $m "[]" -}}
+  {{- $target := $inner -}}
+  {{- $label  := "" -}}
+
+  {{- /* [[nota|texto visible]] */ -}}
+  {{- if in $inner "|" -}}
+    {{- $parts := split $inner "|" -}}
+    {{- $target = index $parts 0 -}}
+    {{- $label  = index $parts 1 -}}
+  {{- end -}}
+
+  {{- /* [[nota#sección]] */ -}}
+  {{- $anchor := "" -}}
+  {{- if in $target "#" -}}
+    {{- $parts := split $target "#" -}}
+    {{- $target = index $parts 0 -}}
+    {{- $anchor = printf "#%s" (anchorize (index $parts 1)) -}}
+  {{- end -}}
+
+  {{- $target = trim $target " " -}}
+  {{- if eq $label "" }}{{ $label = $target }}{{ end -}}
+
+  {{- $url := index $urls (lower $target) -}}
+  {{- if $url -}}
+    {{- $html := printf `<a class="wikilink" href="%s%s" data-note="%s">%s</a>` $url $anchor $url $label -}}
+    {{- $raw = replace $raw $m $html -}}
+  {{- else -}}
+    {{- $html := printf `<span class="wikilink wikilink--pending" title="nota pendiente: %s">%s</span>` $target $label -}}
+    {{- $raw = replace $raw $m $html -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $page.RenderString (dict "display" "block") $raw -}}

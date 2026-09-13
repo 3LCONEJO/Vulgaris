@@ -1,6 +1,6 @@
 {{ define "main" }}
 {{ with .Params.github }}
-  <a class="btn btn--primary floating-src-btn" href="{{ . }}" target="_blank" rel="noopener">↗ source</a>
+  <a class="btn btn--primary floating-src-btn" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "source" }}</a>
 {{ end }}
 
 <article class="wrap">
@@ -20,7 +20,7 @@
     {{ with .Params.github }}
       {{ $repoPath := strings.TrimSuffix "/" (strings.TrimPrefix "https://github.com/" .) }}
       <div class="post-source-btn">
-        <a class="btn" href="{{ . }}" target="_blank" rel="noopener">↗ view source on github</a>
+        <a class="btn" href="{{ . }}" target="_blank" rel="noopener">{{ i18n "viewSource" }}</a>
       </div>
       <div class="badge-row" style="margin-top:0.75rem;">
         <img src="https://img.shields.io/github/license/{{ $repoPath }}?style=flat-square&color=92c22c&labelColor=1a1615" alt="license">
@@ -33,12 +33,12 @@
   {{ $toc := .TableOfContents }}
   {{ if and (ne .Params.toc false) (ge (len (findRE "<li>" $toc)) 2) }}
     <input type="checkbox" id="toc-toggle" class="toc-toggle-input">
-    <label for="toc-toggle" class="toc-toggle-btn"><span>≡ contents</span></label>
+    <label for="toc-toggle" class="toc-toggle-btn"><span>{{ i18n "contents" }}</span></label>
     <label for="toc-toggle" class="toc-backdrop" aria-hidden="true"></label>
     <aside class="post-toc" aria-label="Table of contents">
       <div class="post-toc-head">
-        <span>./table-of-contents</span>
-        <label for="toc-toggle" class="post-toc-close" aria-label="Close table of contents">×</label>
+        <span>{{ i18n "tableOfContents" }}</span>
+        <label for="toc-toggle" class="post-toc-close" aria-label="{{ i18n `closeToc` }}">×</label>
       </div>
       <div class="post-toc-body">
         {{ $toc }}
@@ -53,12 +53,12 @@
   <nav class="post-nav" aria-label="Project navigation">
     {{ with .PrevInSection }}
       <a class="post-nav-link prev" href="{{ .Permalink }}">
-        <span class="dir">← previous</span>{{ .Title }}
+        <span class="dir">{{ i18n "previous" }}</span>{{ .Title }}
       </a>
     {{ else }}<span></span>{{ end }}
     {{ with .NextInSection }}
       <a class="post-nav-link next" href="{{ .Permalink }}">
-        <span class="dir">next →</span>{{ .Title }}
+        <span class="dir">{{ i18n "next" }}</span>{{ .Title }}
       </a>
     {{ else }}<span></span>{{ end }}
   </nav>

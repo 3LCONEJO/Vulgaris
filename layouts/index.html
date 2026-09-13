@@ -30,11 +30,14 @@
 
   <section aria-labelledby="featured-heading">
     <div class="section-heading">
-      <h2 id="featured-heading">featured_projects</h2>
+      <h2 id="featured-heading">{{ i18n "featuredProjects" }}</h2>
       <span class="rule" aria-hidden="true"></span>
     </div>
 
-    {{ $projects := where site.RegularPages "Section" "projects" }}
+    {{/* Solo los proyectos de primer nivel: site.RegularPages incluiria tambien
+         las notas del vault montadas bajo /projects/jaguar/. */}}
+    {{ $projects := slice }}
+    {{ with site.GetPage "/projects" }}{{ $projects = .Pages }}{{ end }}
     {{ $featured := slice }}
     {{ range site.Params.featuredProjects }}
       {{ $slug := . }}
@@ -43,7 +46,7 @@
       {{ else }}
         {{/* fall back to matching by File.BaseFileName if no explicit slug param */}}
         {{ range $projects }}
-          {{ if eq .File.BaseFileName $slug }}
+          {{ if and .File (eq .File.ContentBaseName $slug) }}
             {{ $featured = $featured | append . }}
           {{ end }}
         {{ end }}
@@ -61,17 +64,17 @@
         {{ end }}
       </div>
     {{ else }}
-      <p class="empty-state"># no projects published yet — check back soon</p>
+      <p class="empty-state">{{ i18n "noProjects" }}</p>
     {{ end }}
 
     <p style="margin-top:1.5rem;">
-      <a href="{{ "projects/" | relLangURL }}" class="mono">→ view all projects</a>
+      <a href="{{ "projects/" | relLangURL }}" class="mono">{{ i18n "viewAllProjects" }}</a>
     </p>
   </section>
 
   <section aria-labelledby="recent-heading">
     <div class="section-heading">
-      <h2 id="recent-heading">recent_log</h2>
+      <h2 id="recent-heading">{{ i18n "recentLog" }}</h2>
       <span class="rule" aria-hidden="true"></span>
     </div>
     {{ $posts := first 3 (where site.RegularPages "Section" "blog") }}

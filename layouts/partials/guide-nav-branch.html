@@ -1,0 +1,23 @@
+{{- /* Un nodo del arbol de la guia, recursivo: rama -> eje -> notas.
+       Recibe (dict "page" <seccion> "current" <pagina actual> "depth" <n>) */ -}}
+{{- $sec := .page -}}
+{{- $cur := .current -}}
+{{- $depth := .depth -}}
+<div class="guide-nav-group guide-nav-d{{ $depth }}">
+  <a class="guide-nav-head {{ if eq $cur.RelPermalink $sec.RelPermalink }}is-current{{ end }}" href="{{ $sec.RelPermalink }}">
+    {{ partial "note-title.html" $sec }}
+    {{- with $sec.Params.estado }}<span class="guide-nav-estado guide-nav-estado--{{ . | urlize }}"></span>{{ end -}}
+  </a>
+  {{ with $sec.Sections.ByWeight }}
+    {{ range . }}
+      {{ partial "guide-nav-branch.html" (dict "page" . "current" $cur "depth" (add $depth 1)) }}
+    {{ end }}
+  {{ end }}
+  {{ with sort $sec.RegularPages "File.BaseFileName" }}
+    <ul>
+      {{ range . }}
+        <li><a class="{{ if eq $cur.RelPermalink .RelPermalink }}is-current{{ end }}" href="{{ .RelPermalink }}">{{ partial "note-title.html" . }}</a></li>
+      {{ end }}
+    </ul>
+  {{ end }}
+</div>

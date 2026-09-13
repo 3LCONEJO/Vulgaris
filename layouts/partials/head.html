@@ -1,7 +1,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{ if .IsHome }}{{ site.Title }} — {{ site.Params.tagline }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
-<meta name="description" content="{{ if .Description }}{{ .Description }}{{ else if .Summary }}{{ .Summary | plainify | truncate 160 }}{{ else }}{{ site.Params.description }}{{ end }}">
+<title>{{ if .IsHome }}{{ site.Title }} — {{ site.Params.tagline }}{{ else }}{{ partial "note-title.html" . }} · {{ site.Title }}{{ end }}</title>
+<meta name="description" content="{{ if .Description }}{{ .Description }}{{ else if .Summary }}{{ .Summary | plainify | replaceRE "\\[\\[([^\\]|]*\\|)?([^\\]]+)\\]\\]" "$2" | truncate 160 }}{{ else }}{{ site.Params.description }}{{ end }}">
 
 <link rel="icon" type="image/svg+xml" href="{{ "img/favicon.svg" | relURL }}">
 <link rel="canonical" href="{{ .Permalink }}">
@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="{{ printf "%s?v=%d" ("css/style.css" | relURL) $assetVersion }}">
 <link rel="stylesheet" href="{{ printf "%s?v=%d" ("css/syntax.css" | relURL) $assetVersion }}">
 {{ if .IsHome }}<link rel="stylesheet" href="{{ printf "%s?v=%d" ("css/starfield.css" | relURL) $assetVersion }}">{{ end }}
+{{ if eq .Type "guide" }}<link rel="stylesheet" href="{{ printf "%s?v=%d" ("css/guide.css" | relURL) $assetVersion }}">{{ end }}
 
 {{ if .Params.math }}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
