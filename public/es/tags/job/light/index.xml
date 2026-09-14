@@ -1,23 +1,29 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Job/Light on Vulgaris</title><link>https://3lconejo.github.io/Vulgaris/es/tags/job/light/</link><description>Recent content in Job/Light on Vulgaris</description><generator>Hugo</generator><language>es</language><atom:link href="https://3lconejo.github.io/Vulgaris/es/tags/job/light/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/annotated-destination-modules/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/annotated-destination-modules/</guid><description>&lt;hr&gt;
-&lt;h2 id="merge_topic_states_annotatednf"&gt;&lt;code&gt;merge_topic_states_annotated.nf&lt;/code&gt;&lt;/h2&gt;
-&lt;h2 id="model_selection_umap_annotatednf"&gt;&lt;code&gt;model_selection_umap_annotated.nf&lt;/code&gt;&lt;/h2&gt;
-&lt;h2 id="binarization_topic_qc_annotatednf"&gt;&lt;code&gt;binarization_topic_qc_annotated.nf&lt;/code&gt;&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Job/Light on Vulgaris</title><link>https://3lconejo.github.io/Vulgaris/es/tags/job/light/</link><description>Recent content in Job/Light on Vulgaris</description><generator>Hugo</generator><language>es</language><atom:link href="https://3lconejo.github.io/Vulgaris/es/tags/job/light/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-generate-commands/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-generate-commands/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicqc_generate_commandsnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/qc_generate_commands.nf&lt;/code&gt;&lt;/h2&gt;
 &lt;hr&gt;
-&lt;p&gt;Los tres módulos que dejaron de ser alias (&lt;code&gt;include { X as Y }&lt;/code&gt;, ver
-[[Workflow &amp;amp; Main]]) el &lt;code&gt;[2026-09-11]&lt;/code&gt;, por el bug real explicado a fondo en
-[[Publishdir Replace Not Merge]]. Este artículo asume que ya se leyó ese —
-aquí el foco es &amp;ldquo;qué mirar en cada &lt;code&gt;.nf&lt;/code&gt; puntual&amp;rdquo;, no repetir el porqué
-completo.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-and-model/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-and-model/</guid><description>&lt;hr&gt;
-&lt;h2 id="merge_onlynf"&gt;&lt;code&gt;merge_only.nf&lt;/code&gt;&lt;/h2&gt;
-&lt;h2 id="fit_one_topicnf"&gt;&lt;code&gt;fit_one_topic.nf&lt;/code&gt;&lt;/h2&gt;
-&lt;h2 id="merge_topic_statesnf"&gt;&lt;code&gt;merge_topic_states.nf&lt;/code&gt;&lt;/h2&gt;
-&lt;h2 id="combine_modelsnf"&gt;&lt;code&gt;combine_models.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;Envuelve &lt;code&gt;03_qc_generate_commands.py&lt;/code&gt; — &lt;strong&gt;solo genera&lt;/strong&gt; el archivo de
+comandos QC (uno por muestra) y deja &lt;code&gt;tss.bed&lt;/code&gt; en su lugar. Ya NO los
+ejecuta — eso ahora lo hace &lt;code&gt;qc_run_one_sample.nf&lt;/code&gt;, uno por muestra en
+paralelo (ver [[QC RUN ONE SAMPLE]]). Mismo patrón &lt;code&gt;state&lt;/code&gt;/&lt;code&gt;cp&lt;/code&gt; ya
+explicado en [[CONSENSUS PEAK CALLING]].&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-qc-states/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-qc-states/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicmerge_qc_statesnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/merge_qc_states.nf&lt;/code&gt;&lt;/h2&gt;
 &lt;hr&gt;
-&lt;p&gt;Estos 4 módulos son lo que hoy hace el trabajo del viejo &lt;code&gt;merge_and_model.nf&lt;/code&gt;
-(un solo proceso, &lt;code&gt;MERGE_AND_MODEL&lt;/code&gt; — sigue en el repo, ya NO se usa en
-&lt;code&gt;pycistopic.nf&lt;/code&gt;, dejado solo de referencia histórica). Se documentan juntos
-aquí porque ninguno tiene sentido leído aislado — son las 4 piezas de un
-mismo rediseño.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-cistopic-states/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-cistopic-states/</guid><description>&lt;hr&gt;
+&lt;p&gt;Junta los N &lt;code&gt;state&lt;/code&gt; que salen de las corridas paralelas de &lt;code&gt;QC_RUN_ONE_SAMPLE&lt;/code&gt; (una por muestra) en UN solo &lt;code&gt;state&lt;/code&gt; antes de pasárselo a &lt;code&gt;QC_PLOTS_THRESHOLDS&lt;/code&gt;. Es exactamente el mismo patrón que &lt;code&gt;merge_cistopic_states.nf&lt;/code&gt; (ver [[MERGE CISTOPIC STATES]] para el
+detalle completo de [[stageAs]] con patrón y [[cp#-rn]]).&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-plots-thresholds/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-plots-thresholds/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicqc_plots_thresholdsnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/qc_plots_thresholds.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Envuelve &lt;code&gt;04_qc_plots_thresholds.py&lt;/code&gt; (plots de QC + umbrales automáticos de
+barcode). Mismo patrón [[state]]/[[cp]] de los módulos anteriores — lo único
+nuevo aquí es un segundo [[publishDir]].&lt;/p&gt;
+&lt;h2 id="dos-publishdir-en-el-mismo-proceso"&gt;Dos &lt;code&gt;publishDir&lt;/code&gt; en el mismo proceso&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-groovy" data-lang="groovy"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;publishDir&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;${params.project_root}/3_output/${params.run_date}/A_pyCisTopic&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;mode:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;copy&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;publishDir&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;${params.project_root}/4_figures/${params.run_date}/A_pyCisTopic&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;mode:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;copy&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;pattern:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;state/**.png&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Un proceso puede tener varias líneas [[publishDir]] — cada una con su propio
+destino y, opcionalmente, un &lt;code&gt;pattern&lt;/code&gt; que filtra qué outputs van a esa
+copia en particular. Aquí: todo el [[state]] va a &lt;code&gt;3_output/&lt;/code&gt; como siempre,
+pero además cualquier &lt;code&gt;.png&lt;/code&gt; que haya adentro (los plots) se copia también a
+&lt;code&gt;4_figures/&lt;/code&gt; — replicando la misma separación datos/figuras que ya usa el
+resto del proyecto.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-cistopic-states/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-cistopic-states/</guid><description>&lt;hr&gt;
 &lt;h2 id="nfmodulesa_pycistopicmerge_cistopic_statesnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/merge_cistopic_states.nf&lt;/code&gt;&lt;/h2&gt;
 &lt;hr&gt;
 &lt;p&gt;Nuevo &lt;code&gt;[2026-09-01]&lt;/code&gt;, agregado junto con la paralelización de
@@ -35,29 +41,23 @@ las otras (los de su muestra). Hay que combinarlas en una sola antes de que
 [[MERGE AND MODEL]]) pueda escanear el directorio y encontrar los modelos de
 las 24 muestras juntos — ese script descubre muestras escaneando
 &lt;code&gt;&amp;lt;out-dir&amp;gt;&lt;/code&gt; por el sufijo &lt;code&gt;*_cistopic_obj_models.pkl&lt;/code&gt;, así que necesita
-verlas todas en el mismo lugar.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-qc-states/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-qc-states/</guid><description>&lt;hr&gt;
-&lt;h2 id="nfmodulesa_pycistopicmerge_qc_statesnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/merge_qc_states.nf&lt;/code&gt;&lt;/h2&gt;
+verlas todas en el mismo lugar.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-and-model/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-and-model/</guid><description>&lt;hr&gt;
+&lt;h2 id="merge_onlynf"&gt;&lt;code&gt;merge_only.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id="fit_one_topicnf"&gt;&lt;code&gt;fit_one_topic.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id="merge_topic_statesnf"&gt;&lt;code&gt;merge_topic_states.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id="combine_modelsnf"&gt;&lt;code&gt;combine_models.nf&lt;/code&gt;&lt;/h2&gt;
 &lt;hr&gt;
-&lt;p&gt;Junta los N &lt;code&gt;state&lt;/code&gt; que salen de las corridas paralelas de &lt;code&gt;QC_RUN_ONE_SAMPLE&lt;/code&gt; (una por muestra) en UN solo &lt;code&gt;state&lt;/code&gt; antes de pasárselo a &lt;code&gt;QC_PLOTS_THRESHOLDS&lt;/code&gt;. Es exactamente el mismo patrón que &lt;code&gt;merge_cistopic_states.nf&lt;/code&gt; (ver [[MERGE CISTOPIC STATES]] para el
-detalle completo de [[stageAs]] con patrón y [[cp#-rn]]).&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-generate-commands/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-generate-commands/</guid><description>&lt;hr&gt;
-&lt;h2 id="nfmodulesa_pycistopicqc_generate_commandsnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/qc_generate_commands.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;Estos 4 módulos son lo que hoy hace el trabajo del viejo &lt;code&gt;merge_and_model.nf&lt;/code&gt;
+(un solo proceso, &lt;code&gt;MERGE_AND_MODEL&lt;/code&gt; — sigue en el repo, ya NO se usa en
+&lt;code&gt;pycistopic.nf&lt;/code&gt;, dejado solo de referencia histórica). Se documentan juntos
+aquí porque ninguno tiene sentido leído aislado — son las 4 piezas de un
+mismo rediseño.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/annotated-destination-modules/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/annotated-destination-modules/</guid><description>&lt;hr&gt;
+&lt;h2 id="merge_topic_states_annotatednf"&gt;&lt;code&gt;merge_topic_states_annotated.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id="model_selection_umap_annotatednf"&gt;&lt;code&gt;model_selection_umap_annotated.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id="binarization_topic_qc_annotatednf"&gt;&lt;code&gt;binarization_topic_qc_annotated.nf&lt;/code&gt;&lt;/h2&gt;
 &lt;hr&gt;
-&lt;p&gt;Envuelve &lt;code&gt;03_qc_generate_commands.py&lt;/code&gt; — &lt;strong&gt;solo genera&lt;/strong&gt; el archivo de
-comandos QC (uno por muestra) y deja &lt;code&gt;tss.bed&lt;/code&gt; en su lugar. Ya NO los
-ejecuta — eso ahora lo hace &lt;code&gt;qc_run_one_sample.nf&lt;/code&gt;, uno por muestra en
-paralelo (ver [[QC RUN ONE SAMPLE]]). Mismo patrón &lt;code&gt;state&lt;/code&gt;/&lt;code&gt;cp&lt;/code&gt; ya
-explicado en [[CONSENSUS PEAK CALLING]].&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-plots-thresholds/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-plots-thresholds/</guid><description>&lt;hr&gt;
-&lt;h2 id="nfmodulesa_pycistopicqc_plots_thresholdsnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/qc_plots_thresholds.nf&lt;/code&gt;&lt;/h2&gt;
-&lt;hr&gt;
-&lt;p&gt;Envuelve &lt;code&gt;04_qc_plots_thresholds.py&lt;/code&gt; (plots de QC + umbrales automáticos de
-barcode). Mismo patrón [[state]]/[[cp]] de los módulos anteriores — lo único
-nuevo aquí es un segundo [[publishDir]].&lt;/p&gt;
-&lt;h2 id="dos-publishdir-en-el-mismo-proceso"&gt;Dos &lt;code&gt;publishDir&lt;/code&gt; en el mismo proceso&lt;/h2&gt;
-&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-groovy" data-lang="groovy"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;publishDir&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;${params.project_root}/3_output/${params.run_date}/A_pyCisTopic&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;mode:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;copy&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;publishDir&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;${params.project_root}/4_figures/${params.run_date}/A_pyCisTopic&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;mode:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;copy&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;pattern:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;state/**.png&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Un proceso puede tener varias líneas [[publishDir]] — cada una con su propio
-destino y, opcionalmente, un &lt;code&gt;pattern&lt;/code&gt; que filtra qué outputs van a esa
-copia en particular. Aquí: todo el [[state]] va a &lt;code&gt;3_output/&lt;/code&gt; como siempre,
-pero además cualquier &lt;code&gt;.png&lt;/code&gt; que haya adentro (los plots) se copia también a
-&lt;code&gt;4_figures/&lt;/code&gt; — replicando la misma separación datos/figuras que ya usa el
-resto del proyecto.&lt;/p&gt;</description></item></channel></rss>
+&lt;p&gt;Los tres módulos que dejaron de ser alias (&lt;code&gt;include { X as Y }&lt;/code&gt;, ver
+[[Workflow &amp;amp; Main]]) el &lt;code&gt;[2026-09-11]&lt;/code&gt;, por el bug real explicado a fondo en
+[[Publishdir Replace Not Merge]]. Este artículo asume que ya se leyó ese —
+aquí el foco es &amp;ldquo;qué mirar en cada &lt;code&gt;.nf&lt;/code&gt; puntual&amp;rdquo;, no repetir el porqué
+completo.&lt;/p&gt;</description></item></channel></rss>

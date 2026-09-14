@@ -3,6 +3,7 @@ title: "F — SCENIC+"
 weight: 60
 eyebrow: "rama F // sin empezar"
 estado: "abierto"
+color: 4
 ---
 
 Hueco declarado, igual que [E](../e-cistarget/). Va después de cisTarget y antes de la

@@ -3,6 +3,7 @@ title: "G — scGLUE"
 weight: 70
 eyebrow: "rama G // la que sí ve expresión"
 estado: "implementada y probada"
+color: 0
 ---
 
 Tercera ruta, añadida en `[2026-08-24]`. Hasta entonces el consenso comparaba dos

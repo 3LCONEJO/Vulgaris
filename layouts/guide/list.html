@@ -1,7 +1,7 @@
 {{ define "main" }}
 {{ $isRoot := isset .Params "levels" }}
 <div class="guide-layout wrap">
-  {{ partial "guide-nav.html" . }}
+  {{ partial "guide-toc-drum.html" . }}
 
   <article class="guide-main">
     <header class="{{ if $isRoot }}post-header{{ else }}note-header{{ end }}">
@@ -43,13 +43,13 @@
     {{ end }}
 
     {{ $subs := .Sections.ByWeight }}
-    {{ $notes := (sort .RegularPages "File.BaseFileName") }}
+    {{ $notes := (.RegularPages.ByWeight) }}
     {{ if or $subs $notes }}
       <section class="guide-index">
         {{ range $subs }}
           <h2 class="guide-index-head"><a href="{{ .RelPermalink }}">{{ partial "note-title.html" . }}</a></h2>
           <ul class="note-list">
-            {{ range (sort .RegularPages "File.BaseFileName") }}
+            {{ range (.RegularPages.ByWeight) }}
               <li><a href="{{ .RelPermalink }}"><code>{{ partial "note-title.html" . }}</code></a></li>
             {{ end }}
           </ul>

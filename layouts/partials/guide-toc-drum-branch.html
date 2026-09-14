@@ -1,0 +1,37 @@
+{{/* Un nodo del árbol, aplanado en filas del rodillo.
+     Recibe (dict "page" <seccion> "current" <pagina actual> "depth" <n> "branch" <n>) */}}
+{{- $sec := .page -}}
+{{- $cur := .current -}}
+{{- $depth := .depth -}}
+{{- $branch := .branch -}}
+<a class="tocd-row{{ if eq $cur.RelPermalink $sec.RelPermalink }} is-current{{ end }}"
+   href="{{ $sec.RelPermalink }}"
+   data-depth="{{ $depth }}"
+   data-branch="{{ $branch }}"
+   data-estado="{{ with $sec.Params.estado }}{{ . }}{{ end }}"
+   data-body="{{ with $sec.Params.summary }}{{ . }}{{ else }}{{ $sec.Summary | plainify | replaceRE "\\[\\[([^\\]|]*\\|)?([^\\]]+)\\]\\]" "$2" | truncate 150 }}{{ end }}"
+   style="--c: var(--tocd-c{{ if isset $sec.Params "color" }}{{ $sec.Params.color }}{{ else }}{{ mod $branch 5 }}{{ end }})">
+  <span class="tocd-indent" aria-hidden="true"></span>
+  <span class="tocd-label">{{ partial "note-title.html" $sec }}</span>
+  <span class="tocd-dot" aria-hidden="true"></span>
+</a>
+{{- with $sec.Sections.ByWeight -}}
+  {{- range . -}}
+    {{- partial "guide-toc-drum-branch.html" (dict "page" . "current" $cur "depth" (add $depth 1) "branch" $branch) -}}
+  {{- end -}}
+{{- end -}}
+{{- with $sec.RegularPages.ByWeight -}}
+  {{- range . -}}
+<a class="tocd-row{{ if eq $cur.RelPermalink .RelPermalink }} is-current{{ end }}"
+   href="{{ .RelPermalink }}"
+   data-depth="{{ add $depth 1 }}"
+   data-branch="{{ $branch }}"
+   data-estado="{{ with .Params.estado }}{{ . }}{{ end }}"
+   data-body="{{ with .Params.summary }}{{ . }}{{ else }}{{ .Summary | plainify | replaceRE "\\[\\[([^\\]|]*\\|)?([^\\]]+)\\]\\]" "$2" | truncate 150 }}{{ end }}"
+   style="--c: var(--tocd-c{{ if isset $sec.Params "color" }}{{ $sec.Params.color }}{{ else }}{{ mod $branch 5 }}{{ end }})">
+  <span class="tocd-indent" aria-hidden="true"></span>
+  <span class="tocd-label">{{ partial "note-title.html" . }}</span>
+  <span class="tocd-dot" aria-hidden="true"></span>
+</a>
+  {{- end -}}
+{{- end -}}

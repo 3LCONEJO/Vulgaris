@@ -3,6 +3,7 @@ title: "C — Cicero"
 weight: 30
 eyebrow: "rama C // co-accesibilidad"
 estado: "corre en bash, sin migrar"
+color: 2
 ---
 
 Segunda ruta hacia la red. En vez de tópicos, busca **co-accesibilidad**: qué pares de

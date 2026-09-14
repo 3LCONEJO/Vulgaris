@@ -13,7 +13,7 @@
       {{ partial "guide-nav-branch.html" (dict "page" . "current" $cur "depth" (add $depth 1)) }}
     {{ end }}
   {{ end }}
-  {{ with sort $sec.RegularPages "File.BaseFileName" }}
+  {{ with $sec.RegularPages.ByWeight }}
     <ul>
       {{ range . }}
         <li><a class="{{ if eq $cur.RelPermalink .RelPermalink }}is-current{{ end }}" href="{{ .RelPermalink }}">{{ partial "note-title.html" . }}</a></li>

@@ -3,6 +3,7 @@ title: "D — Integración"
 weight: 40
 eyebrow: "rama D // donde se cruzan"
 estado: "consenso probado, visualizador abierto"
+color: 3
 ---
 
 Aquí es donde las tres rutas se comparan. Esta rama no tiene datos de entrada propios:

@@ -1,0 +1,55 @@
+{{/* ==========================================================================
+     guide-toc-drum.html — índice cilíndrico del vault
+     Uso:  {{ partial "guide-toc-drum.html" . }}   (en guide/single.html y guide/list.html,
+           en el lugar donde hoy va {{ partial "guide-nav.html" . }})
+     Requiere: /css/toc-drum.css y /js/toc-drum.js  (ver README.md)
+     ========================================================================== */}}
+{{- $cur := . -}}
+{{- with site.GetPage "/projects/jaguar" -}}
+{{- if .Sections -}}
+<div class="tocd" data-tocd>
+  <div class="tocd-railcol">
+    <button class="tocd-toggle" type="button" aria-label="Ocultar índice" title="Ocultar índice">
+      <svg width="17" height="17" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <rect x="2.5" y="3.5" width="15" height="13" rx="2.5" stroke="currentColor" stroke-width="1.4"/>
+        <rect class="tocd-toggle-fill" x="2.5" y="3.5" width="6" height="13" rx="2.5" fill="currentColor"/>
+      </svg>
+    </button>
+  </div>
+
+  <nav class="tocd-panel" aria-label="{{ i18n "tocLabel" | default "Índice" }}">
+    <div class="tocd-head">
+      <a class="tocd-root" href="{{ .RelPermalink }}"><span class="prompt">~/</span>{{ partial "note-title.html" . }}</a>
+      <span class="tocd-progress" aria-hidden="true">01/01</span>
+    </div>
+
+    <div class="tocd-window">
+      <div class="tocd-stage">
+        <div class="tocd-drum">
+          {{- range $i, $sec := .Sections.ByWeight -}}
+            {{- partial "guide-toc-drum-branch.html" (dict "page" $sec "current" $cur "depth" 0 "branch" $i) -}}
+          {{- end -}}
+        </div>
+        <div class="tocd-gate" aria-hidden="true"></div>
+        <div class="tocd-bar" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <div class="tocd-card">
+      <div class="tocd-card-top">
+        <span class="tocd-card-title"></span>
+        <span class="tocd-card-branch"></span>
+      </div>
+      <div class="tocd-card-estado"></div>
+      <p class="tocd-card-body"></p>
+    </div>
+  </nav>
+
+  {{/* retrato: el canto del libro */}}
+  <div class="tocd-veil" aria-hidden="true"></div>
+  <div class="tocd-overlay" aria-hidden="true"></div>
+  <div class="tocd-rail" role="slider" tabindex="0" aria-label="Índice del vault"></div>
+  <div class="tocd-hint" aria-hidden="true">desliza el canto →</div>
+</div>
+{{- end -}}
+{{- end -}}

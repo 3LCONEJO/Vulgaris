@@ -6,13 +6,15 @@
 /* --- layout de dos columnas: árbol del vault + nota ---------------------- */
 .guide-layout {
   display: grid;
-  grid-template-columns: 220px minmax(0, 1fr);
-  gap: 2.5rem;
+  grid-template-columns: 28px 220px minmax(0, 1fr);
+  gap: 1rem;
   align-items: start;
 }
 .guide-main { min-width: 0; }
 
-@media (max-width: 820px) {
+/* misma condicion que usa toc-drum.js para entrar en retrato: si el JS
+   esconde el panel, la rejilla tiene que soltar sus columnas */
+@media (max-width: 820px), (max-aspect-ratio: 1/1) {
   .guide-layout { grid-template-columns: 1fr; gap: 1.5rem; }
 }
 
@@ -261,4 +263,9 @@
 .note-body details > pre { margin: 0 0.5rem 0.5rem; }
 
 /* si la guia no existe en este idioma no hay barra lateral: una sola columna */
-.guide-layout:not(:has(.guide-nav)) { grid-template-columns: minmax(0, 1fr); }
+.guide-layout:not(:has(.tocd)) { grid-template-columns: minmax(0, 1fr); }
+
+/* Los encabezados de modulo son rutas largas (`nf/modules/a_pycistopic/x.nf`):
+   sin esto se salen de la pantalla en movil en vez de partirse. */
+.note-body h1 code, .note-body h2 code, .note-body h3 code { overflow-wrap: anywhere; }
+.note-body :is(h1, h2, h3) { overflow-wrap: anywhere; }

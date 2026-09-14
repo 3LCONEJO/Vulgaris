@@ -1,0 +1,195 @@
+/* ==========================================================================
+   toc-drum.css — índice cilíndrico del vault
+   Usa los tokens de style.css; no define colores nuevos salvo el ciclo de rama.
+   ========================================================================== */
+
+/* Las variables se declaran tambien en el ancestro comun, no solo en .tocd:
+   .guide-main es HERMANO de .tocd y necesita --tocd-rail para dejarle sitio al
+   canto. OJO: solo las variables — `display: contents` va aparte, abajo, porque
+   aplicarselo a .guide-layout la deja de ser rejilla. */
+.guide-layout,
+.tocd {
+  --tocd-c0: var(--accent);
+  --tocd-c1: var(--brand);
+  --tocd-c2: var(--accent-bright);
+  --tocd-c3: var(--pod);
+  --tocd-c4: var(--text-muted);
+  --tocd-h: 34px;          /* alto de fila en el panel */
+  --tocd-rail: 26px;
+}
+
+.tocd { display: contents; }
+
+/* --- columna del botón ---------------------------------------------------- */
+.tocd-railcol { position: sticky; top: 5rem; }
+.tocd-toggle {
+  display: grid; place-items: center;
+  width: 28px; height: 28px; padding: 0;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color var(--speed), border-color var(--speed);
+}
+.tocd-toggle:hover { color: var(--accent-bright); border-color: var(--accent-dim); }
+.tocd-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.tocd.is-collapsed .tocd-toggle-fill { fill-opacity: .28; }
+
+/* --- panel ---------------------------------------------------------------- */
+.tocd-panel {
+  position: sticky; top: 5rem;
+  font-family: var(--font-mono); font-size: .8rem;
+  display: flex; flex-direction: column; gap: .6rem;
+  min-width: 0; overflow: hidden;
+  transition: opacity .22s ease;
+}
+.tocd.is-collapsed .tocd-panel { opacity: 0; pointer-events: none; }
+
+.tocd-head { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.tocd-root { color: var(--text); text-decoration: none; }
+.tocd-root .prompt { color: var(--accent); }
+.tocd-progress { font-size: .66rem; color: var(--text-faint); letter-spacing: .05em; font-variant-numeric: tabular-nums; }
+
+.tocd-window {
+  position: relative;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.tocd-stage {
+  position: relative;
+  height: calc(var(--tocd-h) * 7);
+  perspective: 430px; perspective-origin: 50% 50%;
+  cursor: grab; touch-action: none; user-select: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 24%, #000 76%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 24%, #000 76%, transparent 100%);
+}
+.tocd-stage.is-grabbing { cursor: grabbing; }
+.tocd-drum { position: absolute; inset: 0; transform-style: preserve-3d; }
+
+.tocd-row {
+  position: absolute; left: 0; right: 0; top: 50%;
+  height: var(--tocd-h); margin-top: calc(var(--tocd-h) / -2);
+  display: flex; align-items: center; gap: .4rem;
+  padding: 0 .6rem 0 .5rem; box-sizing: border-box;
+  text-decoration: none; color: var(--text-muted);
+  transform-origin: 50% 50%; backface-visibility: hidden;
+  will-change: transform, opacity, filter;
+}
+.tocd-indent { display: block; width: 0; flex: none; height: 18px; }
+.tocd-row[data-depth="1"] .tocd-indent,
+.tocd-row[data-depth="2"] .tocd-indent { width: 12px; border-left: 1px solid color-mix(in srgb, var(--c) 40%, transparent); }
+.tocd-row[data-depth="2"] .tocd-indent { width: 20px; }
+.tocd-label { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.2; }
+.tocd-dot { width: 6px; height: 6px; border-radius: 50%; flex: none; background: var(--c); }
+.tocd-row.is-active .tocd-label { color: var(--c); font-weight: 700; }
+.tocd-row:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+.tocd-gate {
+  position: absolute; left: 0; right: 0; top: 50%;
+  height: var(--tocd-h); margin-top: calc(var(--tocd-h) / -2);
+  pointer-events: none;
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--tocd-active, var(--accent)) 12%, transparent), transparent 78%);
+}
+.tocd-bar {
+  position: absolute; left: 0; top: 50%; width: 2px;
+  height: var(--tocd-h); margin-top: calc(var(--tocd-h) / -2);
+  pointer-events: none; background: var(--tocd-active, var(--accent));
+}
+
+/* --- tarjeta de descripción ----------------------------------------------- */
+.tocd-card {
+  background: var(--bg-inset);
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--tocd-active, var(--accent));
+  border-radius: var(--radius);
+  padding: .7rem .8rem;
+  display: flex; flex-direction: column; gap: .4rem;
+}
+.tocd-card-top { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.tocd-card-title { color: var(--text); font-weight: 700; font-size: .82rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tocd-card-branch { font-size: .62rem; letter-spacing: .06em; color: var(--tocd-active, var(--text-faint)); white-space: nowrap; }
+.tocd-card-estado { font-size: .62rem; text-transform: lowercase; letter-spacing: .05em; color: var(--text-muted); }
+.tocd-card-body { margin: 0; font-family: var(--font-body); font-size: .82rem; line-height: 1.5; color: var(--text-muted); }
+
+/* --- retrato: el canto del libro ------------------------------------------ */
+.tocd-veil, .tocd-overlay, .tocd-rail, .tocd-hint { display: none; }
+
+.tocd.is-portrait .tocd-railcol,
+.tocd.is-portrait .tocd-panel { display: none; }
+
+.tocd.is-portrait .tocd-veil {
+  display: block; position: fixed; inset: 0; z-index: 8;
+  background: rgba(18, 18, 15, .86); backdrop-filter: blur(3px);
+  opacity: 0; pointer-events: none; transition: opacity .2s ease;
+}
+.tocd.is-portrait .tocd-overlay {
+  display: block; position: fixed; inset: 0; z-index: 9; pointer-events: none;
+  perspective: 560px; perspective-origin: 78% 50%;
+  opacity: 0; transition: opacity .18s ease;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 20%, #000 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 20%, #000 80%, transparent 100%);
+}
+.tocd.is-portrait.is-open .tocd-veil,
+.tocd.is-portrait.is-open .tocd-overlay { opacity: 1; }
+.tocd.is-portrait.is-open .tocd-overlay { pointer-events: auto; }
+
+/* el mismo rodillo, más grande, dentro del overlay */
+.tocd-overlay .tocd-stage {
+  --tocd-h: 58px;
+  position: absolute; inset: 0; height: auto;
+  perspective: none;
+}
+.tocd-overlay .tocd-row { right: var(--tocd-rail); padding: 0 1rem 0 1.25rem; }
+.tocd-overlay .tocd-label { font-size: 1.05rem; }
+.tocd-overlay .tocd-gate { right: var(--tocd-rail); }
+.tocd-overlay .tocd-bar { display: none; }
+
+.tocd.is-portrait .tocd-rail {
+  display: flex; position: fixed; top: 0; right: 0; bottom: 0;
+  width: var(--tocd-rail); z-index: 11;
+  flex-direction: column; justify-content: center; align-items: flex-end; gap: 4px;
+  padding-right: 7px; box-sizing: border-box;
+  background: linear-gradient(to left, rgba(33, 29, 28, .9), rgba(26, 22, 21, 0));
+  touch-action: none; user-select: none; cursor: grab;
+}
+.tocd-tick {
+  display: block; height: 3px; width: 9px; border-radius: 2px; background: var(--c);
+  opacity: .5; transition: width .18s ease, opacity .18s ease, height .18s ease;
+}
+.tocd-tick.is-active { width: 17px; height: 4px; opacity: 1; }
+
+.tocd.is-portrait .tocd-hint {
+  display: block; position: fixed; right: 32px; bottom: 18px; z-index: 10;
+  font-family: var(--font-mono); font-size: .6rem; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--text-faint); pointer-events: none; transition: opacity .18s ease;
+}
+.tocd.is-portrait.is-open .tocd-hint { opacity: 0; }
+
+.tocd.is-portrait .tocd-card {
+  display: none;
+  position: fixed; left: 12px; right: 38px; bottom: 16px; z-index: 10;
+  opacity: 0; transform: translateY(10px);
+  transition: opacity .18s ease, transform .18s ease;
+  pointer-events: none;
+}
+.tocd.is-portrait.is-open .tocd-card { display: flex; opacity: 1; transform: translateY(0); }
+
+/* el artículo deja sitio al canto */
+.tocd.is-portrait ~ .guide-main,
+body:has(.tocd.is-portrait) .guide-main { padding-right: var(--tocd-rail); }
+
+/* --- sin rodillo: lista plana accesible ----------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .tocd-stage { height: auto; max-height: calc(100vh - 22rem); overflow-y: auto; -webkit-mask-image: none; mask-image: none; }
+  .tocd-drum { position: static; }
+  .tocd-row { position: static; margin: 0; transform: none !important; opacity: 1 !important; filter: none !important; }
+  .tocd-gate, .tocd-bar { display: none; }
+}
+.tocd.is-flat .tocd-stage { height: auto; max-height: calc(100vh - 22rem); overflow-y: auto; -webkit-mask-image: none; mask-image: none; }
+.tocd.is-flat .tocd-drum { position: static; }
+.tocd.is-flat .tocd-row { position: static; margin: 0; transform: none !important; opacity: 1 !important; filter: none !important; }
+.tocd.is-flat .tocd-gate, .tocd.is-flat .tocd-bar { display: none; }

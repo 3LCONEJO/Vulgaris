@@ -3,6 +3,7 @@ title: "A — pyCisTopic"
 weight: 10
 eyebrow: "rama A // tópicos LDA"
 estado: "migrada a nextflow"
+color: 0
 ---
 
 Primera de las tres rutas hacia la red regulatoria. Modela la accesibilidad de la

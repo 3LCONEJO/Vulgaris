@@ -3,6 +3,7 @@ title: "B — General"
 weight: 20
 eyebrow: "rama B // puente de entrada"
 estado: "parcialmente migrada"
+color: 1
 ---
 
 No es una rama de análisis: es el puente entre el objeto Seurat integrado que llega y

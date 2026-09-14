@@ -918,3 +918,10 @@ input:focus-visible {
 .lang-switch a:hover { color: var(--accent-bright); background: var(--bg-raised); }
 .lang-switch a[aria-current="true"] { color: var(--accent); background: var(--bg-inset); }
 .lang-switch a.is-missing { opacity: 0.45; }
+
+/* --- nav estrecho: el menu en espanol tiene 5 entradas y no cabia a 390px --- */
+@media (max-width: 560px) {
+  .main-nav { gap: 0.9rem; font-size: 0.82rem; flex-wrap: wrap; row-gap: 0.4rem; }
+  .site-header .wrap { flex-wrap: wrap; row-gap: 0.5rem; }
+  .lang-switch { margin-left: auto; }
+}

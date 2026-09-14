@@ -3,6 +3,7 @@ title: "E — cisTarget"
 weight: 50
 eyebrow: "rama E // sin empezar"
 estado: "abierto"
+color: 4
 ---
 
 Hueco declarado, no escondido. Esta fase todavía no está diseñada con el nivel de

@@ -1,339 +1,449 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>Vulgaris</title>
-		<link>http://localhost:1313/Vulgaris/es/</link>
-		<description>Recent content on Vulgaris</description>
-		<generator>Hugo</generator>
-		<language>es</language>
-		
-		
-		
-		
-			<lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
-		
-			<atom:link href="http://localhost:1313/Vulgaris/es/index.xml" rel="self" type="application/rss+xml" />
-			<item>
-				<title>Enfoque: Cicero y co-accesibilidad</title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/c-cicero/codigo/00_enfoque_cicero/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/c-cicero/codigo/00_enfoque_cicero/</guid>
-				<description>&lt;h2 id=&#34;the-problem&#34;&gt;The Problem&lt;/h2&gt;&#xA;&lt;p&gt;Our existing pipeline establishes a strong foundation, but it leaves deeper biological insights hidden in the tables. By moving toward Gene Regulation Networks (GRNs), we can understand the &lt;em&gt;behavior&lt;/em&gt; of the data.&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;Existing Capabilities&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;New GRN Capabilities&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Filter scATAC-seq data by quality&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Discover synchronously activated regions&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Group cells by accessible regions&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Map enhancer-to-target interactions&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Perform differential accessibility&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;Identify regulatory topics and cellular archetypes&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;My work in this phase is to unveil how these patterns manifest and verify whether they align with known biological regulatory systems.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>01_create_cicero_cds.r</title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/c-cicero/codigo/01_create_cicero_cds.r/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/c-cicero/codigo/01_create_cicero_cds.r/</guid>
-				<description>&lt;h2 id=&#34;create-a-cds-object-and-run-cicero&#34;&gt;Create a cds object and Run Cicero&lt;/h2&gt;&#xA;&lt;p&gt;Below is the step-by-step R script to execute this pipeline. It handles argument parsing for cluster environments (like SLURM|LSF), calculates co-accessibility, and integrates the results back into a Seurat object.&lt;/p&gt;&#xA;&lt;h3 id=&#34;1-environment-setup-and-argument-parsing&#34;&gt;1. Environment Setup and Argument Parsing&lt;/h3&gt;&#xA;&lt;p&gt;First, we load the required libraries and parse command-line arguments to avoid hardcoding file paths.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>export_seurat_data.r</title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/b-general/codigo/export_seurat_data.r/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/b-general/codigo/export_seurat_data.r/</guid>
-				<description>&lt;h2 id=&#34;next-steps-pycistopic&#34;&gt;NEXT-STEPS: pycisTopic&lt;/h2&gt;&#xA;&lt;p&gt;To improve the confidence in our results, we can validate our findings using &lt;strong&gt;pycisTopic&lt;/strong&gt;. This tool uses Latent Dirichlet Allocation (LDA) to group co-accessible chromatin regions into distinct regulatory topics and classify cell states.&lt;/p&gt;&#xA;&lt;h3 id=&#34;1-data-preparation-recoger-nuestras-chivas&#34;&gt;1. Data Preparation: &amp;ldquo;Recoger nuestras chivas&amp;rdquo;&lt;/h3&gt;&#xA;&lt;p&gt;Before diving into the Python environment, we need to get our files in order. &lt;code&gt;pycisTopic&lt;/code&gt; relies on a core data structure: a dictionary that links sample IDs to their corresponding ATAC fragment files.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>02_TestingCCANSandCONNS.R</title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/c-cicero/codigo/02_testingccansandconns.r/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/c-cicero/codigo/02_testingccansandconns.r/</guid>
-				<description>&lt;h2 id=&#34;analyze-and-plot-each-ccans&#34;&gt;Analyze and Plot each CCANs&lt;/h2&gt;&#xA;&lt;h3 id=&#34;1-load-data&#34;&gt;1. Load data&lt;/h3&gt;&#xA;&lt;p&gt;Now that we have the results of running cicero it is time to see what is inside.&#xA;First we load our packages.&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Script: TestingCCANSandCONNS.R&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;suppressPackageStartupMessages&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;({&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Seurat&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Signac&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;SeuratWrappers&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;monocle3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cicero&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;EnsDb.Hsapiens.v86&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;TxDb.Hsapiens.UCSC.hg38.knownGene&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;VariantAnnotation&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;igraph&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;dplyr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ggforce&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ggplot2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;patchwork&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# For combining plots (plot_layout(), `/` operator)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;scales&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;     &lt;span class=&#34;c1&#34;&gt;# For rescale()&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;})&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The argumentss mirrors &lt;code&gt;create_cicero_cds.r&#39;s &amp;lt;output_prefix&amp;gt; [project_root] &lt;/code&gt;convention:&#xA;that script names both the output directory and every file inside it after&#xA;the same &lt;code&gt;prefix&lt;/code&gt; (3_output/cicero_&lt;prefix&gt;/&lt;prefix&gt;_CCANs.csv, etc).&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>03_assign_ccan_genes.r</title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/c-cicero/codigo/03_assign_ccan_genes.r/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/c-cicero/codigo/03_assign_ccan_genes.r/</guid>
-				<description>&lt;h3 id=&#34;assign-genes-to-peaks-from-ccans&#34;&gt;Assign Genes to peaks from CCANs&lt;/h3&gt;&#xA;&lt;p&gt;But why? We already assign genes in the previous step to plot them! Well, the thing is, I don&amp;rsquo;t know, but they said that &lt;code&gt;GREATr&lt;/code&gt; is a good tool for annotate peaks, so as a true scientist, I believe that. Jokes aside, in the previous step we find genes per CCAN not per peak so we&amp;rsquo;re not really finding actual enhancer -&amp;gt; peak. But with &lt;code&gt;GREATr&lt;/code&gt; it is per-peak assignment with an extended domain to search &lt;em&gt;&amp;ldquo;near&amp;rdquo;&lt;/em&gt; to the TSS (With a basal window of 5kb/1kb).&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/annotated-destination-modules/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/annotated-destination-modules/</guid>
-				<description>&lt;hr&gt;&#xA;&lt;h2 id=&#34;merge_topic_states_annotatednf&#34;&gt;&lt;code&gt;merge_topic_states_annotated.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;h2 id=&#34;model_selection_umap_annotatednf&#34;&gt;&lt;code&gt;model_selection_umap_annotated.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;h2 id=&#34;binarization_topic_qc_annotatednf&#34;&gt;&lt;code&gt;binarization_topic_qc_annotated.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;Los tres módulos que dejaron de ser alias (&lt;code&gt;include { X as Y }&lt;/code&gt;, ver&#xA;[[Workflow &amp;amp; Main]]) el &lt;code&gt;[2026-09-11]&lt;/code&gt;, por el bug real explicado a fondo en&#xA;[[Publishdir Replace Not Merge]]. Este artículo asume que ya se leyó ese —&#xA;aquí el foco es &amp;ldquo;qué mirar en cada &lt;code&gt;.nf&lt;/code&gt; puntual&amp;rdquo;, no repetir el porqué&#xA;completo.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/binarization-topic/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/binarization-topic/</guid>
-				<description>&lt;hr&gt;&#xA;&lt;h2 id=&#34;nfmodulesa_pycistopicbinarization_topic_qcnf&#34;&gt;&lt;code&gt;nf/modules/a_pycistopic/binarization_topic_qc.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;Envuelve &lt;code&gt;08_binarization_topic_qc.py&lt;/code&gt; (binarización Otsu/Yen de β, métricas&#xA;de tópico, anotación por tipo celular). Mismo patrón [[state]]/[[cp]] y flag&#xA;condicional (&lt;code&gt;--annot-var&lt;/code&gt;) que ya se vio en los módulos anteriores — no hay&#xA;sintaxis nueva aquí, es un buen ejemplo de que, una vez entendido el patrón&#xA;[[state]], la mayoría de estos módulos son casi mecánicos de escribir.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/build-cistopic-objects/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/build-cistopic-objects/</guid>
-				<description>&lt;hr&gt;&#xA;&lt;h2 id=&#34;nfmodulesa_pycistopicbuild_cistopic_objectsnf&#34;&gt;&lt;code&gt;nf/modules/a_pycistopic/build_cistopic_objects.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;Envuelve &lt;code&gt;05_build_cistopic_objects.py&lt;/code&gt; — el paso largo y caro del pipeline&#xA;(cisTopic objects por muestra + Scrublet + modelos Mallet, grilla&#xA;&lt;code&gt;n_topics=[2,5,...,50]&lt;/code&gt;). Mismo patrón [[state]]/[[cp]] de siempre; lo que&#xA;cambia aquí es &lt;strong&gt;cómo se le piden recursos de LSF&lt;/strong&gt;, y desde &lt;code&gt;[2026-09-01]&lt;/code&gt;,&#xA;&lt;strong&gt;cuántas veces se llama a este proceso&lt;/strong&gt; — no la sintaxis básica del&#xA;&lt;code&gt;process&lt;/code&gt; en sí.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/consensus-peak-calling/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/consensus-peak-calling/</guid>
-				<description>&lt;hr&gt;&#xA;&lt;h2 id=&#34;nfmodulesa_pycistopicconsensus_peak_callingnf&#34;&gt;&lt;code&gt;nf/modules/a_pycistopic/consensus_peak_calling.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;Envuelve &lt;code&gt;02_consensus_peak_calling.py&lt;/code&gt;. Primer módulo que RECIBE un [[state]]&#xA;de un paso anterior (&lt;code&gt;01_pseudobulk_export.py&lt;/code&gt;, vía [[PSEUDOBULK EXPORT]])&#xA;— aquí es donde importa entender por qué se hace [[cp]] y no se escribe directo&#xA;sobre lo que llega.&lt;/p&gt;&#xA;&lt;h2 id=&#34;el-proceso&#34;&gt;El proceso&lt;/h2&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-groovy&#34; data-lang=&#34;groovy&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;process&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;CONSENSUS_PEAK_CALLING&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;label&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;pycistopic_env&amp;#39;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;label&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;medium_job&amp;#39;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;publishDir&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;${params.project_root}/3_output/${params.run_date}/A_pyCisTopic&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;mode:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;copy&amp;#39;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nl&#34;&gt;input:&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;path&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;state_in&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;stageAs:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;state_in&amp;#39;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nl&#34;&gt;output:&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;path&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;state&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;emit:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;state&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nl&#34;&gt;script:&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;    cp -rL state_in state&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;    python .../02_consensus_peak_calling.py \\&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;        --out-dir state --blacklist .../hg38-blacklist.v2.bed \\&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;        --n-cpu ${params.n_cpu} --temp-dir ${params.temp_dir}&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;por-qué-cp--rl-state_in-state-y-no-escribir-directo-sobre-state_in&#34;&gt;Por qué &lt;code&gt;cp -rL state_in state&lt;/code&gt; y no escribir directo sobre &lt;code&gt;state_in&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;p&gt;Esto es lo más importante de todo el patrón [[state]] — vale la pena&#xA;detenerse.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/dars-gene-activity/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/dars-gene-activity/</guid>
-				<description>&lt;hr&gt;&#xA;&lt;h2 id=&#34;nfmodulesa_pycistopicdars_gene_activitynf&#34;&gt;&lt;code&gt;nf/modules/a_pycistopic/dars_gene_activity.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;Envuelve &lt;code&gt;09_dars_gene_activity.py&lt;/code&gt; — el último paso de la rama (region&#xA;sets, DARs, gene activity + DAGs). Mismo patrón [[state]]/[[cp]] y flag&#xA;condicional (&lt;code&gt;--variable&lt;/code&gt;, aquí vía &lt;code&gt;params.dars_variable&lt;/code&gt;) de siempre.&lt;/p&gt;&#xA;&lt;h2 id=&#34;la-conexión-con-el-consenso-de-tres-vías-d_integrate&#34;&gt;La conexión con el consenso de tres vías (&lt;code&gt;D_integrate&lt;/code&gt;)&lt;/h2&gt;&#xA;&lt;p&gt;Este script tiene un parche reciente (&lt;code&gt;2026-08-24&lt;/code&gt;, ver&#xA;&lt;a href=&#34;http://localhost:1313/Vulgaris/es/projects/jaguar/d-integrate/&#34;&gt;D_integrate&lt;/a&gt; para el consenso completo): ahora también guarda &lt;code&gt;*_gene_activity_weights.csv&lt;/code&gt;, que antes&#xA;se calculaba y se descartaba. Ese archivo es exactamente el aporte de&#xA;pycisTopic al consenso de tres vías que arma&#xA;&lt;code&gt;D_integrate/2_python/build_region_gene_consensus.py&lt;/code&gt;. No cambia nada de la&#xA;sintaxis de este módulo — se menciona aquí porque es la razón por la que&#xA;este paso, aunque es &amp;ldquo;el último&amp;rdquo; de esta rama, sigue siendo un prerrequisito&#xA;real para otra rama (&lt;code&gt;D_integrate&lt;/code&gt;) que todavía no está migrada a Nextflow.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/filter-annotated-cells/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/filter-annotated-cells/</guid>
-				<description>&lt;hr&gt;&#xA;&lt;h2 id=&#34;nfmodulesa_pycistopicfilter_annotated_cellsnf&#34;&gt;&lt;code&gt;nf/modules/a_pycistopic/filter_annotated_cells.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;Primer nodo de la rama &amp;ldquo;solo anotadas&amp;rdquo; — la primera vez que este workflow&#xA;&lt;strong&gt;bifurca&lt;/strong&gt; de verdad, en vez de solo hacer fan-out-y-volver-a-juntar (ver&#xA;[[Workflow &amp;amp; Main]], sección &amp;ldquo;Bifurcar el DAG&amp;rdquo;, para la mecánica de&#xA;canales). Este artículo cubre el porqué y el diseño; ese otro cubre la&#xA;sintaxis que lo conecta.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/fit-one-topic-annotated/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/fit-one-topic-annotated/</guid>
-				<description>&lt;hr&gt;&#xA;&lt;h2 id=&#34;fit_one_topic_annotatednf&#34;&gt;&lt;code&gt;fit_one_topic_annotated.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;h2 id=&#34;combine_models_annotatednf&#34;&gt;&lt;code&gt;combine_models_annotated.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;Continuación de [[FILTER ANNOTATED CELLS]] — estos dos son los equivalentes&#xA;de &lt;code&gt;fit_one_topic.nf&lt;/code&gt;/&lt;code&gt;combine_models.nf&lt;/code&gt; (ver [[MERGE AND MODEL]]) para la&#xA;rama &amp;ldquo;solo anotadas&amp;rdquo;, pero como archivos &lt;code&gt;.nf&lt;/code&gt; propios en vez de reusar los&#xA;originales con un alias (&lt;code&gt;include { X as Y }&lt;/code&gt;, ver [[Workflow &amp;amp; Main]]).&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-and-model/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-and-model/</guid>
-				<description>&lt;hr&gt;&#xA;&lt;h2 id=&#34;merge_onlynf&#34;&gt;&lt;code&gt;merge_only.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;h2 id=&#34;fit_one_topicnf&#34;&gt;&lt;code&gt;fit_one_topic.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;h2 id=&#34;merge_topic_statesnf&#34;&gt;&lt;code&gt;merge_topic_states.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;h2 id=&#34;combine_modelsnf&#34;&gt;&lt;code&gt;combine_models.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;Estos 4 módulos son lo que hoy hace el trabajo del viejo &lt;code&gt;merge_and_model.nf&lt;/code&gt;&#xA;(un solo proceso, &lt;code&gt;MERGE_AND_MODEL&lt;/code&gt; — sigue en el repo, ya NO se usa en&#xA;&lt;code&gt;pycistopic.nf&lt;/code&gt;, dejado solo de referencia histórica). Se documentan juntos&#xA;aquí porque ninguno tiene sentido leído aislado — son las 4 piezas de un&#xA;mismo rediseño.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-cistopic-states/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-cistopic-states/</guid>
-				<description>&lt;hr&gt;&#xA;&lt;h2 id=&#34;nfmodulesa_pycistopicmerge_cistopic_statesnf&#34;&gt;&lt;code&gt;nf/modules/a_pycistopic/merge_cistopic_states.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;Nuevo &lt;code&gt;[2026-09-01]&lt;/code&gt;, agregado junto con la paralelización de&#xA;[[BUILD CISTOPIC OBJECTS]]. Es el &amp;ldquo;punto de sincronización&amp;rdquo; entre las N&#xA;corridas paralelas (una por muestra) y el resto del pipeline, que sigue&#xA;esperando UN solo [[state]] para seguir.&lt;/p&gt;&#xA;&lt;h2 id=&#34;el-problema-que-resuelve&#34;&gt;El problema que resuelve&lt;/h2&gt;&#xA;&lt;p&gt;Cada corrida paralela de &lt;code&gt;BUILD_CISTOPIC_OBJECTS&lt;/code&gt; parte del mismo&#xA;[[state_in]] (QC + consensus peaks + todo lo de antes) y hace&#xA;&lt;code&gt;cp -rL state_in state&lt;/code&gt;, y después le agrega SOLO los &lt;code&gt;.pkl&lt;/code&gt;/&lt;code&gt;.png&lt;/code&gt; de su&#xA;propia muestra. Resultado: N carpetas &lt;code&gt;state&lt;/code&gt;, casi idénticas entre sí en la&#xA;parte compartida, cada una con un puñado de archivos nuevos que NO están en&#xA;las otras (los de su muestra). Hay que combinarlas en una sola antes de que&#xA;&lt;code&gt;06_merge_and_model.py&lt;/code&gt; (invocado hoy por &lt;code&gt;MERGE_ONLY&lt;/code&gt;/&lt;code&gt;FIT_ONE_TOPIC&lt;/code&gt;, ver&#xA;[[MERGE AND MODEL]]) pueda escanear el directorio y encontrar los modelos de&#xA;las 24 muestras juntos — ese script descubre muestras escaneando&#xA;&lt;code&gt;&amp;lt;out-dir&amp;gt;&lt;/code&gt; por el sufijo &lt;code&gt;*_cistopic_obj_models.pkl&lt;/code&gt;, así que necesita&#xA;verlas todas en el mismo lugar.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-qc-states/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-qc-states/</guid>
-				<description>&lt;hr&gt;&#xA;&lt;h2 id=&#34;nfmodulesa_pycistopicmerge_qc_statesnf&#34;&gt;&lt;code&gt;nf/modules/a_pycistopic/merge_qc_states.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;Junta los N &lt;code&gt;state&lt;/code&gt; que salen de las corridas paralelas de &lt;code&gt;QC_RUN_ONE_SAMPLE&lt;/code&gt; (una por muestra) en UN solo &lt;code&gt;state&lt;/code&gt; antes de pasárselo a &lt;code&gt;QC_PLOTS_THRESHOLDS&lt;/code&gt;. Es exactamente el mismo patrón que &lt;code&gt;merge_cistopic_states.nf&lt;/code&gt; (ver [[MERGE CISTOPIC STATES]] para el&#xA;detalle completo de [[stageAs]] con patrón y [[cp#-rn]]).&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/model-selection-umap/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/model-selection-umap/</guid>
-				<description>&lt;hr&gt;&#xA;&lt;h2 id=&#34;nfmodulesa_pycistopicmodel_selection_umapnf&#34;&gt;&lt;code&gt;nf/modules/a_pycistopic/model_selection_umap.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;Envuelve &lt;code&gt;07_model_selection_umap.py&lt;/code&gt; (selección de modelo, Leiden, UMAP).&#xA;Mismo patrón [[state]]/[[cp]] de siempre, &lt;code&gt;label &#39;medium_job&#39;&lt;/code&gt; genérico (sin&#xA;&lt;code&gt;withName:&lt;/code&gt; propio, a diferencia de los dos módulos anteriores).&lt;/p&gt;&#xA;&lt;h2 id=&#34;un-flag-condicional-más&#34;&gt;Un flag condicional más&lt;/h2&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-groovy&#34; data-lang=&#34;groovy&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;select_model_flag&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;params&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;select_model&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;?&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;--select-model ${params.select_model}&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Mismo patrón que ya se vio en [[PSEUDOBULK EXPORT]] para &lt;code&gt;--variable&lt;/code&gt; —&#xA;Groovy plano dentro del bloque [[script]], antes de las comillas triples,&#xA;arma el flag condicionalmente según el parámetro.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/pseudobulk-export/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/pseudobulk-export/</guid>
-				<description>&lt;hr&gt;&#xA;&lt;h2 id=&#34;nfmodulesa_pycistopicpseudobulk_exportnf&#34;&gt;&lt;code&gt;nf/modules/a_pycistopic/pseudobulk_export.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;Envuelve &lt;code&gt;01_pseudobulk_export.py&lt;/code&gt; — el primer paso de la rama&#xA;&lt;code&gt;A_pyCisTopic&lt;/code&gt; propiamente dicha. Es el módulo donde aparece por primera vez&#xA;el patrón &lt;strong&gt;[[state]]&lt;/strong&gt;, que se repite en los otros 8 módulos de esta rama —&#xA;vale la pena entenderlo bien aquí.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-generate-commands/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-generate-commands/</guid>
-				<description>&lt;hr&gt;&#xA;&lt;h2 id=&#34;nfmodulesa_pycistopicqc_generate_commandsnf&#34;&gt;&lt;code&gt;nf/modules/a_pycistopic/qc_generate_commands.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;Envuelve &lt;code&gt;03_qc_generate_commands.py&lt;/code&gt; — &lt;strong&gt;solo genera&lt;/strong&gt; el archivo de&#xA;comandos QC (uno por muestra) y deja &lt;code&gt;tss.bed&lt;/code&gt; en su lugar. Ya NO los&#xA;ejecuta — eso ahora lo hace &lt;code&gt;qc_run_one_sample.nf&lt;/code&gt;, uno por muestra en&#xA;paralelo (ver [[QC RUN ONE SAMPLE]]). Mismo patrón &lt;code&gt;state&lt;/code&gt;/&lt;code&gt;cp&lt;/code&gt; ya&#xA;explicado en [[CONSENSUS PEAK CALLING]].&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-plots-thresholds/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-plots-thresholds/</guid>
-				<description>&lt;hr&gt;&#xA;&lt;h2 id=&#34;nfmodulesa_pycistopicqc_plots_thresholdsnf&#34;&gt;&lt;code&gt;nf/modules/a_pycistopic/qc_plots_thresholds.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;Envuelve &lt;code&gt;04_qc_plots_thresholds.py&lt;/code&gt; (plots de QC + umbrales automáticos de&#xA;barcode). Mismo patrón [[state]]/[[cp]] de los módulos anteriores — lo único&#xA;nuevo aquí es un segundo [[publishDir]].&lt;/p&gt;&#xA;&lt;h2 id=&#34;dos-publishdir-en-el-mismo-proceso&#34;&gt;Dos &lt;code&gt;publishDir&lt;/code&gt; en el mismo proceso&lt;/h2&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-groovy&#34; data-lang=&#34;groovy&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;publishDir&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;${params.project_root}/3_output/${params.run_date}/A_pyCisTopic&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;mode:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;copy&amp;#39;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;publishDir&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;${params.project_root}/4_figures/${params.run_date}/A_pyCisTopic&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;mode:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;copy&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;pattern:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;state/**.png&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Un proceso puede tener varias líneas [[publishDir]] — cada una con su propio&#xA;destino y, opcionalmente, un &lt;code&gt;pattern&lt;/code&gt; que filtra qué outputs van a esa&#xA;copia en particular. Aquí: todo el [[state]] va a &lt;code&gt;3_output/&lt;/code&gt; como siempre,&#xA;pero además cualquier &lt;code&gt;.png&lt;/code&gt; que haya adentro (los plots) se copia también a&#xA;&lt;code&gt;4_figures/&lt;/code&gt; — replicando la misma separación datos/figuras que ya usa el&#xA;resto del proyecto.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-run-one-sample/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-run-one-sample/</guid>
-				<description>&lt;hr&gt;&#xA;&lt;h2 id=&#34;nfmodulesa_pycistopicqc_run_one_samplenf&#34;&gt;&lt;code&gt;nf/modules/a_pycistopic/qc_run_one_sample.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;hr&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-groovy&#34; data-lang=&#34;groovy&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;process&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;QC_RUN_ONE_SAMPLE&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;label&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;pycistopic_env&amp;#39;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;tag&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;${sample_id}&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;publishDir&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;${params.project_root}/3_output/${params.run_date}/A_pyCisTopic&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;mode:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;copy&amp;#39;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nl&#34;&gt;input:&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;tuple&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;val&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sample_id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;val&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;fragment_path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;path&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;state_in&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;stageAs:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;state_in&amp;#39;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nl&#34;&gt;output:&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;path&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;state&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;emit:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;state&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nl&#34;&gt;script:&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;    cp -rL state_in state&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;    python -m pycisTopic.cli.pycistopic qc \\&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;        --fragments ${fragment_path} \\&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;        --regions state/consensus_peak_calling/consensus_regions.bed \\&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;        --tss state/1_qc/tss.bed \\&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;        --output state/1_qc/${sample_id}&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;tuple-valsample_id-valfragment_path--dos-valores-en-un-solo-input&#34;&gt;&lt;code&gt;tuple val(sample_id), val(fragment_path)&lt;/code&gt; — dos valores en un solo input&lt;/h2&gt;&#xA;&lt;p&gt;Ya viste &lt;code&gt;val sample_id&lt;/code&gt; solo (un string) en &lt;code&gt;build_cistopic_objects.nf&lt;/code&gt; ([[BUILD CISTOPIC OBJECTS]]).&#xA;Hace falta ADEMÁS la ruta de fragmentos de esa muestra puntual, porque&#xA;el comando de pycisTopic la necesita como argumento (&lt;code&gt;--fragments&lt;/code&gt;) — no&#xA;alcanza con el nombre de la muestra. &lt;code&gt;tuple val(a), val(b)&lt;/code&gt; empaqueta los&#xA;dos juntos en un solo item de canal, así que cada vez que llega uno nuevo,&#xA;Nextflow dispara una ejecución con AMBOS valores correspondientes a la&#xA;misma fila (nunca el &lt;code&gt;sample_id&lt;/code&gt; de una fila con el &lt;code&gt;fragment_path&lt;/code&gt; de&#xA;otra).&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/topic-qc-correlation-annotated/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/topic-qc-correlation-annotated/</guid>
-				<description>&lt;hr&gt;&#xA;&lt;h2 id=&#34;nfmodulesa_pycistopictopic_qc_correlation_annotatednf&#34;&gt;&lt;code&gt;nf/modules/a_pycistopic/topic_qc_correlation_annotated.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;Envuelve &lt;code&gt;analyze_topic_qc_correlation.py&lt;/code&gt; — un script que el propio repo&#xA;original describe como &amp;ldquo;one-off analysis, not part of run_pipeline.sh&amp;rdquo;: la&#xA;referencia real en &lt;code&gt;4_figures/2026-08-21/A_pyCisTopic/topic_qc_correlation/&lt;/code&gt;&#xA;se generó corriéndolo a mano vía &lt;code&gt;job_sub_topic_qc_correlation.sh&lt;/code&gt; (un&#xA;&lt;code&gt;bsub&lt;/code&gt; directo), nunca pasó por el pipeline principal. Este módulo lo agrega&#xA;a Nextflow por primera vez — pero solo para la rama &amp;ldquo;solo anotadas&amp;rdquo;, no&#xA;para la original.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/b-general/nextflow/export-seurat-data/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/b-general/nextflow/export-seurat-data/</guid>
-				<description>&lt;hr&gt;&#xA;&lt;h2 id=&#34;nfmodulesb_generalexport_seurat_datanf&#34;&gt;&lt;code&gt;nf/modules/b_general/export_seurat_data.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;Envuelve &lt;code&gt;B_general/1_R/export_seurat_data.r&lt;/code&gt; — el primer paso real de todo&#xA;el pipeline (exporta peaks/barcodes/metadata con rutas de fragmentos a&#xA;partir del objeto Seurat integrado).&lt;/p&gt;&#xA;&lt;h2 id=&#34;el-proceso-completo&#34;&gt;El proceso completo&lt;/h2&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-groovy&#34; data-lang=&#34;groovy&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;process&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;EXPORT_SEURAT_DATA&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;label&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;scatac_full_env&amp;#39;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;label&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;light_job&amp;#39;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;publishDir&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;${params.project_root}/2_data/${params.data_date}/B_general&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;mode:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;copy&amp;#39;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nl&#34;&gt;output:&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;path&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;seurat_metadata_with_fragments.tsv&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;emit:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cell_data&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;path&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;sample_fragment_mapping.tsv&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt;         &lt;span class=&#34;nl&#34;&gt;emit:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;fragment_mapping&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;path&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;integrated_peaks.bed&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nl&#34;&gt;script:&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;    Rscript ${params.project_root}/1_scripts/B_general/1_R/export_seurat_data.r \\&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;        ${params.seurat_object_path} .&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nl&#34;&gt;stub:&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;    touch seurat_metadata_with_fragments.tsv sample_fragment_mapping.tsv integrated_peaks.bed&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;pieza-por-pieza&#34;&gt;Pieza por pieza&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;&lt;code&gt;label &#39;scatac_full_env&#39;&lt;/code&gt; / &lt;code&gt;label &#39;light_job&#39;&lt;/code&gt;&lt;/strong&gt; — un [[label]] es una&#xA;etiqueta arbitraria (cualquier nombre) que después &lt;code&gt;nextflow.config&lt;/code&gt;&#xA;usa para decidir qué conda env activar y qué recursos de LSF pedir&#xA;(ver [[Nextflow Config]]). Un proceso puede tener varios labels a la vez —&#xA;aquí uno dice &amp;ldquo;qué entorno&amp;rdquo; y otro &amp;ldquo;cuántos recursos&amp;rdquo;, cosas independientes.&lt;/li&gt;&#xA;&lt;li&gt;[[publishDir]] — copia (o [[symlink]]) los outputs declarados hacia una&#xA;ruta legible por humanos, además de donde Nextflow los cachea internamente&#xA;(&lt;code&gt;work/&lt;/code&gt;). Es la única razón por la que &lt;code&gt;2_data/&amp;lt;fecha&amp;gt;/B_general/&lt;/code&gt; sigue&#xA;teniendo la misma pinta de siempre — Nextflow por dentro guarda todo en&#xA;&lt;code&gt;work/xx/yyyy.../&lt;/code&gt;, con nombres de hash, no en esa ruta.&lt;/li&gt;&#xA;&lt;li&gt;[[output]]: con [[emit]]:** — declara qué archivos produce el proceso.&#xA;&lt;code&gt;emit: cell_data&lt;/code&gt; le pone un nombre a ese output específico, para poder&#xA;referenciarlo después como &lt;code&gt;EXPORT_SEURAT_DATA.out.cell_data&lt;/code&gt; desde el&#xA;&lt;code&gt;workflow&lt;/code&gt; (ver [[Workflow &amp;amp; Main]]). El tercer output&#xA;(&lt;code&gt;integrated_peaks.bed&lt;/code&gt;) no tiene &lt;code&gt;emit:&lt;/code&gt; porque nada de este piloto lo&#xA;vuelve a leer — sigue publicado, pero nadie lo necesita como input.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Sin &lt;code&gt;input:&lt;/code&gt;&lt;/strong&gt; — es el ÚNICO módulo de este piloto sin dependencias de&#xA;otro proceso. En vez de recibir un canal, lee &lt;code&gt;params.seurat_object_path&lt;/code&gt;&#xA;directo (un parámetro global de &lt;code&gt;nextflow.config&lt;/code&gt;, no un archivo que pasó&#xA;por otro proceso).&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;&lt;code&gt;script:&lt;/code&gt;&lt;/strong&gt; — el bloque real que se ejecuta. Es &lt;em&gt;exactamente&lt;/em&gt;&#xA;la misma llamada a &lt;code&gt;Rscript&lt;/code&gt; que ya se hacia previamente — Nextflow no reescribe&#xA;la lógica, solo la orquesta — fue un principio de diseño explícito, no&#xA;casualidad: migrar sin tocar ni un script.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;&lt;code&gt;stub:&lt;/code&gt;&lt;/strong&gt; — bloque alternativo, ver [[Stub Run]].&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;por-qué-el--al-final-del-rscript--call&#34;&gt;Por qué el &lt;code&gt;.&lt;/code&gt; al final del &lt;code&gt;Rscript ...&lt;/code&gt; call&lt;/h2&gt;&#xA;&lt;p&gt;&lt;code&gt;export_seurat_data.r&lt;/code&gt; acepta &lt;code&gt;[seurat_object_path] [out_dir]&lt;/code&gt; como&#xA;argumentos posicionales (ver el propio script). El &lt;code&gt;.&lt;/code&gt; le dice &amp;ldquo;escribe aquí&#xA;mismo, en el directorio de trabajo de este proceso&amp;rdquo; — eso es lo que&#xA;&lt;code&gt;publishDir&lt;/code&gt;/&lt;code&gt;output:&lt;/code&gt; después recogen.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/nextflow/nextflow-config/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/nextflow/nextflow-config/</guid>
-				<description>&lt;hr&gt;&#xA;&lt;h2 id=&#34;nextflowconfig&#34;&gt;&lt;code&gt;nextflow.config&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;La configuración global — separada del código de los procesos a propósito&#xA;(ver [[OVERVIEW]]). Se carga automáticamente por su nombre: Nextflow la&#xA;busca en el directorio desde donde se ejecuta &lt;code&gt;nextflow run&lt;/code&gt;, sin que nada&#xA;la tenga que importar explícitamente.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/nextflow/overview/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/nextflow/overview/</guid>
-				<description>&lt;p&gt;Esta carpeta documenta, archivo por archivo, el piloto de migración a&#xA;Nextflow de la rama &lt;a href=&#34;http://localhost:1313/Vulgaris/es/projects/jaguar/a-pycistopic/&#34;&gt;A_pyCisTopic&lt;/a&gt; (ahí está el contexto de&#xA;por qué se hizo y qué cambió al migrar). Cada &lt;code&gt;.md&lt;/code&gt; de aquí explica el &lt;code&gt;.nf&lt;/code&gt;&#xA;correspondiente — está pensado para leerse &lt;strong&gt;al lado del código real&lt;/strong&gt;, no&#xA;como referencia genérica de Nextflow.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/nextflow/publishdir-replace-not-merge/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/nextflow/publishdir-replace-not-merge/</guid>
-				<description>&lt;p&gt;&lt;strong&gt;Hallazgo real &lt;code&gt;[2026-09-11]&lt;/code&gt;: &lt;code&gt;publishDir&lt;/code&gt; a un destino compartido REEMPLAZA,&#xA;no fusiona.&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;El bug más serio encontrado en todo este piloto — no por lo difícil de&#xA;arreglar (una vez entendido, es trivial), sino porque casi borra datos&#xA;reales de la corrida de producción sin ningún error visible.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/nextflow/stub-run/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/nextflow/stub-run/</guid>
-				<description>&lt;p&gt;&lt;strong&gt;[[-stub-run]] — cómo se validó este pipeline sin correr cómputo real.&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;el-problema-que-resuelve&#34;&gt;El problema que resuelve&lt;/h2&gt;&#xA;&lt;p&gt;Correr el pipeline de producción completo (MACS3, modelado Mallet hasta&#xA;&lt;code&gt;n_topics=50&lt;/code&gt;, etc.) es cómputo real de horas — no es algo para probar cada&#xA;vez que se toca una coma en un &lt;code&gt;.nf&lt;/code&gt;. Pero igual hace falta alguna forma de&#xA;confirmar que el DAG completo (10 procesos, dependencias entre ellos,&#xA;conda envs, envío a LSF) está bien armado ANTES de comprometerse a una&#xA;corrida real.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/nextflow/workflow--main/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/nextflow/workflow--main/</guid>
-				<description>&lt;hr&gt;&#xA;&lt;h2 id=&#34;mainnf&#34;&gt;&lt;code&gt;main.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;h2 id=&#34;nfworkflowspycistopicnf&#34;&gt;&lt;code&gt;nf/workflows/pycistopic.nf&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;Donde se conectan los procesos entre sí. Si ya se leyeron los módulos&#xA;anteriores, esto es lo último que falta para tener el mapa completo.&lt;/p&gt;&#xA;&lt;h2 id=&#34;mainnf--casi-vacío-a-propósito&#34;&gt;&lt;code&gt;main.nf&lt;/code&gt; — casi vacío a propósito&lt;/h2&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-groovy&#34; data-lang=&#34;groovy&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#!/usr/bin/env nextflow&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;nextflow&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;enable&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;dsl&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;include&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;PYCISTOPIC&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;./nf/workflows/pycistopic.nf&amp;#39;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;workflow&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;PYCISTOPIC&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;()&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;nextflow run main.nf&lt;/code&gt; siempre busca un &lt;code&gt;workflow&lt;/code&gt; SIN NOMBRE (el bloque&#xA;&lt;code&gt;workflow { ... }&lt;/code&gt; de aquí, sin identificador) como punto de entrada — es el&#xA;equivalente a &lt;code&gt;if __name__ == &amp;quot;__main__&amp;quot;:&lt;/code&gt; de Python. Todo lo real vive en&#xA;&lt;code&gt;PYCISTOPIC&lt;/code&gt; (con nombre), importado de otro archivo. Esto es lo que&#xA;después va a permitir, en fases siguientes (C_cicero, D_integrate, G_scglue),&#xA;tener un &lt;code&gt;main.nf&lt;/code&gt; que llame a VARIOS workflows con nombre, uno por rama,&#xA;sin que este archivo crezca mucho.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/bash/bsub/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/bash/bsub/</guid>
-				<description>&lt;h2 id=&#34;e-bsub&#34;&gt;e: &amp;ldquo;bsub&amp;rdquo;&lt;/h2&gt;&#xA;&lt;p&gt;El comando &lt;code&gt;bsub&lt;/code&gt; es un componente clave del &lt;a href=&#34;https://www.ibm.com/docs/sk/spectrum-lsf/10.1.0&#34;&gt;IBM Spectrum&lt;/a&gt; LSF (Load Sharing Facility) es usado para subir/mandar jobs a ejecución en un clúster de alto rendimiento. En el caso de este proyecto el &lt;code&gt;farm22&lt;/code&gt; del Wellcome Sanger Institute.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/bash/cp/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/bash/cp/</guid>
-				<description>&lt;h2 id=&#34;e-cp&#34;&gt;e: &amp;ldquo;cp&amp;rdquo;&lt;/h2&gt;&#xA;&lt;p&gt;El comando &lt;code&gt;cp&lt;/code&gt; (ja) en bash es usado para copiar archivos y directorios de una ubicación a otra (copiar, si quisieras mover usas &lt;code&gt;mv&lt;/code&gt;, que también sirve para renombrar). Es uno de los principales comandos que requiere especificar el &lt;strong&gt;archivo fuente&lt;/strong&gt; y su &lt;strong&gt;destino&lt;/strong&gt;.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/bash/mkdir/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/bash/mkdir/</guid>
-				<description>&lt;h2 id=&#34;e-mkdir&#34;&gt;e: &amp;ldquo;mkdir&amp;rdquo;&lt;/h2&gt;&#xA;&lt;p&gt;El comando &lt;code&gt;mkdir&lt;/code&gt; (Make Directory) se usa en la terminal para crear una o varias carpetas/folders/directorios como le quieras llamar.&lt;/p&gt;&#xA;&lt;h2 id=&#34;sintaxis-básica&#34;&gt;Sintaxis básica&lt;/h2&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mkdir &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;opción&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; nombre_del_directorio&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;usos-comunes&#34;&gt;Usos comunes&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Crear una carpeta:&lt;/strong&gt; Escribe &lt;code&gt;mkdir carpeta_nueva&lt;/code&gt; para generar una carpeta en tu ubicación actual.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Crear varias carpetas:&lt;/strong&gt; Separa los nombres con espacios, por ejemplo: &lt;code&gt;mkdir carpeta1 carpeta2 carpeta3&lt;/code&gt;.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Carpetas anidadas:&lt;/strong&gt; Usa la opción &lt;code&gt;-p&lt;/code&gt; para crear una ruta completa con subcarpetas que aún no existen, como &lt;code&gt;mkdir -p padre/hijo/nieto&lt;/code&gt;.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;ver-también&#34;&gt;Ver también&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;[[touch]] — lo mismo pero para archivos vací&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/bash/symlink/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/bash/symlink/</guid>
-				<description>&lt;h2 id=&#34;e-symlink&#34;&gt;e: &amp;ldquo;symlink&amp;rdquo;&lt;/h2&gt;&#xA;&lt;p&gt;Un &lt;code&gt;symlink&lt;/code&gt; (o enlace simbólico) es algo muy usado en este pipeline por Nextflow. Es un archivo especial que apunta a otro archivo o directorio/carpeta/folder en la computadora, que funciona como un acceso directo, básicamente cuando copiabas juegos del ciber, o quizás ya no se haga eso porque ya no existen los cibers, y la mayoría de gente ya tiene sus computadoras, pero en mis tiempos luego copiabas juegos que en realidad solo eran accesos directos y si tienes un acceso directo pero no el contenido al que quieres acceder, pues, no sirve de nada verdad.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/bash/touch/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/bash/touch/</guid>
-				<description>&lt;h2 id=&#34;e-touch&#34;&gt;e: &amp;ldquo;touch&amp;rdquo;&lt;/h2&gt;&#xA;&lt;p&gt;El comando &lt;code&gt;touch&lt;/code&gt; en Bash se usa principalmente para crear archivos vacíos nuevos y para actualizar la fecha y hora de acceso o modificación de archivos existentes.&lt;/p&gt;&#xA;&lt;h2 id=&#34;sintaxis-básica&#34;&gt;Sintaxis básica&lt;/h2&gt;&#xA;&lt;p&gt;La estructura del comando es bastante sencilla, solo es escribir &lt;code&gt;touch&lt;/code&gt; y después el nombre del archivo:&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/-work-dir/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/-work-dir/</guid>
-				<description>&lt;h2 id=&#34;e--work-dir&#34;&gt;e: &amp;ldquo;-work-dir&amp;rdquo;&lt;/h2&gt;&#xA;&lt;p&gt;Al principio yo hacía todo en una sola carpeta, y después terminaba con un relajo de archivos, outputs, inputs, figuras, todo en un solo lugar. La gente sensata de Nextflow ya sabía que esto está mal entonces para cada run del módulo se crea una carpeta llamada work que está separada por hashes, o el nombre único del workflow.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/collect/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/collect/</guid>
-				<description>&lt;h2 id=&#34;e-collect&#34;&gt;e: &amp;ldquo;collect()&amp;rdquo;&lt;/h2&gt;&#xA;&lt;p&gt;Hay veces que aunque paralelicemos procesos, necesitamos que todos terminen, como en los módulos que implican un merge, entonces para eso nos sirve &lt;code&gt;collect()&lt;/code&gt;, esperamos que todos terminen, y seguimos con el siguiente comando.&lt;/p&gt;&#xA;&lt;h2 id=&#34;cómo-se-ve&#34;&gt;Cómo se ve&lt;/h2&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-groovy&#34; data-lang=&#34;groovy&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;QC_RUN_ONE_SAMPLE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;qc_samples&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;QC_GENERATE_COMMANDS&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;state&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;first&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;())&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;MERGE_QC_STATES&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;QC_RUN_ONE_SAMPLE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;out&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;state&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;na&#34;&gt;collect&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;())&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;qué-hace-exactamente&#34;&gt;Qué hace exactamente&lt;/h2&gt;&#xA;&lt;p&gt;Toma los N items que fueron saliendo del canal y los junta en &lt;strong&gt;un solo item&lt;/strong&gt;&#xA;que es la lista de todos. Como el canal pasa a tener un item, el proceso que lo&#xA;recibe corre &lt;strong&gt;una sola vez&lt;/strong&gt;, y le llegan las 20 carpetas juntas.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/emit/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/emit/</guid>
-				<description>&lt;h2 id=&#34;e-emit&#34;&gt;e: &amp;ldquo;emit:&amp;rdquo;&lt;/h2&gt;&#xA;&lt;p&gt;Nextflow recibe un archivo bajo su nombre clave, pero para no confundirse le pasa un nombre que puede ser el mismo u otro a bash, esto para ser más organizados con los inputs y outputs del workflow del pipeline.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/first/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/first/</guid>
-				<description>&lt;h2 id=&#34;e-first&#34;&gt;e: &amp;ldquo;first()&amp;rdquo;&lt;/h2&gt;&#xA;&lt;!-- TODO (Jorge): tu párrafo de entrada, como en las demás notas. --&gt;&#xA;&lt;h2 id=&#34;el-problema-que-resuelve&#34;&gt;El problema que resuelve&lt;/h2&gt;&#xA;&lt;p&gt;Un canal normal es una &lt;strong&gt;cola&lt;/strong&gt;: cada item se consume una sola vez y se gasta.&#xA;Eso está bien cuando cada item dispara su propia ejecución, pero rompe cuando&#xA;un proceso que corre UNA vez tiene que alimentar a N ejecuciones paralelas.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/input/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/input/</guid>
-				<description>&lt;h2 id=&#34;e-input&#34;&gt;e: &amp;ldquo;input:&amp;rdquo;&lt;/h2&gt;&#xA;&lt;p&gt;Es la entrada del pipeline, la información con la que va a jugar, Nextflow es muy bueno para manejar esta información, simplemente lo lee de su archivo de configuración y usa esa información para ejecutar algún programa con parámetros bajo un nombre designado.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/label/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/label/</guid>
-				<description>&lt;h2 id=&#34;e-label&#34;&gt;e: &amp;ldquo;label&amp;rdquo;&lt;/h2&gt;&#xA;&lt;p&gt;Es el nombre que le ponemos al trabajo, puede ser el que sea. Como buena práctica de programación NUNCA DE LOS NUNCAS pongas &amp;ldquo;Final&amp;rdquo; nunca vas a acabar, todo es imperfecto en esta vida, lo que sucede muchas veces es que te quedas sin tiempo y lo entregas así como está.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/output/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/output/</guid>
-				<description>&lt;h2 id=&#34;e-output&#34;&gt;e: &amp;ldquo;output:&amp;rdquo;&lt;/h2&gt;&#xA;&lt;p&gt;Es la salida que espera Nextflow para pasársela al siguiente proceso, o simplemente guardarla en su carpeta. No se me ocurre nada chistoso aquí.&lt;/p&gt;&#xA;&lt;h2 id=&#34;cómo-se-ve&#34;&gt;Cómo se ve&lt;/h2&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-groovy&#34; data-lang=&#34;groovy&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nl&#34;&gt;output:&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;seurat_metadata_with_fragments.tsv&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;emit:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cell_data&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;sample_fragment_mapping.tsv&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt;        &lt;span class=&#34;nl&#34;&gt;emit:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;fragment_mapping&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;integrated_peaks.bed&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;lo-que-hay-que-tener-en-cuenta&#34;&gt;Lo que hay que tener en cuenta&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Es una declaración, no una acción.&lt;/strong&gt; El &lt;code&gt;script&lt;/code&gt; crea los archivos; el&#xA;&lt;code&gt;output:&lt;/code&gt; solo dice cuáles de todos los que quedaron en el [[-work-dir]]&#xA;le importan a Nextflow. Lo que no declares, existe en el work dir pero&#xA;nadie lo puede usar después ni se publica.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Las rutas son relativas al work dir de la tarea&lt;/strong&gt;, nunca absolutas. Por&#xA;eso ves &lt;code&gt;path &amp;quot;state&amp;quot;&lt;/code&gt; y no &lt;code&gt;path &amp;quot;/lustre/.../state&amp;quot;&lt;/code&gt;.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Si el archivo no aparece, la tarea falla.&lt;/strong&gt; Nextflow revisa al terminar&#xA;que todo lo declarado exista; si el script no lo generó, marca error&#xA;aunque el comando haya devuelto 0. Por eso el [[stub]] tiene que hacer&#xA;[[touch]] de exactamente los mismos nombres.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Sin [[emit]] igual funciona&lt;/strong&gt;, solo que te toca referirlo por posición&#xA;(&lt;code&gt;PROCESO.out[0]&lt;/code&gt;) en vez de por nombre. &lt;code&gt;integrated_peaks.bed&lt;/code&gt; arriba no&#xA;tiene &lt;code&gt;emit:&lt;/code&gt; porque nadie lo consume — solo se publica.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;ver-también&#34;&gt;Ver también&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;[[input]] — el otro lado.&lt;/li&gt;&#xA;&lt;li&gt;[[emit]] — ponerle nombre a cada salida.&lt;/li&gt;&#xA;&lt;li&gt;[[publishDir]] — sacar una copia fuera del work d&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/publishdir/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/publishdir/</guid>
-				<description>&lt;h2 id=&#34;e-publishdir&#34;&gt;e: &amp;ldquo;publishDir&amp;rdquo;&lt;/h2&gt;&#xA;&lt;p&gt;Como Nextflow sí tiene muy bien sus carpetas organizadas para que no se anden molestando y el cache sea eficaz pues sabemos que nuestro lenguaje o manera de entender el mundo no es muy eficaz, pero igualmente necesitamos interpretabilidad, eso incluye el motivo por el que estoy haciendo esto, o sea lo más fácil era confiar ciegamente en la IA pero no, me pica la curiosidad, aunque eso signifique desperdiciar mi sábado. Entonces le podemos indicar a un módulo que su output, además de sacarlo en su [[-work-dir]] también nos lo ponga en una carpeta que nosotros elijamos.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/script/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/script/</guid>
-				<description>&lt;h2 id=&#34;e-script&#34;&gt;e: &amp;ldquo;script:&amp;rdquo;&lt;/h2&gt;&#xA;&lt;p&gt;Es básicamente lo que va a ejecutar Nextflow en una terminal de bash como por ejemplo&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-groovy&#34; data-lang=&#34;groovy&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nl&#34;&gt;script:&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;cat ${Message}&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;y ya, Nextflow va a hacer esa tarea, creo que es de las partes más fáciles de entender de Nextflow.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/state/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/state/</guid>
-				<description>&lt;h2 id=&#34;e-state&#34;&gt;e: &amp;ldquo;state&amp;rdquo;&lt;/h2&gt;&#xA;&lt;p&gt;Es la carpeta donde se va a ejecutar el módulo de Nextflow.&lt;/p&gt;&#xA;&lt;h2 id=&#34;ojo--un-ajuste-a-lo-de-arriba&#34;&gt;Ojo — un ajuste a lo de arriba&lt;/h2&gt;&#xA;&lt;p&gt;La carpeta donde &lt;strong&gt;se ejecuta&lt;/strong&gt; el módulo es el [[-work-dir]] (el hash), eso lo&#xA;decide Nextflow solo. &lt;code&gt;state&lt;/code&gt; es otra cosa, y no es sintaxis de Nextflow: es&#xA;una convención &lt;strong&gt;nuestra&lt;/strong&gt;, de este pipeline. Es la carpeta de datos acumulados&#xA;que va viajando de un proceso al siguiente.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/state_in/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/state_in/</guid>
-				<description>&lt;h2 id=&#34;e-state_in&#34;&gt;e: &amp;ldquo;state_in&amp;rdquo;&lt;/h2&gt;&#xA;&lt;p&gt;No me acuerdo qué significaba esto, creo que era el nombre interno de algo xd.&lt;/p&gt;&#xA;&lt;h2 id=&#34;era-eso-sí&#34;&gt;Era eso, sí&lt;/h2&gt;&#xA;&lt;p&gt;Es el nombre con el que se monta el [[state]] que &lt;strong&gt;llega&lt;/strong&gt; del proceso&#xA;anterior:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-groovy&#34; data-lang=&#34;groovy&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nl&#34;&gt;input:&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;state_in&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nl&#34;&gt;stageAs:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;state_in&amp;#39;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;por-qué-no-se-llama-state-a-secas&#34;&gt;Por qué no se llama &lt;code&gt;state&lt;/code&gt; a secas&lt;/h2&gt;&#xA;&lt;p&gt;Porque el proceso va a crear su propia carpeta &lt;code&gt;state&lt;/code&gt; como [[output]], y si&#xA;la de entrada también se llamara &lt;code&gt;state&lt;/code&gt;, chocarían dentro del mismo&#xA;[[-work-dir]]. El &lt;code&gt;stageAs: &#39;state_in&#39;&lt;/code&gt; fuerza el nombre de la que entra, y&#xA;así queda:&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/stub/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/stub/</guid>
-				<description>&lt;h2 id=&#34;e-stub&#34;&gt;e: &amp;ldquo;stub:&amp;rdquo;&lt;/h2&gt;&#xA;&lt;p&gt;Igual que [[-stub-run]], es la parte en donde escribes lo que se va a ejecutar si activas el flag &lt;code&gt;-stub-run&lt;/code&gt;, es como [[script]] pero falso.&lt;/p&gt;&#xA;&lt;h2 id=&#34;cómo-se-ve&#34;&gt;Cómo se ve&lt;/h2&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-groovy&#34; data-lang=&#34;groovy&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;process&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;CONSENSUS_PEAK_CALLING&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nl&#34;&gt;script:&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;    cp -rL state_in state&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;    python .../02_consensus_peak_calling.py --out-dir state ...&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nl&#34;&gt;stub:&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;    cp -rL state_in state&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;    mkdir -p state/consensus_peak_calling&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;    touch state/consensus_peak_calling/consensus_regions.bed&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;    &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;la-regla-para-escribirlo&#34;&gt;La regla para escribirlo&lt;/h2&gt;&#xA;&lt;p&gt;El stub tiene que crear &lt;strong&gt;exactamente los mismos nombres&lt;/strong&gt; que declara el&#xA;[[output]] del proceso, y nada más. Si el output dice&#xA;&lt;code&gt;path &amp;quot;state&amp;quot;, emit: state&lt;/code&gt;, el stub tiene que dejar una carpeta &lt;code&gt;state&lt;/code&gt;&#xA;ahí parada. No importa que los archivos estén vacíos: lo único que se está&#xA;probando es que la tubería conecte, no que los datos sirvan.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>-stub-run</title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/-stub-run/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/nextflow/-stub-run/</guid>
-				<description>&lt;p&gt;Cuando no quieres que el pipeline corra con el objeto completo como gallina sin cabeza y después pierdas una semana de tiempo porque ay este comando no admite que la columna lleve un puntito, entonces usas un stub-run para ejecutar una workflow de a mentis, o sea primero verificas que las vías del tren estén bien antes de que un tren las empiece a recorrer.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>Comodines (*)</title>
-				<link>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/bash/comodines/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/Vulgaris/es/projects/jaguar/sintaxis/bash/comodines/</guid>
-				<description>&lt;p&gt;Los &lt;code&gt;comodines&lt;/code&gt; en Bash son caracteres especiales que sirven para representar uno o más caracteres al buscar o seleccionar nombres de archivos y directorios. El proceso en el que Bash interpreta estos símbolos y los sustituye por los nombres reales se le llama globbing.&lt;/p&gt;</description>
-			</item>
-	</channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Vulgaris</title><link>https://3lconejo.github.io/Vulgaris/es/</link><description>Recent content on Vulgaris</description><generator>Hugo</generator><language>es</language><lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate><atom:link href="https://3lconejo.github.io/Vulgaris/es/index.xml" rel="self" type="application/rss+xml"/><item><title>Enfoque: Cicero y co-accesibilidad</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/c-cicero/codigo/00_enfoque_cicero/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/c-cicero/codigo/00_enfoque_cicero/</guid><description>&lt;h2 id="the-problem"&gt;The Problem&lt;/h2&gt;
+&lt;p&gt;Our existing pipeline establishes a strong foundation, but it leaves deeper biological insights hidden in the tables. By moving toward Gene Regulation Networks (GRNs), we can understand the &lt;em&gt;behavior&lt;/em&gt; of the data.&lt;/p&gt;
+&lt;table&gt;
+	&lt;thead&gt;
+			&lt;tr&gt;
+					&lt;th&gt;Existing Capabilities&lt;/th&gt;
+					&lt;th&gt;New GRN Capabilities&lt;/th&gt;
+			&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+			&lt;tr&gt;
+					&lt;td&gt;Filter scATAC-seq data by quality&lt;/td&gt;
+					&lt;td&gt;Discover synchronously activated regions&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;Group cells by accessible regions&lt;/td&gt;
+					&lt;td&gt;Map enhancer-to-target interactions&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+					&lt;td&gt;Perform differential accessibility&lt;/td&gt;
+					&lt;td&gt;Identify regulatory topics and cellular archetypes&lt;/td&gt;
+			&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;My work in this phase is to unveil how these patterns manifest and verify whether they align with known biological regulatory systems.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/pseudobulk-export/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/pseudobulk-export/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicpseudobulk_exportnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/pseudobulk_export.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Envuelve &lt;code&gt;01_pseudobulk_export.py&lt;/code&gt; — el primer paso de la rama
+&lt;code&gt;A_pyCisTopic&lt;/code&gt; propiamente dicha. Es el módulo donde aparece por primera vez
+el patrón &lt;strong&gt;[[state]]&lt;/strong&gt;, que se repite en los otros 8 módulos de esta rama —
+vale la pena entenderlo bien aquí.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/nextflow/overview/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/nextflow/overview/</guid><description>&lt;p&gt;Esta carpeta documenta, archivo por archivo, el piloto de migración a
+Nextflow de la rama &lt;a href="https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/"&gt;A_pyCisTopic&lt;/a&gt; (ahí está el contexto de
+por qué se hizo y qué cambió al migrar). Cada &lt;code&gt;.md&lt;/code&gt; de aquí explica el &lt;code&gt;.nf&lt;/code&gt;
+correspondiente — está pensado para leerse &lt;strong&gt;al lado del código real&lt;/strong&gt;, no
+como referencia genérica de Nextflow.&lt;/p&gt;</description></item><item><title>01_create_cicero_cds.r</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/c-cicero/codigo/01_create_cicero_cds.r/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/c-cicero/codigo/01_create_cicero_cds.r/</guid><description>&lt;h2 id="create-a-cds-object-and-run-cicero"&gt;Create a cds object and Run Cicero&lt;/h2&gt;
+&lt;p&gt;Below is the step-by-step R script to execute this pipeline. It handles argument parsing for cluster environments (like SLURM|LSF), calculates co-accessibility, and integrates the results back into a Seurat object.&lt;/p&gt;
+&lt;h3 id="1-environment-setup-and-argument-parsing"&gt;1. Environment Setup and Argument Parsing&lt;/h3&gt;
+&lt;p&gt;First, we load the required libraries and parse command-line arguments to avoid hardcoding file paths.&lt;/p&gt;</description></item><item><title>export_seurat_data.r</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/b-general/codigo/export_seurat_data.r/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/b-general/codigo/export_seurat_data.r/</guid><description>&lt;h2 id="next-steps-pycistopic"&gt;NEXT-STEPS: pycisTopic&lt;/h2&gt;
+&lt;p&gt;To improve the confidence in our results, we can validate our findings using &lt;strong&gt;pycisTopic&lt;/strong&gt;. This tool uses Latent Dirichlet Allocation (LDA) to group co-accessible chromatin regions into distinct regulatory topics and classify cell states.&lt;/p&gt;
+&lt;h3 id="1-data-preparation-recoger-nuestras-chivas"&gt;1. Data Preparation: &amp;ldquo;Recoger nuestras chivas&amp;rdquo;&lt;/h3&gt;
+&lt;p&gt;Before diving into the Python environment, we need to get our files in order. &lt;code&gt;pycisTopic&lt;/code&gt; relies on a core data structure: a dictionary that links sample IDs to their corresponding ATAC fragment files.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/consensus-peak-calling/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/consensus-peak-calling/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicconsensus_peak_callingnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/consensus_peak_calling.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Envuelve &lt;code&gt;02_consensus_peak_calling.py&lt;/code&gt;. Primer módulo que RECIBE un [[state]]
+de un paso anterior (&lt;code&gt;01_pseudobulk_export.py&lt;/code&gt;, vía [[PSEUDOBULK EXPORT]])
+— aquí es donde importa entender por qué se hace [[cp]] y no se escribe directo
+sobre lo que llega.&lt;/p&gt;
+&lt;h2 id="el-proceso"&gt;El proceso&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-groovy" data-lang="groovy"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;process&lt;/span&gt; &lt;span class="n"&gt;CONSENSUS_PEAK_CALLING&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;pycistopic_env&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;medium_job&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;publishDir&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;${params.project_root}/3_output/${params.run_date}/A_pyCisTopic&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;mode:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;copy&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;input:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="n"&gt;state_in&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;stageAs:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;state_in&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;output:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;state&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;emit:&lt;/span&gt; &lt;span class="n"&gt;state&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;script:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; cp -rL state_in state
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; python .../02_consensus_peak_calling.py \\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; --out-dir state --blacklist .../hg38-blacklist.v2.bed \\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; --n-cpu ${params.n_cpu} --temp-dir ${params.temp_dir}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="por-qué-cp--rl-state_in-state-y-no-escribir-directo-sobre-state_in"&gt;Por qué &lt;code&gt;cp -rL state_in state&lt;/code&gt; y no escribir directo sobre &lt;code&gt;state_in&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;Esto es lo más importante de todo el patrón [[state]] — vale la pena
+detenerse.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/nextflow/workflow--main/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/nextflow/workflow--main/</guid><description>&lt;hr&gt;
+&lt;h2 id="mainnf"&gt;&lt;code&gt;main.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id="nfworkflowspycistopicnf"&gt;&lt;code&gt;nf/workflows/pycistopic.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Donde se conectan los procesos entre sí. Si ya se leyeron los módulos
+anteriores, esto es lo último que falta para tener el mapa completo.&lt;/p&gt;
+&lt;h2 id="mainnf--casi-vacío-a-propósito"&gt;&lt;code&gt;main.nf&lt;/code&gt; — casi vacío a propósito&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-groovy" data-lang="groovy"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#!/usr/bin/env nextflow&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;nextflow&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;enable&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;dsl&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;include&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt; &lt;span class="n"&gt;PYCISTOPIC&lt;/span&gt; &lt;span class="o"&gt;}&lt;/span&gt; &lt;span class="n"&gt;from&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;./nf/workflows/pycistopic.nf&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;workflow&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;PYCISTOPIC&lt;/span&gt;&lt;span class="o"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;nextflow run main.nf&lt;/code&gt; siempre busca un &lt;code&gt;workflow&lt;/code&gt; SIN NOMBRE (el bloque
+&lt;code&gt;workflow { ... }&lt;/code&gt; de aquí, sin identificador) como punto de entrada — es el
+equivalente a &lt;code&gt;if __name__ == &amp;quot;__main__&amp;quot;:&lt;/code&gt; de Python. Todo lo real vive en
+&lt;code&gt;PYCISTOPIC&lt;/code&gt; (con nombre), importado de otro archivo. Esto es lo que
+después va a permitir, en fases siguientes (C_cicero, D_integrate, G_scglue),
+tener un &lt;code&gt;main.nf&lt;/code&gt; que llame a VARIOS workflows con nombre, uno por rama,
+sin que este archivo crezca mucho.&lt;/p&gt;</description></item><item><title>02_TestingCCANSandCONNS.R</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/c-cicero/codigo/02_testingccansandconns.r/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/c-cicero/codigo/02_testingccansandconns.r/</guid><description>&lt;h2 id="analyze-and-plot-each-ccans"&gt;Analyze and Plot each CCANs&lt;/h2&gt;
+&lt;h3 id="1-load-data"&gt;1. Load data&lt;/h3&gt;
+&lt;p&gt;Now that we have the results of running cicero it is time to see what is inside.
+First we load our packages.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-r" data-lang="r"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Script: TestingCCANSandCONNS.R&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nf"&gt;suppressPackageStartupMessages&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Seurat&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Signac&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;SeuratWrappers&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;monocle3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cicero&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;EnsDb.Hsapiens.v86&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;TxDb.Hsapiens.UCSC.hg38.knownGene&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;VariantAnnotation&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;igraph&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;dplyr&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ggforce&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ggplot2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;patchwork&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# For combining plots (plot_layout(), `/` operator)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nf"&gt;library&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;scales&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c1"&gt;# For rescale()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;})&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The argumentss mirrors &lt;code&gt;create_cicero_cds.r's &amp;lt;output_prefix&amp;gt; [project_root] &lt;/code&gt;convention:
+that script names both the output directory and every file inside it after
+the same &lt;code&gt;prefix&lt;/code&gt; (3_output/cicero_&lt;prefix&gt;/&lt;prefix&gt;_CCANs.csv, etc).&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-generate-commands/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-generate-commands/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicqc_generate_commandsnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/qc_generate_commands.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Envuelve &lt;code&gt;03_qc_generate_commands.py&lt;/code&gt; — &lt;strong&gt;solo genera&lt;/strong&gt; el archivo de
+comandos QC (uno por muestra) y deja &lt;code&gt;tss.bed&lt;/code&gt; en su lugar. Ya NO los
+ejecuta — eso ahora lo hace &lt;code&gt;qc_run_one_sample.nf&lt;/code&gt;, uno por muestra en
+paralelo (ver [[QC RUN ONE SAMPLE]]). Mismo patrón &lt;code&gt;state&lt;/code&gt;/&lt;code&gt;cp&lt;/code&gt; ya
+explicado en [[CONSENSUS PEAK CALLING]].&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/nextflow/nextflow-config/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/nextflow/nextflow-config/</guid><description>&lt;hr&gt;
+&lt;h2 id="nextflowconfig"&gt;&lt;code&gt;nextflow.config&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;La configuración global — separada del código de los procesos a propósito
+(ver [[OVERVIEW]]). Se carga automáticamente por su nombre: Nextflow la
+busca en el directorio desde donde se ejecuta &lt;code&gt;nextflow run&lt;/code&gt;, sin que nada
+la tenga que importar explícitamente.&lt;/p&gt;</description></item><item><title>03_assign_ccan_genes.r</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/c-cicero/codigo/03_assign_ccan_genes.r/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/c-cicero/codigo/03_assign_ccan_genes.r/</guid><description>&lt;h3 id="assign-genes-to-peaks-from-ccans"&gt;Assign Genes to peaks from CCANs&lt;/h3&gt;
+&lt;p&gt;But why? We already assign genes in the previous step to plot them! Well, the thing is, I don&amp;rsquo;t know, but they said that &lt;code&gt;GREATr&lt;/code&gt; is a good tool for annotate peaks, so as a true scientist, I believe that. Jokes aside, in the previous step we find genes per CCAN not per peak so we&amp;rsquo;re not really finding actual enhancer -&amp;gt; peak. But with &lt;code&gt;GREATr&lt;/code&gt; it is per-peak assignment with an extended domain to search &lt;em&gt;&amp;ldquo;near&amp;rdquo;&lt;/em&gt; to the TSS (With a basal window of 5kb/1kb).&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-run-one-sample/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-run-one-sample/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicqc_run_one_samplenf"&gt;&lt;code&gt;nf/modules/a_pycistopic/qc_run_one_sample.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-groovy" data-lang="groovy"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;process&lt;/span&gt; &lt;span class="n"&gt;QC_RUN_ONE_SAMPLE&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;pycistopic_env&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;tag&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;${sample_id}&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;publishDir&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;${params.project_root}/3_output/${params.run_date}/A_pyCisTopic&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;mode:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;copy&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;input:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;tuple&lt;/span&gt; &lt;span class="nf"&gt;val&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sample_id&lt;/span&gt;&lt;span class="o"&gt;),&lt;/span&gt; &lt;span class="n"&gt;val&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fragment_path&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="n"&gt;state_in&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;stageAs:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;state_in&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;output:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;state&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;emit:&lt;/span&gt; &lt;span class="n"&gt;state&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;script:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; cp -rL state_in state
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; python -m pycisTopic.cli.pycistopic qc \\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; --fragments ${fragment_path} \\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; --regions state/consensus_peak_calling/consensus_regions.bed \\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; --tss state/1_qc/tss.bed \\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; --output state/1_qc/${sample_id}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="tuple-valsample_id-valfragment_path--dos-valores-en-un-solo-input"&gt;&lt;code&gt;tuple val(sample_id), val(fragment_path)&lt;/code&gt; — dos valores en un solo input&lt;/h2&gt;
+&lt;p&gt;Ya viste &lt;code&gt;val sample_id&lt;/code&gt; solo (un string) en &lt;code&gt;build_cistopic_objects.nf&lt;/code&gt; ([[BUILD CISTOPIC OBJECTS]]).
+Hace falta ADEMÁS la ruta de fragmentos de esa muestra puntual, porque
+el comando de pycisTopic la necesita como argumento (&lt;code&gt;--fragments&lt;/code&gt;) — no
+alcanza con el nombre de la muestra. &lt;code&gt;tuple val(a), val(b)&lt;/code&gt; empaqueta los
+dos juntos en un solo item de canal, así que cada vez que llega uno nuevo,
+Nextflow dispara una ejecución con AMBOS valores correspondientes a la
+misma fila (nunca el &lt;code&gt;sample_id&lt;/code&gt; de una fila con el &lt;code&gt;fragment_path&lt;/code&gt; de
+otra).&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-qc-states/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-qc-states/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicmerge_qc_statesnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/merge_qc_states.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Junta los N &lt;code&gt;state&lt;/code&gt; que salen de las corridas paralelas de &lt;code&gt;QC_RUN_ONE_SAMPLE&lt;/code&gt; (una por muestra) en UN solo &lt;code&gt;state&lt;/code&gt; antes de pasárselo a &lt;code&gt;QC_PLOTS_THRESHOLDS&lt;/code&gt;. Es exactamente el mismo patrón que &lt;code&gt;merge_cistopic_states.nf&lt;/code&gt; (ver [[MERGE CISTOPIC STATES]] para el
+detalle completo de [[stageAs]] con patrón y [[cp#-rn]]).&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-plots-thresholds/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-plots-thresholds/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicqc_plots_thresholdsnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/qc_plots_thresholds.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Envuelve &lt;code&gt;04_qc_plots_thresholds.py&lt;/code&gt; (plots de QC + umbrales automáticos de
+barcode). Mismo patrón [[state]]/[[cp]] de los módulos anteriores — lo único
+nuevo aquí es un segundo [[publishDir]].&lt;/p&gt;
+&lt;h2 id="dos-publishdir-en-el-mismo-proceso"&gt;Dos &lt;code&gt;publishDir&lt;/code&gt; en el mismo proceso&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-groovy" data-lang="groovy"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;publishDir&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;${params.project_root}/3_output/${params.run_date}/A_pyCisTopic&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;mode:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;copy&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;publishDir&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;${params.project_root}/4_figures/${params.run_date}/A_pyCisTopic&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;mode:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;copy&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;pattern:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;state/**.png&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Un proceso puede tener varias líneas [[publishDir]] — cada una con su propio
+destino y, opcionalmente, un &lt;code&gt;pattern&lt;/code&gt; que filtra qué outputs van a esa
+copia en particular. Aquí: todo el [[state]] va a &lt;code&gt;3_output/&lt;/code&gt; como siempre,
+pero además cualquier &lt;code&gt;.png&lt;/code&gt; que haya adentro (los plots) se copia también a
+&lt;code&gt;4_figures/&lt;/code&gt; — replicando la misma separación datos/figuras que ya usa el
+resto del proyecto.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/nextflow/stub-run/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/nextflow/stub-run/</guid><description>&lt;p&gt;&lt;strong&gt;[[-stub-run]] — cómo se validó este pipeline sin correr cómputo real.&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id="el-problema-que-resuelve"&gt;El problema que resuelve&lt;/h2&gt;
+&lt;p&gt;Correr el pipeline de producción completo (MACS3, modelado Mallet hasta
+&lt;code&gt;n_topics=50&lt;/code&gt;, etc.) es cómputo real de horas — no es algo para probar cada
+vez que se toca una coma en un &lt;code&gt;.nf&lt;/code&gt;. Pero igual hace falta alguna forma de
+confirmar que el DAG completo (10 procesos, dependencias entre ellos,
+conda envs, envío a LSF) está bien armado ANTES de comprometerse a una
+corrida real.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/build-cistopic-objects/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/build-cistopic-objects/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicbuild_cistopic_objectsnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/build_cistopic_objects.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Envuelve &lt;code&gt;05_build_cistopic_objects.py&lt;/code&gt; — el paso largo y caro del pipeline
+(cisTopic objects por muestra + Scrublet + modelos Mallet, grilla
+&lt;code&gt;n_topics=[2,5,...,50]&lt;/code&gt;). Mismo patrón [[state]]/[[cp]] de siempre; lo que
+cambia aquí es &lt;strong&gt;cómo se le piden recursos de LSF&lt;/strong&gt;, y desde &lt;code&gt;[2026-09-01]&lt;/code&gt;,
+&lt;strong&gt;cuántas veces se llama a este proceso&lt;/strong&gt; — no la sintaxis básica del
+&lt;code&gt;process&lt;/code&gt; en sí.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/nextflow/publishdir-replace-not-merge/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/nextflow/publishdir-replace-not-merge/</guid><description>&lt;p&gt;&lt;strong&gt;Hallazgo real &lt;code&gt;[2026-09-11]&lt;/code&gt;: &lt;code&gt;publishDir&lt;/code&gt; a un destino compartido REEMPLAZA,
+no fusiona.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;El bug más serio encontrado en todo este piloto — no por lo difícil de
+arreglar (una vez entendido, es trivial), sino porque casi borra datos
+reales de la corrida de producción sin ningún error visible.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-cistopic-states/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-cistopic-states/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicmerge_cistopic_statesnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/merge_cistopic_states.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Nuevo &lt;code&gt;[2026-09-01]&lt;/code&gt;, agregado junto con la paralelización de
+[[BUILD CISTOPIC OBJECTS]]. Es el &amp;ldquo;punto de sincronización&amp;rdquo; entre las N
+corridas paralelas (una por muestra) y el resto del pipeline, que sigue
+esperando UN solo [[state]] para seguir.&lt;/p&gt;
+&lt;h2 id="el-problema-que-resuelve"&gt;El problema que resuelve&lt;/h2&gt;
+&lt;p&gt;Cada corrida paralela de &lt;code&gt;BUILD_CISTOPIC_OBJECTS&lt;/code&gt; parte del mismo
+[[state_in]] (QC + consensus peaks + todo lo de antes) y hace
+&lt;code&gt;cp -rL state_in state&lt;/code&gt;, y después le agrega SOLO los &lt;code&gt;.pkl&lt;/code&gt;/&lt;code&gt;.png&lt;/code&gt; de su
+propia muestra. Resultado: N carpetas &lt;code&gt;state&lt;/code&gt;, casi idénticas entre sí en la
+parte compartida, cada una con un puñado de archivos nuevos que NO están en
+las otras (los de su muestra). Hay que combinarlas en una sola antes de que
+&lt;code&gt;06_merge_and_model.py&lt;/code&gt; (invocado hoy por &lt;code&gt;MERGE_ONLY&lt;/code&gt;/&lt;code&gt;FIT_ONE_TOPIC&lt;/code&gt;, ver
+[[MERGE AND MODEL]]) pueda escanear el directorio y encontrar los modelos de
+las 24 muestras juntos — ese script descubre muestras escaneando
+&lt;code&gt;&amp;lt;out-dir&amp;gt;&lt;/code&gt; por el sufijo &lt;code&gt;*_cistopic_obj_models.pkl&lt;/code&gt;, así que necesita
+verlas todas en el mismo lugar.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-and-model/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-and-model/</guid><description>&lt;hr&gt;
+&lt;h2 id="merge_onlynf"&gt;&lt;code&gt;merge_only.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id="fit_one_topicnf"&gt;&lt;code&gt;fit_one_topic.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id="merge_topic_statesnf"&gt;&lt;code&gt;merge_topic_states.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id="combine_modelsnf"&gt;&lt;code&gt;combine_models.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Estos 4 módulos son lo que hoy hace el trabajo del viejo &lt;code&gt;merge_and_model.nf&lt;/code&gt;
+(un solo proceso, &lt;code&gt;MERGE_AND_MODEL&lt;/code&gt; — sigue en el repo, ya NO se usa en
+&lt;code&gt;pycistopic.nf&lt;/code&gt;, dejado solo de referencia histórica). Se documentan juntos
+aquí porque ninguno tiene sentido leído aislado — son las 4 piezas de un
+mismo rediseño.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/model-selection-umap/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/model-selection-umap/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicmodel_selection_umapnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/model_selection_umap.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Envuelve &lt;code&gt;07_model_selection_umap.py&lt;/code&gt; (selección de modelo, Leiden, UMAP).
+Mismo patrón [[state]]/[[cp]] de siempre, &lt;code&gt;label 'medium_job'&lt;/code&gt; genérico (sin
+&lt;code&gt;withName:&lt;/code&gt; propio, a diferencia de los dos módulos anteriores).&lt;/p&gt;
+&lt;h2 id="un-flag-condicional-más"&gt;Un flag condicional más&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-groovy" data-lang="groovy"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kt"&gt;def&lt;/span&gt; &lt;span class="n"&gt;select_model_flag&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;select_model&lt;/span&gt; &lt;span class="o"&gt;?&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;--select-model ${params.select_model}&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Mismo patrón que ya se vio en [[PSEUDOBULK EXPORT]] para &lt;code&gt;--variable&lt;/code&gt; —
+Groovy plano dentro del bloque [[script]], antes de las comillas triples,
+arma el flag condicionalmente según el parámetro.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/binarization-topic/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/binarization-topic/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicbinarization_topic_qcnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/binarization_topic_qc.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Envuelve &lt;code&gt;08_binarization_topic_qc.py&lt;/code&gt; (binarización Otsu/Yen de β, métricas
+de tópico, anotación por tipo celular). Mismo patrón [[state]]/[[cp]] y flag
+condicional (&lt;code&gt;--annot-var&lt;/code&gt;) que ya se vio en los módulos anteriores — no hay
+sintaxis nueva aquí, es un buen ejemplo de que, una vez entendido el patrón
+[[state]], la mayoría de estos módulos son casi mecánicos de escribir.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/dars-gene-activity/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/dars-gene-activity/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicdars_gene_activitynf"&gt;&lt;code&gt;nf/modules/a_pycistopic/dars_gene_activity.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Envuelve &lt;code&gt;09_dars_gene_activity.py&lt;/code&gt; — el último paso de la rama (region
+sets, DARs, gene activity + DAGs). Mismo patrón [[state]]/[[cp]] y flag
+condicional (&lt;code&gt;--variable&lt;/code&gt;, aquí vía &lt;code&gt;params.dars_variable&lt;/code&gt;) de siempre.&lt;/p&gt;
+&lt;h2 id="la-conexión-con-el-consenso-de-tres-vías-d_integrate"&gt;La conexión con el consenso de tres vías (&lt;code&gt;D_integrate&lt;/code&gt;)&lt;/h2&gt;
+&lt;p&gt;Este script tiene un parche reciente (&lt;code&gt;2026-08-24&lt;/code&gt;, ver
+&lt;a href="https://3lconejo.github.io/Vulgaris/es/projects/jaguar/d-integrate/"&gt;D_integrate&lt;/a&gt; para el consenso completo): ahora también guarda &lt;code&gt;*_gene_activity_weights.csv&lt;/code&gt;, que antes
+se calculaba y se descartaba. Ese archivo es exactamente el aporte de
+pycisTopic al consenso de tres vías que arma
+&lt;code&gt;D_integrate/2_python/build_region_gene_consensus.py&lt;/code&gt;. No cambia nada de la
+sintaxis de este módulo — se menciona aquí porque es la razón por la que
+este paso, aunque es &amp;ldquo;el último&amp;rdquo; de esta rama, sigue siendo un prerrequisito
+real para otra rama (&lt;code&gt;D_integrate&lt;/code&gt;) que todavía no está migrada a Nextflow.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/filter-annotated-cells/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/filter-annotated-cells/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicfilter_annotated_cellsnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/filter_annotated_cells.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Primer nodo de la rama &amp;ldquo;solo anotadas&amp;rdquo; — la primera vez que este workflow
+&lt;strong&gt;bifurca&lt;/strong&gt; de verdad, en vez de solo hacer fan-out-y-volver-a-juntar (ver
+[[Workflow &amp;amp; Main]], sección &amp;ldquo;Bifurcar el DAG&amp;rdquo;, para la mecánica de
+canales). Este artículo cubre el porqué y el diseño; ese otro cubre la
+sintaxis que lo conecta.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/fit-one-topic-annotated/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/fit-one-topic-annotated/</guid><description>&lt;hr&gt;
+&lt;h2 id="fit_one_topic_annotatednf"&gt;&lt;code&gt;fit_one_topic_annotated.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id="combine_models_annotatednf"&gt;&lt;code&gt;combine_models_annotated.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Continuación de [[FILTER ANNOTATED CELLS]] — estos dos son los equivalentes
+de &lt;code&gt;fit_one_topic.nf&lt;/code&gt;/&lt;code&gt;combine_models.nf&lt;/code&gt; (ver [[MERGE AND MODEL]]) para la
+rama &amp;ldquo;solo anotadas&amp;rdquo;, pero como archivos &lt;code&gt;.nf&lt;/code&gt; propios en vez de reusar los
+originales con un alias (&lt;code&gt;include { X as Y }&lt;/code&gt;, ver [[Workflow &amp;amp; Main]]).&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/annotated-destination-modules/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/annotated-destination-modules/</guid><description>&lt;hr&gt;
+&lt;h2 id="merge_topic_states_annotatednf"&gt;&lt;code&gt;merge_topic_states_annotated.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id="model_selection_umap_annotatednf"&gt;&lt;code&gt;model_selection_umap_annotated.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id="binarization_topic_qc_annotatednf"&gt;&lt;code&gt;binarization_topic_qc_annotated.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Los tres módulos que dejaron de ser alias (&lt;code&gt;include { X as Y }&lt;/code&gt;, ver
+[[Workflow &amp;amp; Main]]) el &lt;code&gt;[2026-09-11]&lt;/code&gt;, por el bug real explicado a fondo en
+[[Publishdir Replace Not Merge]]. Este artículo asume que ya se leyó ese —
+aquí el foco es &amp;ldquo;qué mirar en cada &lt;code&gt;.nf&lt;/code&gt; puntual&amp;rdquo;, no repetir el porqué
+completo.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/topic-qc-correlation-annotated/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/topic-qc-correlation-annotated/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopictopic_qc_correlation_annotatednf"&gt;&lt;code&gt;nf/modules/a_pycistopic/topic_qc_correlation_annotated.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Envuelve &lt;code&gt;analyze_topic_qc_correlation.py&lt;/code&gt; — un script que el propio repo
+original describe como &amp;ldquo;one-off analysis, not part of run_pipeline.sh&amp;rdquo;: la
+referencia real en &lt;code&gt;4_figures/2026-08-21/A_pyCisTopic/topic_qc_correlation/&lt;/code&gt;
+se generó corriéndolo a mano vía &lt;code&gt;job_sub_topic_qc_correlation.sh&lt;/code&gt; (un
+&lt;code&gt;bsub&lt;/code&gt; directo), nunca pasó por el pipeline principal. Este módulo lo agrega
+a Nextflow por primera vez — pero solo para la rama &amp;ldquo;solo anotadas&amp;rdquo;, no
+para la original.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/b-general/nextflow/export-seurat-data/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/b-general/nextflow/export-seurat-data/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesb_generalexport_seurat_datanf"&gt;&lt;code&gt;nf/modules/b_general/export_seurat_data.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Envuelve &lt;code&gt;B_general/1_R/export_seurat_data.r&lt;/code&gt; — el primer paso real de todo
+el pipeline (exporta peaks/barcodes/metadata con rutas de fragmentos a
+partir del objeto Seurat integrado).&lt;/p&gt;
+&lt;h2 id="el-proceso-completo"&gt;El proceso completo&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-groovy" data-lang="groovy"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;process&lt;/span&gt; &lt;span class="n"&gt;EXPORT_SEURAT_DATA&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;scatac_full_env&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;label&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;light_job&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;publishDir&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;${params.project_root}/2_data/${params.data_date}/B_general&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;mode:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;copy&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;output:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;seurat_metadata_with_fragments.tsv&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;emit:&lt;/span&gt; &lt;span class="n"&gt;cell_data&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;sample_fragment_mapping.tsv&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;emit:&lt;/span&gt; &lt;span class="n"&gt;fragment_mapping&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;integrated_peaks.bed&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;script:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; Rscript ${params.project_root}/1_scripts/B_general/1_R/export_seurat_data.r \\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; ${params.seurat_object_path} .
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;stub:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; touch seurat_metadata_with_fragments.tsv sample_fragment_mapping.tsv integrated_peaks.bed
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="pieza-por-pieza"&gt;Pieza por pieza&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;label 'scatac_full_env'&lt;/code&gt; / &lt;code&gt;label 'light_job'&lt;/code&gt;&lt;/strong&gt; — un [[label]] es una
+etiqueta arbitraria (cualquier nombre) que después &lt;code&gt;nextflow.config&lt;/code&gt;
+usa para decidir qué conda env activar y qué recursos de LSF pedir
+(ver [[Nextflow Config]]). Un proceso puede tener varios labels a la vez —
+aquí uno dice &amp;ldquo;qué entorno&amp;rdquo; y otro &amp;ldquo;cuántos recursos&amp;rdquo;, cosas independientes.&lt;/li&gt;
+&lt;li&gt;[[publishDir]] — copia (o [[symlink]]) los outputs declarados hacia una
+ruta legible por humanos, además de donde Nextflow los cachea internamente
+(&lt;code&gt;work/&lt;/code&gt;). Es la única razón por la que &lt;code&gt;2_data/&amp;lt;fecha&amp;gt;/B_general/&lt;/code&gt; sigue
+teniendo la misma pinta de siempre — Nextflow por dentro guarda todo en
+&lt;code&gt;work/xx/yyyy.../&lt;/code&gt;, con nombres de hash, no en esa ruta.&lt;/li&gt;
+&lt;li&gt;[[output]]: con [[emit]]:** — declara qué archivos produce el proceso.
+&lt;code&gt;emit: cell_data&lt;/code&gt; le pone un nombre a ese output específico, para poder
+referenciarlo después como &lt;code&gt;EXPORT_SEURAT_DATA.out.cell_data&lt;/code&gt; desde el
+&lt;code&gt;workflow&lt;/code&gt; (ver [[Workflow &amp;amp; Main]]). El tercer output
+(&lt;code&gt;integrated_peaks.bed&lt;/code&gt;) no tiene &lt;code&gt;emit:&lt;/code&gt; porque nada de este piloto lo
+vuelve a leer — sigue publicado, pero nadie lo necesita como input.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Sin &lt;code&gt;input:&lt;/code&gt;&lt;/strong&gt; — es el ÚNICO módulo de este piloto sin dependencias de
+otro proceso. En vez de recibir un canal, lee &lt;code&gt;params.seurat_object_path&lt;/code&gt;
+directo (un parámetro global de &lt;code&gt;nextflow.config&lt;/code&gt;, no un archivo que pasó
+por otro proceso).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;script:&lt;/code&gt;&lt;/strong&gt; — el bloque real que se ejecuta. Es &lt;em&gt;exactamente&lt;/em&gt;
+la misma llamada a &lt;code&gt;Rscript&lt;/code&gt; que ya se hacia previamente — Nextflow no reescribe
+la lógica, solo la orquesta — fue un principio de diseño explícito, no
+casualidad: migrar sin tocar ni un script.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;stub:&lt;/code&gt;&lt;/strong&gt; — bloque alternativo, ver [[Stub Run]].&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="por-qué-el--al-final-del-rscript--call"&gt;Por qué el &lt;code&gt;.&lt;/code&gt; al final del &lt;code&gt;Rscript ...&lt;/code&gt; call&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;export_seurat_data.r&lt;/code&gt; acepta &lt;code&gt;[seurat_object_path] [out_dir]&lt;/code&gt; como
+argumentos posicionales (ver el propio script). El &lt;code&gt;.&lt;/code&gt; le dice &amp;ldquo;escribe aquí
+mismo, en el directorio de trabajo de este proceso&amp;rdquo; — eso es lo que
+&lt;code&gt;publishDir&lt;/code&gt;/&lt;code&gt;output:&lt;/code&gt; después recogen.&lt;/p&gt;</description></item><item><title>-stub-run</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/-stub-run/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/-stub-run/</guid><description>&lt;p&gt;Cuando no quieres que el pipeline corra con el objeto completo como gallina sin cabeza y después pierdas una semana de tiempo porque ay este comando no admite que la columna lleve un puntito, entonces usas un stub-run para ejecutar una workflow de a mentis, o sea primero verificas que las vías del tren estén bien antes de que un tren las empiece a recorrer.&lt;/p&gt;</description></item><item><title>-work-dir</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/-work-dir/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/-work-dir/</guid><description>&lt;p&gt;Al principio yo hacía todo en una sola carpeta, y después terminaba con un relajo de archivos, outputs, inputs, figuras, todo en un solo lugar. La gente sensata de Nextflow ya sabía que esto está mal entonces para cada run del módulo se crea una carpeta llamada work que está separada por hashes, o el nombre único del workflow.&lt;/p&gt;</description></item><item><title>bsub</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/bash/bsub/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/bash/bsub/</guid><description>&lt;p&gt;El comando &lt;code&gt;bsub&lt;/code&gt; es un componente clave del &lt;a href="https://www.ibm.com/docs/sk/spectrum-lsf/10.1.0"&gt;IBM Spectrum&lt;/a&gt; LSF (Load Sharing Facility) es usado para subir/mandar jobs a ejecución en un clúster de alto rendimiento. En el caso de este proyecto el &lt;code&gt;farm22&lt;/code&gt; del Wellcome Sanger Institute.&lt;/p&gt;
+&lt;h2 id="uso-básico"&gt;Uso básico&lt;/h2&gt;
+&lt;p&gt;Para mandar un job usando &lt;code&gt;bsub&lt;/code&gt; puedes hacerlo directamente de la terminal o dentro de un script de bash.&lt;/p&gt;</description></item><item><title>collect()</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/collect/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/collect/</guid><description>&lt;p&gt;Hay veces que aunque paralelicemos procesos, necesitamos que todos terminen, como en los módulos que implican un merge, entonces para eso nos sirve &lt;code&gt;collect()&lt;/code&gt;, esperamos que todos terminen, y seguimos con el siguiente comando.&lt;/p&gt;
+&lt;h2 id="cómo-se-ve"&gt;Cómo se ve&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-groovy" data-lang="groovy"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;QC_RUN_ONE_SAMPLE&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;qc_samples&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="n"&gt;QC_GENERATE_COMMANDS&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;state&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;first&lt;/span&gt;&lt;span class="o"&gt;())&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;MERGE_QC_STATES&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;QC_RUN_ONE_SAMPLE&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;state&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;collect&lt;/span&gt;&lt;span class="o"&gt;())&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="qué-hace-exactamente"&gt;Qué hace exactamente&lt;/h2&gt;
+&lt;p&gt;Toma los N items que fueron saliendo del canal y los junta en &lt;strong&gt;un solo item&lt;/strong&gt;
+que es la lista de todos. Como el canal pasa a tener un item, el proceso que lo
+recibe corre &lt;strong&gt;una sola vez&lt;/strong&gt;, y le llegan las 20 carpetas juntas.&lt;/p&gt;</description></item><item><title>Comodines (*)</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/bash/comodines/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/bash/comodines/</guid><description>&lt;p&gt;Los &lt;code&gt;comodines&lt;/code&gt; en Bash son caracteres especiales que sirven para representar uno o más caracteres al buscar o seleccionar nombres de archivos y directorios. El proceso en el que Bash interpreta estos símbolos y los sustituye por los nombres reales se le llama globbing.&lt;/p&gt;</description></item><item><title>cp</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/bash/cp/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/bash/cp/</guid><description>&lt;p&gt;El comando &lt;code&gt;cp&lt;/code&gt; (ja) en bash es usado para copiar archivos y directorios de una ubicación a otra (copiar, si quisieras mover usas &lt;code&gt;mv&lt;/code&gt;, que también sirve para renombrar). Es uno de los principales comandos que requiere especificar el &lt;strong&gt;archivo fuente&lt;/strong&gt; y su &lt;strong&gt;destino&lt;/strong&gt;.&lt;/p&gt;</description></item><item><title>emit:</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/emit/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/emit/</guid><description>&lt;p&gt;Nextflow recibe un archivo bajo su nombre clave, pero para no confundirse le pasa un nombre que puede ser el mismo u otro a bash, esto para ser más organizados con los inputs y outputs del workflow del pipeline.&lt;/p&gt;
+&lt;h2 id="ojo--un-ajuste-a-lo-de-arriba"&gt;Ojo — un ajuste a lo de arriba&lt;/h2&gt;
+&lt;p&gt;El nombre de &lt;code&gt;emit:&lt;/code&gt; &lt;strong&gt;no viaja a bash&lt;/strong&gt;. Bash nunca lo ve. Es un nombre que
+existe solo del lado de Nextflow, para que el &lt;code&gt;workflow&lt;/code&gt; pueda referirse a esa
+salida después. La idea de fondo sí es la tuya: sirve para no confundirse
+cuando un proceso saca varias cosas.&lt;/p&gt;</description></item><item><title>first()</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/first/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/first/</guid><description>&lt;!-- TODO (Jorge): tu párrafo de entrada, como en las demás notas. --&gt;
+&lt;h2 id="el-problema-que-resuelve"&gt;El problema que resuelve&lt;/h2&gt;
+&lt;p&gt;Un canal normal es una &lt;strong&gt;cola&lt;/strong&gt;: cada item se consume una sola vez y se gasta.
+Eso está bien cuando cada item dispara su propia ejecución, pero rompe cuando
+un proceso que corre UNA vez tiene que alimentar a N ejecuciones paralelas.&lt;/p&gt;</description></item><item><title>input:</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/input/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/input/</guid><description>&lt;p&gt;Es la entrada del pipeline, la información con la que va a jugar, Nextflow es muy bueno para manejar esta información, simplemente lo lee de su archivo de configuración y usa esa información para ejecutar algún programa con parámetros bajo un nombre designado.&lt;/p&gt;</description></item><item><title>label</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/label/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/label/</guid><description>&lt;p&gt;Es el nombre que le ponemos al trabajo, puede ser el que sea. Como buena práctica de programación NUNCA DE LOS NUNCAS pongas &amp;ldquo;Final&amp;rdquo; nunca vas a acabar, todo es imperfecto en esta vida, lo que sucede muchas veces es que te quedas sin tiempo y lo entregas así como está.&lt;/p&gt;</description></item><item><title>mkdir</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/bash/mkdir/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/bash/mkdir/</guid><description>&lt;p&gt;El comando &lt;code&gt;mkdir&lt;/code&gt; (Make Directory) se usa en la terminal para crear una o varias carpetas/folders/directorios como le quieras llamar.&lt;/p&gt;
+&lt;h2 id="sintaxis-básica"&gt;Sintaxis básica&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;mkdir &lt;span class="o"&gt;[&lt;/span&gt;opción&lt;span class="o"&gt;]&lt;/span&gt; nombre_del_directorio
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="usos-comunes"&gt;Usos comunes&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Crear una carpeta:&lt;/strong&gt; Escribe &lt;code&gt;mkdir carpeta_nueva&lt;/code&gt; para generar una carpeta en tu ubicación actual.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Crear varias carpetas:&lt;/strong&gt; Separa los nombres con espacios, por ejemplo: &lt;code&gt;mkdir carpeta1 carpeta2 carpeta3&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Carpetas anidadas:&lt;/strong&gt; Usa la opción &lt;code&gt;-p&lt;/code&gt; para crear una ruta completa con subcarpetas que aún no existen, como &lt;code&gt;mkdir -p padre/hijo/nieto&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="ver-también"&gt;Ver también&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;[[touch]] — lo mismo pero para archivos vacíos.&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>output:</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/output/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/output/</guid><description>&lt;p&gt;Es la salida que espera Nextflow para pasársela al siguiente proceso, o simplemente guardarla en su carpeta. No se me ocurre nada chistoso aquí.&lt;/p&gt;
+&lt;h2 id="cómo-se-ve"&gt;Cómo se ve&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-groovy" data-lang="groovy"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nl"&gt;output:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;seurat_metadata_with_fragments.tsv&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;emit:&lt;/span&gt; &lt;span class="n"&gt;cell_data&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;sample_fragment_mapping.tsv&amp;#34;&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;emit:&lt;/span&gt; &lt;span class="n"&gt;fragment_mapping&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;integrated_peaks.bed&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="lo-que-hay-que-tener-en-cuenta"&gt;Lo que hay que tener en cuenta&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Es una declaración, no una acción.&lt;/strong&gt; El &lt;code&gt;script&lt;/code&gt; crea los archivos; el
+&lt;code&gt;output:&lt;/code&gt; solo dice cuáles de todos los que quedaron en el [[-work-dir]]
+le importan a Nextflow. Lo que no declares, existe en el work dir pero
+nadie lo puede usar después ni se publica.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Las rutas son relativas al work dir de la tarea&lt;/strong&gt;, nunca absolutas. Por
+eso ves &lt;code&gt;path &amp;quot;state&amp;quot;&lt;/code&gt; y no &lt;code&gt;path &amp;quot;/lustre/.../state&amp;quot;&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Si el archivo no aparece, la tarea falla.&lt;/strong&gt; Nextflow revisa al terminar
+que todo lo declarado exista; si el script no lo generó, marca error
+aunque el comando haya devuelto 0. Por eso el [[stub]] tiene que hacer
+[[touch]] de exactamente los mismos nombres.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Sin [[emit]] igual funciona&lt;/strong&gt;, solo que te toca referirlo por posición
+(&lt;code&gt;PROCESO.out[0]&lt;/code&gt;) en vez de por nombre. &lt;code&gt;integrated_peaks.bed&lt;/code&gt; arriba no
+tiene &lt;code&gt;emit:&lt;/code&gt; porque nadie lo consume — solo se publica.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="ver-también"&gt;Ver también&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;[[input]] — el otro lado.&lt;/li&gt;
+&lt;li&gt;[[emit]] — ponerle nombre a cada salida.&lt;/li&gt;
+&lt;li&gt;[[publishDir]] — sacar una copia fuera del work dir.&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>publishDir</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/publishdir/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/publishdir/</guid><description>&lt;p&gt;Como Nextflow sí tiene muy bien sus carpetas organizadas para que no se anden molestando y el cache sea eficaz pues sabemos que nuestro lenguaje o manera de entender el mundo no es muy eficaz, pero igualmente necesitamos interpretabilidad, eso incluye el motivo por el que estoy haciendo esto, o sea lo más fácil era confiar ciegamente en la IA pero no, me pica la curiosidad, aunque eso signifique desperdiciar mi sábado. Entonces le podemos indicar a un módulo que su output, además de sacarlo en su [[-work-dir]] también nos lo ponga en una carpeta que nosotros elijamos.&lt;/p&gt;</description></item><item><title>script:</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/script/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/script/</guid><description>&lt;p&gt;Es básicamente lo que va a ejecutar Nextflow en una terminal de bash como por ejemplo&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-groovy" data-lang="groovy"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nl"&gt;script:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt;cat ${Message}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt;&amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;y ya, Nextflow va a hacer esa tarea, creo que es de las partes más fáciles de entender de Nextflow.&lt;/p&gt;</description></item><item><title>state</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/state/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/state/</guid><description>&lt;p&gt;Es la carpeta donde se va a ejecutar el módulo de Nextflow.&lt;/p&gt;
+&lt;h2 id="ojo--un-ajuste-a-lo-de-arriba"&gt;Ojo — un ajuste a lo de arriba&lt;/h2&gt;
+&lt;p&gt;La carpeta donde &lt;strong&gt;se ejecuta&lt;/strong&gt; el módulo es el [[-work-dir]] (el hash), eso lo
+decide Nextflow solo. &lt;code&gt;state&lt;/code&gt; es otra cosa, y no es sintaxis de Nextflow: es
+una convención &lt;strong&gt;nuestra&lt;/strong&gt;, de este pipeline. Es la carpeta de datos acumulados
+que va viajando de un proceso al siguiente.&lt;/p&gt;</description></item><item><title>state_in</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/state_in/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/state_in/</guid><description>&lt;p&gt;No me acuerdo qué significaba esto, creo que era el nombre interno de algo xd.&lt;/p&gt;
+&lt;h2 id="era-eso-sí"&gt;Era eso, sí&lt;/h2&gt;
+&lt;p&gt;Es el nombre con el que se monta el [[state]] que &lt;strong&gt;llega&lt;/strong&gt; del proceso
+anterior:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-groovy" data-lang="groovy"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nl"&gt;input:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="n"&gt;state_in&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nl"&gt;stageAs:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;state_in&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="por-qué-no-se-llama-state-a-secas"&gt;Por qué no se llama &lt;code&gt;state&lt;/code&gt; a secas&lt;/h2&gt;
+&lt;p&gt;Porque el proceso va a crear su propia carpeta &lt;code&gt;state&lt;/code&gt; como [[output]], y si
+la de entrada también se llamara &lt;code&gt;state&lt;/code&gt;, chocarían dentro del mismo
+[[-work-dir]]. El &lt;code&gt;stageAs: 'state_in'&lt;/code&gt; fuerza el nombre de la que entra, y
+así queda:&lt;/p&gt;</description></item><item><title>stub:</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/stub/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/nextflow/stub/</guid><description>&lt;p&gt;Igual que [[-stub-run]], es la parte en donde escribes lo que se va a ejecutar si activas el flag &lt;code&gt;-stub-run&lt;/code&gt;, es como [[script]] pero falso.&lt;/p&gt;
+&lt;h2 id="cómo-se-ve"&gt;Cómo se ve&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-groovy" data-lang="groovy"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;process&lt;/span&gt; &lt;span class="n"&gt;CONSENSUS_PEAK_CALLING&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;script:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; cp -rL state_in state
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; python .../02_consensus_peak_calling.py --out-dir state ...
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nl"&gt;stub:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;&amp;#34;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; cp -rL state_in state
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; mkdir -p state/consensus_peak_calling
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; touch state/consensus_peak_calling/consensus_regions.bed
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="la-regla-para-escribirlo"&gt;La regla para escribirlo&lt;/h2&gt;
+&lt;p&gt;El stub tiene que crear &lt;strong&gt;exactamente los mismos nombres&lt;/strong&gt; que declara el
+[[output]] del proceso, y nada más. Si el output dice
+&lt;code&gt;path &amp;quot;state&amp;quot;, emit: state&lt;/code&gt;, el stub tiene que dejar una carpeta &lt;code&gt;state&lt;/code&gt;
+ahí parada. No importa que los archivos estén vacíos: lo único que se está
+probando es que la tubería conecte, no que los datos sirvan.&lt;/p&gt;</description></item><item><title>symlink</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/bash/symlink/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/bash/symlink/</guid><description>&lt;p&gt;Un &lt;code&gt;symlink&lt;/code&gt; (o enlace simbólico) es algo muy usado en este pipeline por Nextflow. Es un archivo especial que apunta a otro archivo o directorio/carpeta/folder en la computadora, que funciona como un acceso directo, básicamente cuando copiabas juegos del ciber, o quizás ya no se haga eso porque ya no existen los cibers, y la mayoría de gente ya tiene sus computadoras, pero en mis tiempos luego copiabas juegos que en realidad solo eran accesos directos y si tienes un acceso directo pero no el contenido al que quieres acceder, pues, no sirve de nada verdad.&lt;/p&gt;</description></item><item><title>touch</title><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/bash/touch/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/sintaxis/bash/touch/</guid><description>&lt;p&gt;El comando &lt;code&gt;touch&lt;/code&gt; en Bash se usa principalmente para crear archivos vacíos nuevos y para actualizar la fecha y hora de acceso o modificación de archivos existentes.&lt;/p&gt;
+&lt;h2 id="sintaxis-básica"&gt;Sintaxis básica&lt;/h2&gt;
+&lt;p&gt;La estructura del comando es bastante sencilla, solo es escribir &lt;code&gt;touch&lt;/code&gt; y después el nombre del archivo:&lt;/p&gt;</description></item></channel></rss>

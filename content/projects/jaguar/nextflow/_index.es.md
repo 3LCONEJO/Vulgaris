@@ -3,6 +3,7 @@ title: "La migración a Nextflow"
 weight: 5
 eyebrow: "transversal"
 estado: "en curso"
+color: 4
 ---
 
 Notas sobre la migración en sí, no sobre ninguna rama en particular: qué es DSL2, cómo

@@ -1,6 +1,218 @@
-<!doctype html><html lang=es><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>DARS GENE ACTIVITY · Vulgaris</title><meta name=description content=" nf/modules/a_pycistopic/dars_gene_activity.nf Envuelve 09_dars_gene_activity.py — el último paso de la rama (region sets, DARs, gene activity + DAGs). Mismo …"><link rel=icon type=image/svg+xml href=/Vulgaris/img/favicon.svg><link rel=canonical href=https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/dars-gene-activity/><meta property="og:title" content><meta property="og:description" content="Vulgaris — un portafolio hecho de documentación, entre el código y la biología. El nombre viene de Phaseolus vulgaris, el frijol común."><meta property="og:type" content="article"><meta property="og:url" content="https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/dars-gene-activity/"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Karla:wght@400;500;700&display=swap" rel=stylesheet><link rel=stylesheet href="/Vulgaris/css/style.css?v=1789340161"><link rel=stylesheet href="/Vulgaris/css/syntax.css?v=1789340161"><link rel=stylesheet href="/Vulgaris/css/guide.css?v=1789340161"></head><body><a class=skip-link href=#main>Saltar al contenido</a><header class=site-header><div class=wrap><a class=brand href=/Vulgaris/es/><img src=/Vulgaris/img/favicon.svg alt="Vulgaris logo" class=logo-img>
+<!doctype html><html lang=es><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>DARS GENE ACTIVITY · Vulgaris</title><meta name=description content=" nf/modules/a_pycistopic/dars_gene_activity.nf Envuelve 09_dars_gene_activity.py — el último paso de la rama (region sets, DARs, gene activity + DAGs). Mismo …"><link rel=icon type=image/svg+xml href=/Vulgaris/img/favicon.svg><link rel=canonical href=https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/dars-gene-activity/><meta property="og:title" content><meta property="og:description" content="Vulgaris — un portafolio hecho de documentación, entre el código y la biología. El nombre viene de Phaseolus vulgaris, el frijol común."><meta property="og:type" content="article"><meta property="og:url" content="https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/dars-gene-activity/"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Karla:wght@400;500;700&display=swap" rel=stylesheet><link rel=stylesheet href="/Vulgaris/css/style.css?v=1789344413"><link rel=stylesheet href="/Vulgaris/css/syntax.css?v=1789344413"><link rel=stylesheet href="/Vulgaris/css/guide.css?v=1789344413"><link rel=stylesheet href="/Vulgaris/css/toc-drum.css?v=1789344413"></head><body><a class=skip-link href=#main>Saltar al contenido</a><header class=site-header><div class=wrap><a class=brand href=/Vulgaris/es/><img src=/Vulgaris/img/favicon.svg alt="Vulgaris logo" class=logo-img>
 <span class=brand-text>Vulgaris</span></a><nav aria-label=Primary><ul class=main-nav><li><a href=/Vulgaris/es/projects/jaguar/>~/guia</a></li><li><a href=/Vulgaris/es/projects/>~/proyectos</a></li><li><a href=/Vulgaris/cv/>~/cv</a></li><li><a href=/Vulgaris/blog/>~/blog</a></li><li><a href=/Vulgaris/es/tags/>~/etiquetas</a></li></ul></nav><nav class=lang-switch aria-label=Language><a href=/Vulgaris/ class=is-missing title="no disponible en este idioma — ir a su portada">en</a>
-<a href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/dars-gene-activity/ aria-current=true>es</a></nav></div></header><main id=main><div class="guide-layout wrap"><nav class=guide-nav aria-label="Guide navigation"><a class=guide-nav-root href=/Vulgaris/es/projects/jaguar/><span class=prompt>~/</span>JAGUAR-GRN</a><div class="guide-nav-group guide-nav-d1"><a class=guide-nav-head href=/Vulgaris/es/projects/jaguar/nextflow/>La migración a Nextflow<span class="guide-nav-estado guide-nav-estado--en-curso"></span></a><ul><li><a href=/Vulgaris/es/projects/jaguar/nextflow/nextflow-config/>Nextflow Config</a></li><li><a href=/Vulgaris/es/projects/jaguar/nextflow/overview/>OVERVIEW</a></li><li><a href=/Vulgaris/es/projects/jaguar/nextflow/publishdir-replace-not-merge/>Publishdir Replace Not Merge</a></li><li><a href=/Vulgaris/es/projects/jaguar/nextflow/stub-run/>Stub Run</a></li><li><a href=/Vulgaris/es/projects/jaguar/nextflow/workflow--main/>Workflow & Main</a></li></ul></div><div class="guide-nav-group guide-nav-d1"><a class=guide-nav-head href=/Vulgaris/es/projects/jaguar/a-pycistopic/>A — pyCisTopic<span class="guide-nav-estado guide-nav-estado--migrada-a-nextflow"></span></a><div class="guide-nav-group guide-nav-d2"><a class=guide-nav-head href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/>Nextflow</a><ul><li><a href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/annotated-destination-modules/>ANNOTATED DESTINATION MODULES</a></li><li><a href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/binarization-topic/>BINARIZATION TOPIC</a></li><li><a href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/build-cistopic-objects/>BUILD CISTOPIC OBJECTS</a></li><li><a href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/consensus-peak-calling/>CONSENSUS PEAK CALLING</a></li><li><a class=is-current href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/dars-gene-activity/>DARS GENE ACTIVITY</a></li><li><a href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/filter-annotated-cells/>FILTER ANNOTATED CELLS</a></li><li><a href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/fit-one-topic-annotated/>FIT ONE TOPIC ANNOTATED</a></li><li><a href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-and-model/>MERGE AND MODEL</a></li><li><a href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-cistopic-states/>MERGE CISTOPIC STATES</a></li><li><a href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-qc-states/>MERGE QC STATES</a></li><li><a href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/model-selection-umap/>MODEL SELECTION UMAP</a></li><li><a href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/pseudobulk-export/>PSEUDOBULK EXPORT</a></li><li><a href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-generate-commands/>QC GENERATE COMMANDS</a></li><li><a href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-plots-thresholds/>QC PLOTS THRESHOLDS</a></li><li><a href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-run-one-sample/>QC RUN ONE SAMPLE</a></li><li><a href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/topic-qc-correlation-annotated/>TOPIC QC CORRELATION ANNOTATED</a></li></ul></div><div class="guide-nav-group guide-nav-d2"><a class=guide-nav-head href=/Vulgaris/es/projects/jaguar/a-pycistopic/codigo/>Código</a></div></div><div class="guide-nav-group guide-nav-d1"><a class=guide-nav-head href=/Vulgaris/es/projects/jaguar/b-general/>B — General<span class="guide-nav-estado guide-nav-estado--parcialmente-migrada"></span></a><div class="guide-nav-group guide-nav-d2"><a class=guide-nav-head href=/Vulgaris/es/projects/jaguar/b-general/nextflow/>Nextflow</a><ul><li><a href=/Vulgaris/es/projects/jaguar/b-general/nextflow/export-seurat-data/>EXPORT SEURAT DATA</a></li></ul></div><div class="guide-nav-group guide-nav-d2"><a class=guide-nav-head href=/Vulgaris/es/projects/jaguar/b-general/codigo/>Código</a><ul><li><a href=/Vulgaris/es/projects/jaguar/b-general/codigo/export_seurat_data.r/>export_seurat_data.r</a></li></ul></div></div><div class="guide-nav-group guide-nav-d1"><a class=guide-nav-head href=/Vulgaris/es/projects/jaguar/c-cicero/>C — Cicero<span class="guide-nav-estado guide-nav-estado--corre-en-bash-sin-migrar"></span></a><div class="guide-nav-group guide-nav-d2"><a class=guide-nav-head href=/Vulgaris/es/projects/jaguar/c-cicero/codigo/>Código</a><ul><li><a href=/Vulgaris/es/projects/jaguar/c-cicero/codigo/00_enfoque_cicero/>Enfoque: Cicero y co-accesibilidad</a></li><li><a href=/Vulgaris/es/projects/jaguar/c-cicero/codigo/01_create_cicero_cds.r/>01_create_cicero_cds.r</a></li><li><a href=/Vulgaris/es/projects/jaguar/c-cicero/codigo/02_testingccansandconns.r/>02_TestingCCANSandCONNS.R</a></li><li><a href=/Vulgaris/es/projects/jaguar/c-cicero/codigo/03_assign_ccan_genes.r/>03_assign_ccan_genes.r</a></li></ul></div></div><div class="guide-nav-group guide-nav-d1"><a class=guide-nav-head href=/Vulgaris/es/projects/jaguar/sintaxis/>Sintaxis</a><div class="guide-nav-group guide-nav-d2"><a class=guide-nav-head href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/>Nextflow</a><ul><li><a href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/-stub-run/>-stub-run</a></li><li><a href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/-work-dir/>-work-dir</a></li><li><a href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/collect/>collect()</a></li><li><a href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/emit/>emit:</a></li><li><a href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/first/>first()</a></li><li><a href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/input/>input:</a></li><li><a href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/label/>label</a></li><li><a href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/output/>output:</a></li><li><a href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/publishdir/>publishDir</a></li><li><a href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/script/>script:</a></li><li><a href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/state/>state</a></li><li><a href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/state_in/>state_in</a></li><li><a href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/stub/>stub:</a></li></ul></div><div class="guide-nav-group guide-nav-d2"><a class=guide-nav-head href=/Vulgaris/es/projects/jaguar/sintaxis/bash/>Bash</a><ul><li><a href=/Vulgaris/es/projects/jaguar/sintaxis/bash/bsub/>bsub</a></li><li><a href=/Vulgaris/es/projects/jaguar/sintaxis/bash/comodines/>Comodines (*)</a></li><li><a href=/Vulgaris/es/projects/jaguar/sintaxis/bash/cp/>cp</a></li><li><a href=/Vulgaris/es/projects/jaguar/sintaxis/bash/mkdir/>mkdir</a></li><li><a href=/Vulgaris/es/projects/jaguar/sintaxis/bash/symlink/>symlink</a></li><li><a href=/Vulgaris/es/projects/jaguar/sintaxis/bash/touch/>touch</a></li></ul></div></div><div class="guide-nav-group guide-nav-d1"><a class=guide-nav-head href=/Vulgaris/es/projects/jaguar/d-integrate/>D — Integración<span class="guide-nav-estado guide-nav-estado--consenso-probado-visualizador-abierto"></span></a><div class="guide-nav-group guide-nav-d2"><a class=guide-nav-head href=/Vulgaris/es/projects/jaguar/d-integrate/codigo/>Código</a></div></div><div class="guide-nav-group guide-nav-d1"><a class=guide-nav-head href=/Vulgaris/es/projects/jaguar/e-cistarget/>E — cisTarget<span class="guide-nav-estado guide-nav-estado--abierto"></span></a></div><div class="guide-nav-group guide-nav-d1"><a class=guide-nav-head href=/Vulgaris/es/projects/jaguar/f-scenicp/>F — SCENIC+<span class="guide-nav-estado guide-nav-estado--abierto"></span></a></div><div class="guide-nav-group guide-nav-d1"><a class=guide-nav-head href=/Vulgaris/es/projects/jaguar/g-scglue/>G — scGLUE<span class="guide-nav-estado guide-nav-estado--implementada-y-probada"></span></a><div class="guide-nav-group guide-nav-d2"><a class=guide-nav-head href=/Vulgaris/es/projects/jaguar/g-scglue/codigo/>Código</a></div></div></nav><article class=guide-main><header class=note-header><p class=eyebrow><a href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/>Nextflow</a> /
+<a href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/dars-gene-activity/ aria-current=true>es</a></nav></div></header><main id=main><div class="guide-layout wrap"><div class=tocd data-tocd><div class=tocd-railcol><button class=tocd-toggle type=button aria-label="Ocultar índice" title="Ocultar índice">
+<svg width="17" height="17" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="2.5" y="3.5" width="15" height="13" rx="2.5" stroke="currentColor" stroke-width="1.4"/><rect class="tocd-toggle-fill" x="2.5" y="3.5" width="6" height="13" rx="2.5" fill="currentColor"/></svg></button></div><nav class=tocd-panel aria-label="Índice del vault"><div class=tocd-head><a class=tocd-root href=/Vulgaris/es/projects/jaguar/><span class=prompt>~/</span>JAGUAR-GRN</a>
+<span class=tocd-progress aria-hidden=true>01/01</span></div><div class=tocd-window><div class=tocd-stage><div class=tocd-drum><a class=tocd-row href=/Vulgaris/es/projects/jaguar/nextflow/ data-depth=0 data-branch=0 data-estado="en curso" data-body="Notas sobre la migración en sí, no sobre ninguna rama en particular: qué es DSL2, cómo está armado nextflow.config, cómo se validó todo sin gastar …" style=--c:var(--tocd-c4)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>La migración a Nextflow</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/nextflow/overview/ data-depth=1 data-branch=0 data-estado data-body="Esta carpeta documenta, archivo por archivo, el piloto de migración a Nextflow de la rama A_pyCisTopic (ahí está el contexto de por qué se hizo y qué …" style=--c:var(--tocd-c4)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>OVERVIEW</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/nextflow/workflow--main/ data-depth=1 data-branch=0 data-estado data-body=" main.nf nf/workflows/pycistopic.nf Donde se conectan los procesos entre sí. Si ya se leyeron los módulos anteriores, esto es lo último que falta para …" style=--c:var(--tocd-c4)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>Workflow & Main</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/nextflow/nextflow-config/ data-depth=1 data-branch=0 data-estado data-body=" nextflow.config La configuración global — separada del código de los procesos a propósito (ver OVERVIEW). Se carga automáticamente por su nombre: …" style=--c:var(--tocd-c4)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>Nextflow Config</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/nextflow/stub-run/ data-depth=1 data-branch=0 data-estado data-body="-stub-run — cómo se validó este pipeline sin correr cómputo real.
+El problema que resuelve Correr el pipeline de producción completo (MACS3, modelado …" style=--c:var(--tocd-c4)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>Stub Run</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/nextflow/publishdir-replace-not-merge/ data-depth=1 data-branch=0 data-estado data-body="Hallazgo real [2026-09-11]: publishDir a un destino compartido REEMPLAZA, no fusiona.
+El bug más serio encontrado en todo este piloto — no por lo …" style=--c:var(--tocd-c4)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>Publishdir Replace Not Merge</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/a-pycistopic/ data-depth=0 data-branch=1 data-estado="migrada a nextflow" data-body="Primera de las tres rutas hacia la red regulatoria. Modela la accesibilidad de la cromatina como tópicos LDA (Mallet): cada tópico es un conjunto de …" style=--c:var(--tocd-c0)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>A — pyCisTopic</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/ data-depth=1 data-branch=1 data-estado data-body="Una nota por módulo .nf de esta rama: qué proceso envuelve, qué entra, qué sale y por qué se decidió así. Pensadas para leerse al lado del código …" style=--c:var(--tocd-c1)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>Nextflow</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/pseudobulk-export/ data-depth=2 data-branch=1 data-estado data-body=" nf/modules/a_pycistopic/pseudobulk_export.nf Envuelve 01_pseudobulk_export.py — el primer paso de la rama A_pyCisTopic propiamente dicha. Es el …" style=--c:var(--tocd-c1)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>PSEUDOBULK EXPORT</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/consensus-peak-calling/ data-depth=2 data-branch=1 data-estado data-body=" nf/modules/a_pycistopic/consensus_peak_calling.nf Envuelve 02_consensus_peak_calling.py. Primer módulo que RECIBE un state de un paso anterior …" style=--c:var(--tocd-c1)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>CONSENSUS PEAK CALLING</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-generate-commands/ data-depth=2 data-branch=1 data-estado data-body=" nf/modules/a_pycistopic/qc_generate_commands.nf Envuelve 03_qc_generate_commands.py — solo genera el archivo de comandos QC (uno por muestra) y deja …" style=--c:var(--tocd-c1)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>QC GENERATE COMMANDS</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-run-one-sample/ data-depth=2 data-branch=1 data-estado data-body=" nf/modules/a_pycistopic/qc_run_one_sample.nf process QC_RUN_ONE_SAMPLE { label &amp;#39;pycistopic_env&amp;#39; tag &amp;#34;${sample_id}&amp;#34; publishDir …" style=--c:var(--tocd-c1)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>QC RUN ONE SAMPLE</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-qc-states/ data-depth=2 data-branch=1 data-estado data-body=" nf/modules/a_pycistopic/merge_qc_states.nf Junta los N state que salen de las corridas paralelas de QC_RUN_ONE_SAMPLE (una por muestra) en UN solo …" style=--c:var(--tocd-c1)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>MERGE QC STATES</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/qc-plots-thresholds/ data-depth=2 data-branch=1 data-estado data-body=" nf/modules/a_pycistopic/qc_plots_thresholds.nf Envuelve 04_qc_plots_thresholds.py (plots de QC + umbrales automáticos de barcode). Mismo patrón …" style=--c:var(--tocd-c1)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>QC PLOTS THRESHOLDS</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/build-cistopic-objects/ data-depth=2 data-branch=1 data-estado data-body=" nf/modules/a_pycistopic/build_cistopic_objects.nf Envuelve 05_build_cistopic_objects.py — el paso largo y caro del pipeline (cisTopic objects por …" style=--c:var(--tocd-c1)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>BUILD CISTOPIC OBJECTS</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-cistopic-states/ data-depth=2 data-branch=1 data-estado data-body=" nf/modules/a_pycistopic/merge_cistopic_states.nf Nuevo [2026-09-01], agregado junto con la paralelización de BUILD CISTOPIC OBJECTS. Es el …" style=--c:var(--tocd-c1)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>MERGE CISTOPIC STATES</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-and-model/ data-depth=2 data-branch=1 data-estado data-body=" merge_only.nf fit_one_topic.nf merge_topic_states.nf combine_models.nf Estos 4 módulos son lo que hoy hace el trabajo del viejo merge_and_model.nf …" style=--c:var(--tocd-c1)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>MERGE AND MODEL</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/model-selection-umap/ data-depth=2 data-branch=1 data-estado data-body=" nf/modules/a_pycistopic/model_selection_umap.nf Envuelve 07_model_selection_umap.py (selección de modelo, Leiden, UMAP). Mismo patrón state/cp de …" style=--c:var(--tocd-c1)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>MODEL SELECTION UMAP</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/binarization-topic/ data-depth=2 data-branch=1 data-estado data-body=" nf/modules/a_pycistopic/binarization_topic_qc.nf Envuelve 08_binarization_topic_qc.py (binarización Otsu/Yen de β, métricas de tópico, anotación por …" style=--c:var(--tocd-c1)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>BINARIZATION TOPIC</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class="tocd-row is-current" href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/dars-gene-activity/ data-depth=2 data-branch=1 data-estado data-body=" nf/modules/a_pycistopic/dars_gene_activity.nf Envuelve 09_dars_gene_activity.py — el último paso de la rama (region sets, DARs, gene activity + …" style=--c:var(--tocd-c1)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>DARS GENE ACTIVITY</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/filter-annotated-cells/ data-depth=2 data-branch=1 data-estado data-body=" nf/modules/a_pycistopic/filter_annotated_cells.nf Primer nodo de la rama &amp;ldquo;solo anotadas&amp;rdquo; — la primera vez que este workflow bifurca de …" style=--c:var(--tocd-c1)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>FILTER ANNOTATED CELLS</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/fit-one-topic-annotated/ data-depth=2 data-branch=1 data-estado data-body=" fit_one_topic_annotated.nf combine_models_annotated.nf Continuación de FILTER ANNOTATED CELLS — estos dos son los equivalentes de …" style=--c:var(--tocd-c1)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>FIT ONE TOPIC ANNOTATED</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/annotated-destination-modules/ data-depth=2 data-branch=1 data-estado data-body=" merge_topic_states_annotated.nf model_selection_umap_annotated.nf binarization_topic_qc_annotated.nf Los tres módulos que dejaron de ser alias …" style=--c:var(--tocd-c1)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>ANNOTATED DESTINATION MODULES</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/topic-qc-correlation-annotated/ data-depth=2 data-branch=1 data-estado data-body=" nf/modules/a_pycistopic/topic_qc_correlation_annotated.nf Envuelve analyze_topic_qc_correlation.py — un script que el propio repo original describe …" style=--c:var(--tocd-c1)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>TOPIC QC CORRELATION ANNOTATED</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/a-pycistopic/codigo/ data-depth=1 data-branch=1 data-estado data-body="Una nota por script: qué problema resuelve, qué decisiones tiene adentro y qué hay que saber antes de tocarlo.
+Esto es el código. Cómo se orquesta es …" style=--c:var(--tocd-c1)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>Código</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/b-general/ data-depth=0 data-branch=2 data-estado="parcialmente migrada" data-body="No es una rama de análisis: es el puente entre el objeto Seurat integrado que llega y todo lo demás. Exporta lo que las otras ramas necesitan como …" style=--c:var(--tocd-c1)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>B — General</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/b-general/nextflow/ data-depth=1 data-branch=2 data-estado data-body="Una nota por módulo .nf de esta rama: qué proceso envuelve, qué entra, qué sale y por qué se decidió así. Pensadas para leerse al lado del código …" style=--c:var(--tocd-c2)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>Nextflow</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/b-general/nextflow/export-seurat-data/ data-depth=2 data-branch=2 data-estado data-body=" nf/modules/b_general/export_seurat_data.nf Envuelve B_general/1_R/export_seurat_data.r — el primer paso real de todo el pipeline (exporta …" style=--c:var(--tocd-c2)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>EXPORT SEURAT DATA</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/b-general/codigo/ data-depth=1 data-branch=2 data-estado data-body="Una nota por script: qué problema resuelve, qué decisiones tiene adentro y qué hay que saber antes de tocarlo.
+Esto es el código. Cómo se orquesta es …" style=--c:var(--tocd-c2)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>Código</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/b-general/codigo/export_seurat_data.r/ data-depth=2 data-branch=2 data-estado data-body="NEXT-STEPS: pycisTopic To improve the confidence in our results, we can validate our findings using pycisTopic. This tool uses Latent Dirichlet …" style=--c:var(--tocd-c2)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>export_seurat_data.r</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/c-cicero/ data-depth=0 data-branch=3 data-estado="corre en bash, sin migrar" data-body="Segunda ruta hacia la red. En vez de tópicos, busca co-accesibilidad: qué pares de picos se abren al mismo tiempo. Como los datos no tienen dimensión …" style=--c:var(--tocd-c2)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>C — Cicero</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/c-cicero/codigo/ data-depth=1 data-branch=3 data-estado data-body="Una nota por script: qué problema resuelve, qué decisiones tiene adentro y qué hay que saber antes de tocarlo.
+Esto es el código. Cómo se orquesta es …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>Código</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/c-cicero/codigo/00_enfoque_cicero/ data-depth=2 data-branch=3 data-estado data-body="The Problem Our existing pipeline establishes a strong foundation, but it leaves deeper biological insights hidden in the tables. By moving toward …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>Enfoque: Cicero y co-accesibilidad</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/c-cicero/codigo/01_create_cicero_cds.r/ data-depth=2 data-branch=3 data-estado data-body="Create a cds object and Run Cicero Below is the step-by-step R script to execute this pipeline. It handles argument parsing for cluster environments …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>01_create_cicero_cds.r</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/c-cicero/codigo/02_testingccansandconns.r/ data-depth=2 data-branch=3 data-estado data-body="Analyze and Plot each CCANs 1. Load data Now that we have the results of running cicero it is time to see what is inside. First we load our packages. …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>02_TestingCCANSandCONNS.R</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/c-cicero/codigo/03_assign_ccan_genes.r/ data-depth=2 data-branch=3 data-estado data-body="Assign Genes to peaks from CCANs But why? We already assign genes in the previous step to plot them! Well, the thing is, I don&amp;rsquo;t know, but they …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>03_assign_ccan_genes.r</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/d-integrate/ data-depth=0 data-branch=4 data-estado="consenso probado, visualizador abierto" data-body="Aquí es donde las tres rutas se comparan. Esta rama no tiene datos de entrada propios: sus entradas son las salidas de A, C y G.
+El consenso de tres …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>D — Integración</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/d-integrate/codigo/ data-depth=1 data-branch=4 data-estado data-body="Una nota por script: qué problema resuelve, qué decisiones tiene adentro y qué hay que saber antes de tocarlo.
+Esto es el código. Cómo se orquesta es …" style=--c:var(--tocd-c4)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>Código</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/e-cistarget/ data-depth=0 data-branch=5 data-estado=abierto data-body="Hueco declarado, no escondido. Esta fase todavía no está diseñada con el nivel de detalle de las demás.
+Lo que sí existe es un candidato concreto de …" style=--c:var(--tocd-c4)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>E — cisTarget</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/f-scenicp/ data-depth=0 data-branch=6 data-estado=abierto data-body="Hueco declarado, igual que E. Va después de cisTarget y antes de la red final.
+Lo que falta decidir: qué rol juega SCENIC+ respecto a la red que hoy …" style=--c:var(--tocd-c4)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>F — SCENIC+</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/g-scglue/ data-depth=0 data-branch=7 data-estado="implementada y probada" data-body="Tercera ruta, añadida en [2026-08-24]. Hasta entonces el consenso comparaba dos vistas del mismo dato de ATAC: tópicos LDA contra co-accesibilidad. …" style=--c:var(--tocd-c0)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>G — scGLUE</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/g-scglue/codigo/ data-depth=1 data-branch=7 data-estado data-body="Una nota por script: qué problema resuelve, qué decisiones tiene adentro y qué hay que saber antes de tocarlo.
+Esto es el código. Cómo se orquesta es …" style=--c:var(--tocd-c2)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>Código</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/sintaxis/ data-depth=0 data-branch=8 data-estado data-body="Glosario atómico: una nota por comando o directiva. A grosso modo, lo justo para no perder el hilo en el nivel 2 — hay guías mejor redactadas allá …" style=--c:var(--tocd-c4)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>Sintaxis</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/ data-depth=1 data-branch=8 data-estado data-body="Directivas y operadores de Nextflow tal como aparecen en este pipeline.
+" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>Nextflow</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/-stub-run/ data-depth=2 data-branch=8 data-estado data-body="Cuando no quieres que el pipeline corra con el objeto completo como gallina sin cabeza y después pierdas una semana de tiempo porque ay este comando …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>-stub-run</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/-work-dir/ data-depth=2 data-branch=8 data-estado data-body="Al principio yo hacía todo en una sola carpeta, y después terminaba con un relajo de archivos, outputs, inputs, figuras, todo en un solo lugar. La …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>-work-dir</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/collect/ data-depth=2 data-branch=8 data-estado data-body="Hay veces que aunque paralelicemos procesos, necesitamos que todos terminen, como en los módulos que implican un merge, entonces para eso nos sirve …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>collect()</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/emit/ data-depth=2 data-branch=8 data-estado data-body="Nextflow recibe un archivo bajo su nombre clave, pero para no confundirse le pasa un nombre que puede ser el mismo u otro a bash, esto para ser más …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>emit:</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/first/ data-depth=2 data-branch=8 data-estado data-body=" El problema que resuelve Un canal normal es una cola: cada item se consume una sola vez y se gasta. Eso está bien cuando cada item dispara su propia …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>first()</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/input/ data-depth=2 data-branch=8 data-estado data-body="Es la entrada del pipeline, la información con la que va a jugar, Nextflow es muy bueno para manejar esta información, simplemente lo lee de su …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>input:</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/label/ data-depth=2 data-branch=8 data-estado data-body="Es el nombre que le ponemos al trabajo, puede ser el que sea. Como buena práctica de programación NUNCA DE LOS NUNCAS pongas &amp;ldquo;Final&amp;rdquo; nunca …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>label</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/output/ data-depth=2 data-branch=8 data-estado data-body="Es la salida que espera Nextflow para pasársela al siguiente proceso, o simplemente guardarla en su carpeta. No se me ocurre nada chistoso aquí.
+Cómo …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>output:</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/publishdir/ data-depth=2 data-branch=8 data-estado data-body="Como Nextflow sí tiene muy bien sus carpetas organizadas para que no se anden molestando y el cache sea eficaz pues sabemos que nuestro lenguaje o …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>publishDir</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/script/ data-depth=2 data-branch=8 data-estado data-body="Es básicamente lo que va a ejecutar Nextflow en una terminal de bash como por ejemplo
+script: &amp;#34;&amp;#34;&amp;#34; cat ${Message} &amp;#34;&amp;#34;&amp;#34; y ya, …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>script:</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/state/ data-depth=2 data-branch=8 data-estado data-body="Es la carpeta donde se va a ejecutar el módulo de Nextflow.
+Ojo — un ajuste a lo de arriba La carpeta donde se ejecuta el módulo es el -work-dir (el …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>state</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/state_in/ data-depth=2 data-branch=8 data-estado data-body="No me acuerdo qué significaba esto, creo que era el nombre interno de algo xd.
+Era eso, sí Es el nombre con el que se monta el state que llega del …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>state_in</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/stub/ data-depth=2 data-branch=8 data-estado data-body="Igual que -stub-run, es la parte en donde escribes lo que se va a ejecutar si activas el flag -stub-run, es como script pero falso.
+Cómo se ve process …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>stub:</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/sintaxis/bash/ data-depth=1 data-branch=8 data-estado data-body="Comandos de terminal que el pipeline usa por dentro, y los de LSF para mandar trabajo a la farm.
+" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>Bash</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/sintaxis/bash/bsub/ data-depth=2 data-branch=8 data-estado data-body="El comando bsub es un componente clave del IBM Spectrum LSF (Load Sharing Facility) es usado para subir/mandar jobs a ejecución en un clúster de alto …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>bsub</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/sintaxis/bash/comodines/ data-depth=2 data-branch=8 data-estado data-body="Los comodines en Bash son caracteres especiales que sirven para representar uno o más caracteres al buscar o seleccionar nombres de archivos y …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>Comodines (*)</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/sintaxis/bash/cp/ data-depth=2 data-branch=8 data-estado data-body="El comando cp (ja) en bash es usado para copiar archivos y directorios de una ubicación a otra (copiar, si quisieras mover usas mv, que también sirve …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>cp</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/sintaxis/bash/mkdir/ data-depth=2 data-branch=8 data-estado data-body="El comando mkdir (Make Directory) se usa en la terminal para crear una o varias carpetas/folders/directorios como le quieras llamar.
+Sintaxis básica …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>mkdir</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/sintaxis/bash/symlink/ data-depth=2 data-branch=8 data-estado data-body="Un symlink (o enlace simbólico) es algo muy usado en este pipeline por Nextflow. Es un archivo especial que apunta a otro archivo o …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>symlink</span>
+<span class=tocd-dot aria-hidden=true></span>
+</a><a class=tocd-row href=/Vulgaris/es/projects/jaguar/sintaxis/bash/touch/ data-depth=2 data-branch=8 data-estado data-body="El comando touch en Bash se usa principalmente para crear archivos vacíos nuevos y para actualizar la fecha y hora de acceso o modificación de …" style=--c:var(--tocd-c3)><span class=tocd-indent aria-hidden=true></span>
+<span class=tocd-label>touch</span>
+<span class=tocd-dot aria-hidden=true></span></a></div><div class=tocd-gate aria-hidden=true></div><div class=tocd-bar aria-hidden=true></div></div></div><div class=tocd-card><div class=tocd-card-top><span class=tocd-card-title></span>
+<span class=tocd-card-branch></span></div><div class=tocd-card-estado></div><p class=tocd-card-body></p></div></nav><div class=tocd-veil aria-hidden=true></div><div class=tocd-overlay aria-hidden=true></div><div class=tocd-rail role=slider tabindex=0 aria-label="Índice del vault"></div><div class=tocd-hint aria-hidden=true>desliza el canto →</div></div><article class=guide-main><header class=note-header><p class=eyebrow><a href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/>Nextflow</a> /
 DARS GENE ACTIVITY</p><h1>DARS GENE ACTIVITY</h1><div class=note-tags><span class="tag tag--vault">tipo/proceso</span><span class="tag tag--vault">job/medium</span><span class="tag tag--vault">env/pycistopic</span></div></header><div class="post-body note-body"><hr><h2 id=nfmodulesa_pycistopicdars_gene_activitynf><code>nf/modules/a_pycistopic/dars_gene_activity.nf</code></h2><hr><p>Envuelve <code>09_dars_gene_activity.py</code> — el último paso de la rama (region
 sets, DARs, gene activity + DAGs). Mismo patrón <a class=wikilink href=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/state/ data-note=/Vulgaris/es/projects/jaguar/sintaxis/nextflow/state/>state</a>/<a class=wikilink href=/Vulgaris/es/projects/jaguar/sintaxis/bash/cp/ data-note=/Vulgaris/es/projects/jaguar/sintaxis/bash/cp/>cp</a> y flag
 condicional (<code>--variable</code>, aquí vía <code>params.dars_variable</code>) de siempre.</p><h2 id=la-conexión-con-el-consenso-de-tres-vías-d_integrate>La conexión con el consenso de tres vías (<code>D_integrate</code>)</h2><p>Este script tiene un parche reciente (<code>2026-08-24</code>, ver
@@ -20,8 +232,8 @@ deliberadamente, no se le sube la memoria todavía.</p><h2 id=con-esto-se-cierra
 <code>nf/workflows/pycistopic.nf</code>. Ver <a class=wikilink href=/Vulgaris/es/projects/jaguar/nextflow/workflow--main/ data-note=/Vulgaris/es/projects/jaguar/nextflow/workflow--main/>Workflow & Main</a> para el mapa completo
 de los procesos encadenados.</p><h2 id=ver-también>Ver también</h2><ul><li><a class=wikilink href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/binarization-topic/ data-note=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/binarization-topic/>BINARIZATION TOPIC</a> — el paso anterior en la cadena.</li><li><a class=wikilink href=/Vulgaris/es/projects/jaguar/nextflow/nextflow-config/ data-note=/Vulgaris/es/projects/jaguar/nextflow/nextflow-config/>Nextflow Config</a> — el detalle completo del hallazgo de
 <code>errorStrategy</code>/<code>maxRetries</code> que motivó el <code>ignore</code> aquí.</li></ul></div><section class=backlinks><h2 class=backlinks-title>Mencionada en</h2><ul><li><a href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/binarization-topic/>BINARIZATION TOPIC</a></li></ul></section><nav class=post-nav aria-label="Note navigation"><a class="post-nav-link prev" href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/filter-annotated-cells/><span class=dir>← anterior</span>FILTER ANNOTATED CELLS</a>
-<a class="post-nav-link next" href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/consensus-peak-calling/><span class=dir>siguiente →</span>CONSENSUS PEAK CALLING</a></nav></article></div></main><footer class=site-footer><div class=wrap><span>vulgaris alpha 0.1 · © 2026</span>
+<a class="post-nav-link next" href=/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/binarization-topic/><span class=dir>siguiente →</span>BINARIZATION TOPIC</a></nav></article></div></main><footer class=site-footer><div class=wrap><span>vulgaris alpha 0.1 · © 2026</span>
 <span></span>
 <span><a href=https://github.com/3LCONEJO>github</a>
 ·
-<a href=https://linkedin.com/in/Notyet>linkedin</a></span></div></footer><script src=/Vulgaris/js/main.js defer></script><script src=/Vulgaris/js/guide.js defer></script></body></html>
+<a href=https://linkedin.com/in/Notyet>linkedin</a></span></div></footer><script src=/Vulgaris/js/main.js defer></script><script src=/Vulgaris/js/guide.js defer></script><script src=/Vulgaris/js/toc-drum.js defer></script></body></html>

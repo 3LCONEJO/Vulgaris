@@ -12,7 +12,8 @@
   </main>
   {{ partial "footer.html" . }}
   <script src="{{ "js/main.js" | relURL }}" defer></script>
-  {{ if eq .Type "guide" }}<script src="{{ "js/guide.js" | relURL }}" defer></script>{{ end }}
+  {{ if eq .Type "guide" }}<script src="{{ "js/guide.js" | relURL }}" defer></script>
+  <script src="{{ "js/toc-drum.js" | relURL }}" defer></script>{{ end }}
 
   {{ if .Params.math }}
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeGSCF5bnXQiFPxYbBIn" crossorigin="anonymous"></script>

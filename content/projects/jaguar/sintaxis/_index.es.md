@@ -1,7 +1,8 @@
 ---
 title: "Sintaxis"
-weight: 30
+weight: 90
 eyebrow: "nivel 3 // qué significa esta palabra"
+color: 4
 ---
 
 Glosario atómico: una nota por comando o directiva. A grosso modo, lo justo para

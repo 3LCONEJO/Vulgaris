@@ -1,36 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Job/Custom on Vulgaris</title><link>https://3lconejo.github.io/Vulgaris/es/tags/job/custom/</link><description>Recent content in Job/Custom on Vulgaris</description><generator>Hugo</generator><language>es</language><atom:link href="https://3lconejo.github.io/Vulgaris/es/tags/job/custom/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/build-cistopic-objects/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/build-cistopic-objects/</guid><description>&lt;hr&gt;
-&lt;h2 id="nfmodulesa_pycistopicbuild_cistopic_objectsnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/build_cistopic_objects.nf&lt;/code&gt;&lt;/h2&gt;
-&lt;hr&gt;
-&lt;p&gt;Envuelve &lt;code&gt;05_build_cistopic_objects.py&lt;/code&gt; — el paso largo y caro del pipeline
-(cisTopic objects por muestra + Scrublet + modelos Mallet, grilla
-&lt;code&gt;n_topics=[2,5,...,50]&lt;/code&gt;). Mismo patrón [[state]]/[[cp]] de siempre; lo que
-cambia aquí es &lt;strong&gt;cómo se le piden recursos de LSF&lt;/strong&gt;, y desde &lt;code&gt;[2026-09-01]&lt;/code&gt;,
-&lt;strong&gt;cuántas veces se llama a este proceso&lt;/strong&gt; — no la sintaxis básica del
-&lt;code&gt;process&lt;/code&gt; en sí.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/filter-annotated-cells/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/filter-annotated-cells/</guid><description>&lt;hr&gt;
-&lt;h2 id="nfmodulesa_pycistopicfilter_annotated_cellsnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/filter_annotated_cells.nf&lt;/code&gt;&lt;/h2&gt;
-&lt;hr&gt;
-&lt;p&gt;Primer nodo de la rama &amp;ldquo;solo anotadas&amp;rdquo; — la primera vez que este workflow
-&lt;strong&gt;bifurca&lt;/strong&gt; de verdad, en vez de solo hacer fan-out-y-volver-a-juntar (ver
-[[Workflow &amp;amp; Main]], sección &amp;ldquo;Bifurcar el DAG&amp;rdquo;, para la mecánica de
-canales). Este artículo cubre el porqué y el diseño; ese otro cubre la
-sintaxis que lo conecta.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/fit-one-topic-annotated/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/fit-one-topic-annotated/</guid><description>&lt;hr&gt;
-&lt;h2 id="fit_one_topic_annotatednf"&gt;&lt;code&gt;fit_one_topic_annotated.nf&lt;/code&gt;&lt;/h2&gt;
-&lt;h2 id="combine_models_annotatednf"&gt;&lt;code&gt;combine_models_annotated.nf&lt;/code&gt;&lt;/h2&gt;
-&lt;hr&gt;
-&lt;p&gt;Continuación de [[FILTER ANNOTATED CELLS]] — estos dos son los equivalentes
-de &lt;code&gt;fit_one_topic.nf&lt;/code&gt;/&lt;code&gt;combine_models.nf&lt;/code&gt; (ver [[MERGE AND MODEL]]) para la
-rama &amp;ldquo;solo anotadas&amp;rdquo;, pero como archivos &lt;code&gt;.nf&lt;/code&gt; propios en vez de reusar los
-originales con un alias (&lt;code&gt;include { X as Y }&lt;/code&gt;, ver [[Workflow &amp;amp; Main]]).&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-and-model/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-and-model/</guid><description>&lt;hr&gt;
-&lt;h2 id="merge_onlynf"&gt;&lt;code&gt;merge_only.nf&lt;/code&gt;&lt;/h2&gt;
-&lt;h2 id="fit_one_topicnf"&gt;&lt;code&gt;fit_one_topic.nf&lt;/code&gt;&lt;/h2&gt;
-&lt;h2 id="merge_topic_statesnf"&gt;&lt;code&gt;merge_topic_states.nf&lt;/code&gt;&lt;/h2&gt;
-&lt;h2 id="combine_modelsnf"&gt;&lt;code&gt;combine_models.nf&lt;/code&gt;&lt;/h2&gt;
-&lt;hr&gt;
-&lt;p&gt;Estos 4 módulos son lo que hoy hace el trabajo del viejo &lt;code&gt;merge_and_model.nf&lt;/code&gt;
-(un solo proceso, &lt;code&gt;MERGE_AND_MODEL&lt;/code&gt; — sigue en el repo, ya NO se usa en
-&lt;code&gt;pycistopic.nf&lt;/code&gt;, dejado solo de referencia histórica). Se documentan juntos
-aquí porque ninguno tiene sentido leído aislado — son las 4 piezas de un
-mismo rediseño.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/pseudobulk-export/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/pseudobulk-export/</guid><description>&lt;hr&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Job/Custom on Vulgaris</title><link>https://3lconejo.github.io/Vulgaris/es/tags/job/custom/</link><description>Recent content in Job/Custom on Vulgaris</description><generator>Hugo</generator><language>es</language><atom:link href="https://3lconejo.github.io/Vulgaris/es/tags/job/custom/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/pseudobulk-export/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/pseudobulk-export/</guid><description>&lt;hr&gt;
 &lt;h2 id="nfmodulesa_pycistopicpseudobulk_exportnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/pseudobulk_export.nf&lt;/code&gt;&lt;/h2&gt;
 &lt;hr&gt;
 &lt;p&gt;Envuelve &lt;code&gt;01_pseudobulk_export.py&lt;/code&gt; — el primer paso de la rama
@@ -69,7 +37,39 @@ alcanza con el nombre de la muestra. &lt;code&gt;tuple val(a), val(b)&lt;/code&g
 dos juntos en un solo item de canal, así que cada vez que llega uno nuevo,
 Nextflow dispara una ejecución con AMBOS valores correspondientes a la
 misma fila (nunca el &lt;code&gt;sample_id&lt;/code&gt; de una fila con el &lt;code&gt;fragment_path&lt;/code&gt; de
-otra).&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/b-general/nextflow/export-seurat-data/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/b-general/nextflow/export-seurat-data/</guid><description>&lt;hr&gt;
+otra).&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/build-cistopic-objects/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/build-cistopic-objects/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicbuild_cistopic_objectsnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/build_cistopic_objects.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Envuelve &lt;code&gt;05_build_cistopic_objects.py&lt;/code&gt; — el paso largo y caro del pipeline
+(cisTopic objects por muestra + Scrublet + modelos Mallet, grilla
+&lt;code&gt;n_topics=[2,5,...,50]&lt;/code&gt;). Mismo patrón [[state]]/[[cp]] de siempre; lo que
+cambia aquí es &lt;strong&gt;cómo se le piden recursos de LSF&lt;/strong&gt;, y desde &lt;code&gt;[2026-09-01]&lt;/code&gt;,
+&lt;strong&gt;cuántas veces se llama a este proceso&lt;/strong&gt; — no la sintaxis básica del
+&lt;code&gt;process&lt;/code&gt; en sí.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-and-model/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/merge-and-model/</guid><description>&lt;hr&gt;
+&lt;h2 id="merge_onlynf"&gt;&lt;code&gt;merge_only.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id="fit_one_topicnf"&gt;&lt;code&gt;fit_one_topic.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id="merge_topic_statesnf"&gt;&lt;code&gt;merge_topic_states.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id="combine_modelsnf"&gt;&lt;code&gt;combine_models.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Estos 4 módulos son lo que hoy hace el trabajo del viejo &lt;code&gt;merge_and_model.nf&lt;/code&gt;
+(un solo proceso, &lt;code&gt;MERGE_AND_MODEL&lt;/code&gt; — sigue en el repo, ya NO se usa en
+&lt;code&gt;pycistopic.nf&lt;/code&gt;, dejado solo de referencia histórica). Se documentan juntos
+aquí porque ninguno tiene sentido leído aislado — son las 4 piezas de un
+mismo rediseño.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/filter-annotated-cells/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/filter-annotated-cells/</guid><description>&lt;hr&gt;
+&lt;h2 id="nfmodulesa_pycistopicfilter_annotated_cellsnf"&gt;&lt;code&gt;nf/modules/a_pycistopic/filter_annotated_cells.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Primer nodo de la rama &amp;ldquo;solo anotadas&amp;rdquo; — la primera vez que este workflow
+&lt;strong&gt;bifurca&lt;/strong&gt; de verdad, en vez de solo hacer fan-out-y-volver-a-juntar (ver
+[[Workflow &amp;amp; Main]], sección &amp;ldquo;Bifurcar el DAG&amp;rdquo;, para la mecánica de
+canales). Este artículo cubre el porqué y el diseño; ese otro cubre la
+sintaxis que lo conecta.&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/fit-one-topic-annotated/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/a-pycistopic/nextflow/fit-one-topic-annotated/</guid><description>&lt;hr&gt;
+&lt;h2 id="fit_one_topic_annotatednf"&gt;&lt;code&gt;fit_one_topic_annotated.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id="combine_models_annotatednf"&gt;&lt;code&gt;combine_models_annotated.nf&lt;/code&gt;&lt;/h2&gt;
+&lt;hr&gt;
+&lt;p&gt;Continuación de [[FILTER ANNOTATED CELLS]] — estos dos son los equivalentes
+de &lt;code&gt;fit_one_topic.nf&lt;/code&gt;/&lt;code&gt;combine_models.nf&lt;/code&gt; (ver [[MERGE AND MODEL]]) para la
+rama &amp;ldquo;solo anotadas&amp;rdquo;, pero como archivos &lt;code&gt;.nf&lt;/code&gt; propios en vez de reusar los
+originales con un alias (&lt;code&gt;include { X as Y }&lt;/code&gt;, ver [[Workflow &amp;amp; Main]]).&lt;/p&gt;</description></item><item><title/><link>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/b-general/nextflow/export-seurat-data/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://3lconejo.github.io/Vulgaris/es/projects/jaguar/b-general/nextflow/export-seurat-data/</guid><description>&lt;hr&gt;
 &lt;h2 id="nfmodulesb_generalexport_seurat_datanf"&gt;&lt;code&gt;nf/modules/b_general/export_seurat_data.nf&lt;/code&gt;&lt;/h2&gt;
 &lt;hr&gt;
 &lt;p&gt;Envuelve &lt;code&gt;B_general/1_R/export_seurat_data.r&lt;/code&gt; — el primer paso real de todo
